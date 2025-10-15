@@ -103,7 +103,17 @@ $currentUser = $auth->getCurrentUser();
                     <span>Tasks</span>
                 </a>
                 
+                <a href="/crypto.php" class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'crypto.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-bitcoin"></i>
+                    <span>Cryptocurrency</span>
+                </a>
+                
                 <div class="nav-divider"></div>
+                
+                <a href="/analytics.php" class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'analytics.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Analytics</span>
+                </a>
                 
                 <a href="/profile.php" class="nav-item">
                     <i class="fas fa-user-cog"></i>
@@ -113,6 +123,11 @@ $currentUser = $auth->getCurrentUser();
                 <a href="/backup.php" class="nav-item">
                     <i class="fas fa-database"></i>
                     <span>Backup</span>
+                </a>
+                
+                <a href="/admin.php" class="nav-item <?php echo basename($_SERVER['PHP_SELF']) == 'admin.php' ? 'active' : ''; ?>">
+                    <i class="fas fa-cog"></i>
+                    <span>Administration</span>
                 </a>
                 
                 <?php if ($auth->isAdmin()): ?>

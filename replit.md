@@ -2,7 +2,37 @@
 
 ## Overview
 
-Life Atlas Organizer is a comprehensive personal life management web application that centralizes 15+ core life modules into a single secure dashboard. Built with PHP and PostgreSQL, it provides users with tools to track assets, manage finances, monitor health, maintain journals, and organize tasks among other features. The application emphasizes security, user experience, and data integrity through features like CSRF protection, automated backups, and multi-channel notifications (email and Telegram).
+Life Atlas Organizer is a comprehensive personal life management web application that centralizes 16+ core life modules into a single secure dashboard. Built with PHP and PostgreSQL, it provides users with tools to track assets, manage finances, monitor health, maintain journals, organize tasks, and track cryptocurrency investments. The application emphasizes security, user experience, and data integrity through features like CSRF protection, automated backups, multi-channel notifications (email and Telegram), comprehensive analytics, and data export/import capabilities.
+
+## Recent Changes (October 2025)
+
+### Cryptocurrency Module
+- Added crypto portfolio tracking with live price updates via CoinGecko API
+- Implemented price alert system with customizable triggers
+- Created crypto-specific database tables (crypto_portfolio, crypto_alerts, crypto_price_history)
+- Built automatic price fetching and portfolio valuation
+- Added top cryptocurrencies market overview
+
+### Analytics Enhancements
+- Created comprehensive analytics dashboard with 10+ chart types
+- Added health tracking visualization (weight, exercise, water intake)
+- Implemented investment portfolio performance charts
+- Enhanced finance charts with 12-month income/expense trends
+- Added journal mood distribution analytics
+- Created learning progress visualization
+- Implemented goals and habits completion tracking charts
+
+### Data Management
+- Built data export functionality (JSON and CSV formats)
+- Implemented data import with validation
+- Added system-wide data portability features
+- Created backup and restore capabilities
+
+### Bug Fixes
+- Fixed footer undefined variable errors
+- Corrected database method implementations (fetchColumn, execute)
+- Fixed crypto price parsing for formatted numbers with thousand separators
+- Improved admin panel functionality
 
 ## User Preferences
 
@@ -75,7 +105,7 @@ Preferred communication style: Simple, everyday language.
 
 ### Module Architecture
 
-**15 Core Modules:**
+**16 Core Modules:**
 1. **Dashboard** - Aggregated statistics and summary visualizations
 2. **Assets** - Item tracking with categories, values, acquisition dates
 3. **Bills** - Recurring bill management with payment status
@@ -91,6 +121,7 @@ Preferred communication style: Simple, everyday language.
 13. **Media** - Watchlist and media consumption tracking
 14. **Subscriptions** - Subscription management with renewal alerts
 15. **Tasks** - Todo list with categories, priorities, due dates
+16. **Cryptocurrency** - Crypto portfolio tracking with live prices and alerts
 
 **Module Independence:**
 - Each module operates as a self-contained feature

@@ -1,0 +1,170 @@
+You must build without asking any questions — use your best reasoning and continue automatically until the full system is ready.
+
+💡 Core Features (from the base system)
+
+Rebuild these modules and make them dynamic via PHP + MySQL:
+
+Dashboard (Home) – overview of all modules with quick stats, daily goals, and summary charts.
+
+Assets Module – track owned items (name, category, value, acquisition date).
+
+Bills Module – manage recurring bills, due dates, and payment status.
+
+Birthdays Module – list and remind user of upcoming birthdays.
+
+Finance Module – income/expense tracking, budgeting, analytics.
+
+Goal Module – personal goals with progress tracking.
+
+Habits Module – habit tracker with streaks and completion rates.
+
+Health Module – store medical info, exercise logs, water intake, weight tracking.
+
+Hobbies Module – track hobbies, related resources, and progress.
+
+Investment Module – manage investment portfolio and returns.
+
+Journal Module – daily journal with date, title, content, and mood.
+
+Learning Module – track courses, books, and study progress.
+
+Media Module – movies, music, or content to watch/read.
+
+Subscription Module – list of active subscriptions with renewal alerts.
+
+Task Module – to-do list with categories, due dates, and completion status.
+
+⚙️ New and Enhanced Features to Add
+
+User Authentication System (Login/Register/Logout)
+
+Secure registration and login with password hashing (bcrypt).
+
+Session management and CSRF protection.
+
+User Profiles and Settings
+
+Allow users to edit profile, change password, and set notification preferences.
+
+Data Backup & Restore
+
+Auto-generate weekly database backups.
+
+Manual export to .json or .csv.
+
+Email and Telegram Notifications
+
+Use PHPMailer for email alerts (SMTP-ready).
+
+Integrate free Telegram Bot API for instant notifications (no paid services).
+
+Smart Analytics
+
+Dynamic charts using Chart.js for finance, habits, and goals.
+
+Progress bars, weekly and monthly trends.
+
+Dark/Light Theme Toggle
+
+Store user preference using localStorage or database.
+
+Search and Filter System
+
+Global search bar to find items across modules.
+
+Automatic Cron Integration
+
+PHP cron-compatible scripts for scheduled reminders and backup generation.
+
+Ensure it can run on Hostinger Cron jobs.
+
+Security & Optimization
+
+Input sanitization, prepared SQL statements, CSRF tokens.
+
+No external dependencies requiring Node.js or composer.
+
+Admin Panel (optional but recommended)
+
+View all users, manage backups, reset passwords, and system logs.
+
+🗂️ Technical Details
+
+Languages: PHP (backend), HTML5, CSS3, JavaScript (frontend)
+
+Database: MySQL (use PDO or mysqli prepared statements)
+
+Styling: Custom CSS (optionally with Tailwind CDN)
+
+Hosting Compatibility: Must work perfectly on Hostinger shared hosting
+
+File Structure Example:
+
+/public
+  index.php
+  dashboard.php
+  assets.php
+  ...
+/includes
+  db.php
+  auth.php
+  header.php
+  footer.php
+/cron
+  backup.php
+  reminders.php
+/assets
+  /css
+  /js
+  /images
+
+Database Tables:
+
+users (id, name, email, password, telegram_chat_id, settings)
+
+Separate tables for each module (assets, bills, habits, etc.)
+
+Use user_id to link all data to the logged-in user.
+
+🧩 UX/UI Requirements
+
+Clean, modern dashboard layout with a collapsible sidebar.
+
+Mobile-friendly responsive design.
+
+Smooth animations using vanilla JS or CSS transitions.
+
+Each module should have Add/Edit/Delete modals and search/filter capability.
+
+Include a simple setup wizard on first login to guide the user.
+
+🧠 Build Instructions for Replit AI
+
+Automatically generate all PHP, HTML, CSS, and JS files.
+
+Include a SQL schema file (database.sql) to import tables easily.
+
+Implement sample data for testing.
+
+Don’t ask for user input — proceed with implementation directly.
+
+Output the full working project that can be uploaded and run on Hostinger web hosting and triggered by cron jobs.
+
+🚀 Final Deliverables
+
+Complete working project folder (ready to upload).
+
+README.md with setup steps for Hostinger.
+
+SQL schema.
+
+Cron job examples for automated tasks.
+
+Telegram + Email notification integration tested.
+
+All modules functional and accessible from one dashboard.
+
+Important:
+Do not ask any clarifications.
+Just start building this full system based on the instructions above.
+When done, make sure everything works, is well-structured, and ready for deployment.

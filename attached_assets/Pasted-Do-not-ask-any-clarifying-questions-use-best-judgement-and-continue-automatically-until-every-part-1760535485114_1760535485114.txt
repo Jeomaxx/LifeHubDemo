@@ -1,0 +1,265 @@
+Do not ask any clarifying questions — use best judgement and continue automatically until every part below is implemented, tested, and included in the deliverables.
+
+High-level constraints
+
+Backend: PHP 8.x (vanilla PHP, object-oriented where appropriate). Use PDO with prepared statements. No composer dependencies required; however, small third-party libs bundled only when unavoidable are allowed if documented.
+
+Frontend: HTML5, CSS3, vanilla JavaScript (ES6+). Use progressive enhancement, accessibility, and responsive design. Optionally include Tailwind via CDN for convenience. No build step required.
+
+Database: MySQL (exportable database.sql). Use clear normalized schema, user-scoped tables, indexes for performance.
+
+Hosting target: Hostinger shared hosting — file-based deployment, cron jobs, no background daemons assumed.
+
+Security: sanitize inputs, use CSRF tokens, bcrypt password hashing, enforce prepared statements, rate-limit sign-in attempts, and secure session cookie flags.
+
+Deliver everything as a single zipped project ready to upload.
+
+1) Modules to rebuild (from base) — fully dynamic in PHP/MySQL
+
+Recreate and enhance these modules — each must have Add/Edit/Delete, search, filters, per-user isolation, and activity logs:
+
+Dashboard (global overview): quick stats widgets, notifications, compact module cards, and a system-wide analytics page.
+
+Assets, Bills, Birthdays, Finance (income/expense), Goals, Habits, Health, Hobbies, Investment, Journal, Learning, Media, Subscriptions, Tasks.
+
+For each existing module: add timeline/history (who changed what & when), export (CSV/JSON), and charts (Chart.js). Ensure footer code errors are fixed and the footer is responsive.
+
+2) New modules & major features to add now (think like a power user)
+A. Crypto Module (priority)
+
+Table(s): crypto_coins, crypto_prices, crypto_portfolio, crypto_alerts, crypto_transactions.
+
+Auto-fetch live prices from a free public API (e.g., CoinGecko) using server-side PHP cron script. Implement caching (1–5 minute TTL) in DB to avoid hitting rate limits.
+
+Portfolio: add, edit, track holdings (amount, buy price, date). Calculate P&L and performance %.
+
+Alerts: user-defined price alerts (above/below thresholds). Cron checks and triggers email + Telegram notifications.
+
+UI: portfolio view, coin detail pages, sparkline mini-charts, portfolio distribution pie chart, recent transactions list.
+
+Historical prices: store daily snapshot for charts and asset value-over-time graphs.
+
+B. Crypto Features requested by you
+
+Auto-fetch updated prices automatically (cron); include manual “refresh now” button.
+
+Alert system: price rise/drop alerts with configurable sensitivity and cooldown.
+
+CSV import of transactions to bulk add past trades.
+
+C. System Management Page
+
+Admin/System Management UI: backups, cron status, running tasks log, manage email/telegram config, view system logs, force DB backup, restore backup, maintenance mode toggle.
+
+D. Financial & Analytics Enhancements
+
+Finance charts: income vs expense (monthly), category breakdown, cashflow forecast, budget overspend alerts.
+
+Visualize goals & completion rates, habits streak charts, investment portfolio performance charts.
+
+Bills payment history timeline, analyze subscription costs and churn.
+
+Asset value over time (allow user to add historical value points).
+
+E. Advanced Personal Productivity Features
+
+Smart Scheduler: suggest times for tasks/goals based on calendar availability (simple logic using user settings).
+
+Task Dependencies & Recurring Tasks engine.
+
+Pomodoro timer integrated into tasks module (frontend JS).
+
+F. Secure Notes & Sensitive Data
+
+Encrypted sensitive notes using AES-256 server-side encryption with per-user encryption key derived from user password (store encrypted key safely). Provide option to decrypt on demand.
+
+G. Two-Factor Authentication
+
+Add TOTP 2FA support (Google Authenticator compatible). Provide backup codes.
+
+H. Receipt & Document OCR (optional but included)
+
+Local (optional) integration hook for OCR using Tesseract command-line if available on host; fallback to manual upload and text extraction placeholder. Provide clear instructions in README on how to enable OCR.
+
+I. Internationalization & Preferences
+
+Multi-language stub (English + Arabic) — wrap all strings into a simple i18n mechanism so translation files can be added.
+
+Light/Dark theme toggle (persist in DB or localStorage).
+
+J. API & PWA
+
+Provide a simple authenticated REST API (token-based) for mobile syncing or external clients (endpoints: auth, modules CRUD, crypto portfolio).
+
+Add PWA manifest and offline caching for read-only portions (Dashboard cache).
+
+3) UX/UI Requirements & Accessibility
+
+Responsive layout with collapsible sidebar, mobile-first design, keyboard navigation, aria attributes, and semantic HTML.
+
+Use Chart.js (vanilla JS) for all graphs (finance, crypto, health, habits, goals, journal moods).
+
+Provide modals for Add/Edit with validation and friendly error messages.
+
+Provide a first-time setup wizard to create admin user and connect SMTP & Telegram.
+
+4) Notifications & Integrations
+
+Email: use PHPMailer with SMTP. Include templates for alerts (HTML + plain text). Provide settings UI for SMTP credentials.
+
+Telegram: integrate Bot API for free notifications; store user telegram_chat_id and allow test message.
+
+Optional: web-push notifications (with user opt-in) for supported browsers.
+
+5) Cron Jobs & Automation
+
+Create /cron scripts and README-ready sample cron entries:
+
+cron/cron_reminders.php — run every 5–15 minutes: send due reminders, crypto price alerts, backup triggers.
+
+cron/cron_backup.php — run weekly/daily for DB backups; store in /backups with rotation policy (keep last 8).
+
+cron/cron_fetch_crypto.php — run every 3–5 minutes to update cached prices (respect API limits).
+
+Provide exact Hostinger cron expressions and instructions in README.
+
+
+Database Schema (provide database.sql)
+
+Include detailed table definitions (examples below). Replit AI must produce a single database.sql with CREATE TABLE statements and sample seed data for testing.
+
+Example (must be fleshed out for all modules):
+users (id, name, email, password_hash, settings_json, created_at, totp_secret, telegram_chat_id)
+assets (id, user_id, name, category, value, acquired_at, notes, created_at, updated_at)
+bills (id, user_id, title, amount, recurring_type, due_day, next_due_date, paid, created_at)
+finance_transactions (id, user_id, type, amount, category, date, note)
+crypto_coins (id, symbol, name, coingecko_id)
+crypto_prices (coin_id, price_usd, timestamp)
+crypto_portfolio (id, user_id, coin_id, amount, avg_buy_price, added_at)
+crypto_alerts (id, user_id, coin_id, target_price, direction, active, created_at)
+journal (id, user_id, date, title, content, mood)
+...
+
+Security & QA
+
+Input validation & sanitization everywhere, prepared statements, HTML-escape outputs.
+
+CSRF tokens for all form posts.
+
+Passwords hashed with bcrypt (password_hash).
+
+Rate-limiting of login attempts.
+
+Provide example unit or integration tests (PHP unit tests optional) and manual test checklist.
+
+Include a vulnerability checklist and suggestions for hardening in the README.
+
+Developer & Deployment Deliverables
+
+When finished, produce a single project zip with the following structure and files:
+
+
+/public
+  index.php
+  login.php
+  register.php
+  dashboard.php
+  assets.php
+  crypto.php
+  system_management.php
+/includes
+  config.php         (DB, env-like config)
+  db.php
+  auth.php
+  csrf.php
+  helpers.php
+/cron
+  cron_fetch_crypto.php
+  cron_reminders.php
+  cron_backup.php
+/assets
+  css/
+  js/
+  images/
+/backups
+/tests
+database.sql
+README.md (detailed Hostinger setup, cron entries, Telegram + SMTP setup, enabling OCR, how to run DB import, troubleshooting)
+
+
+README must include:
+
+Step-by-step Hostinger upload and config instructions.
+
+Cron job lines for the Hostinger control panel (exact examples).
+
+How to create Telegram Bot + get chat_id and set webhook (or instruct how to send test messages).
+
+How to restore DB from backup and rotate backups.
+
+Security hardening steps & how to enable TOTP.
+
+9) Testing & Sample Data
+
+Add seed/demo user(s) and realistic demo data across modules (finance, crypto holdings, habits, goals, journal entries).
+
+Provide screenshots (PNG) or exportable demo data and exact steps to log in as demo user.
+
+10) Non-functional requirements
+
+Reasonable performance: indexes on search fields, avoid N+1 queries.
+
+Clean, readable code with comments and a small developer guide file DEVELOPER_NOTE.md.
+
+No external build step required — ready to upload to Hostinger.
+
+11) Final instructions to Replit AI — mandatory
+
+Do not ask any questions. Use best judgement and implement all features. If something needs a configuration value (SMTP, Telegram token) create a stub/instructions and default demo values that are safe.
+
+Run code-style checks, run manual QA flows, and produce a full database.sql, seed data, README, and zipped project.
+
+Fix the footer section bug in the original UI and any other UI/UX inconsistencies found.
+
+Implement the crypto price provider using a free public API (cache responses, record snapshots, and protect against rate limits). Document the chosen provider and sample curl commands in README.
+
+When finished, output the downloadable project (zip) and a concise summary of what was implemented and where to configure key settings.
+
+12) Deliverable checklist (what I expect at the end)
+
+Complete PHP + MySQL project folder ready for Hostinger upload.
+
+database.sql and sample data.
+
+README.md with Hostinger deployment + cron setup + Telegram + SMTP instructions.
+
+/cron scripts and sample cron expressions.
+
+System management/admin UI.
+
+All modules working + new Crypto module + analytics/charts + exports/imports + PWA manifest + REST API endpoints.
+
+Backup & restore working.
+
+TOTP 2FA + encrypted notes + Telegram & Email notifications.
+
+Demo user credentials and test data.
+
+Developer notes and security checklist.
+
+Important final note to the AI (copy verbatim into your instruction):
+You MUST build and continue automatically until the system is fully developed and all deliverables in the checklist above are present. Do NOT stop to ask questions. If you cannot implement an optional feature (e.g., OCR) due to host limitations, add a documented fallback and instructions to enable it.
+
+And do this please 
+Create smart scheduler for task ideas
+Add task links and repeating tasks
+Add timer to tasks for focus
+Build tool to import transaction data
+Add website messages to users
+Create setup guide for new users
+Add new data storage sections
+Create guide for deploying the project
+Add helpful notes for developers
+Create security checklist and guide
+Check new parts and fix bugs
+Prepare project for download

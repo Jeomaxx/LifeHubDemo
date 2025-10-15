@@ -1,3 +1,6 @@
-modules = ["php-8.2"]
+modules = ["php-8.2", "postgresql-16"]
 [agent]
 expertMode = true
+
+[nix]
+channel = "stable-25_05"

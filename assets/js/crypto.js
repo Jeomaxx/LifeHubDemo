@@ -37,25 +37,25 @@ function updatePortfolioPrices() {
     document.querySelectorAll('#portfolio-table tr[data-crypto-id]').forEach(row => {
         const cryptoId = row.getAttribute('data-crypto-id');
         const holdingId = row.getAttribute('data-holding-id');
-        const amount = parseFloat(row.children[1].textContent);
-        const purchasePrice = parseFloat(row.children[2].textContent.replace('$', ''));
+        const amount = parseFloat(row.children[1].textContent.replace(/,/g, ''));
+        const purchasePrice = parseFloat(row.children[2].textContent.replace(/[$,]/g, ''));
         
         if (cryptoPrices[cryptoId]) {
             const currentPrice = cryptoPrices[cryptoId].usd;
             const value = amount * currentPrice;
             const invested = amount * purchasePrice;
             const pnl = value - invested;
-            const pnlPercent = ((pnl / invested) * 100).toFixed(2);
+            const pnlPercent = invested > 0 ? ((pnl / invested) * 100).toFixed(2) : 0;
             
             totalValue += value;
             totalInvested += invested;
             
-            row.querySelector('.current-price').textContent = '$' + currentPrice.toFixed(2);
-            row.querySelector('.current-value').textContent = '$' + value.toFixed(2);
+            row.querySelector('.current-price').textContent = '$' + currentPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            row.querySelector('.current-value').textContent = '$' + value.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
             
             const pnlCell = row.querySelector('.pnl-value');
             pnlCell.innerHTML = `<span class="${pnl >= 0 ? 'text-success' : 'text-danger'}">
-                ${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)} (${pnlPercent}%)
+                ${pnl >= 0 ? '+' : ''}$${pnl.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} (${pnlPercent}%)
             </span>`;
         }
     });
@@ -63,9 +63,9 @@ function updatePortfolioPrices() {
     const totalPnl = totalValue - totalInvested;
     const totalPnlPercent = totalInvested > 0 ? ((totalPnl / totalInvested) * 100).toFixed(2) : 0;
     
-    document.getElementById('total-holdings').textContent = '$' + totalValue.toFixed(2);
+    document.getElementById('total-holdings').textContent = '$' + totalValue.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('total-pnl').innerHTML = `<span class="${totalPnl >= 0 ? 'text-success' : 'text-danger'}">
-        ${totalPnl >= 0 ? '+' : ''}$${totalPnl.toFixed(2)}
+        ${totalPnl >= 0 ? '+' : ''}$${totalPnl.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
     </span>`;
 }
 

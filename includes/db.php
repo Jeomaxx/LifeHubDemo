@@ -52,6 +52,11 @@ class Database {
         return $stmt ? $stmt->fetch() : null;
     }
     
+    public function fetchColumn($sql, $params = []) {
+        $stmt = $this->query($sql, $params);
+        return $stmt ? $stmt->fetchColumn() : null;
+    }
+    
     public function insert($table, $data) {
         $keys = array_keys($data);
         $fields = implode(', ', $keys);
@@ -79,6 +84,10 @@ class Database {
     public function delete($table, $where, $params = []) {
         $sql = "DELETE FROM $table WHERE $where";
         return $this->query($sql, $params) !== false;
+    }
+    
+    public function execute($sql, $params = []) {
+        return $this->query($sql, $params);
     }
     
     public function lastInsertId() {

@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     renderAssetsChart();
     renderMoodChart();
     renderLearningChart();
+    renderHealthChart();
+    renderInvestmentChart();
 });
 
 function renderFinanceChart() {
@@ -117,4 +119,78 @@ function renderLearningChart() {
         data: data,
         backgroundColor: chartGradients.createGradient('learningChart', chartColors.secondary, 0.8)
     }]);
+}
+
+function renderHealthChart() {
+    if (typeof healthData === 'undefined' || !healthData.length) return;
+    
+    const labels = healthData.map(h => {
+        const date = new Date(h.date);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    });
+    
+    const datasets = [
+        {
+            label: 'Weight (kg)',
+            data: healthData.map(h => parseFloat(h.weight) || 0),
+            borderColor: chartColors.primary,
+            backgroundColor: chartGradients.createGradient('healthChart', chartColors.primary, 0.2),
+            yAxisID: 'y'
+        },
+        {
+            label: 'Exercise (min)',
+            data: healthData.map(h => parseInt(h.exercise_minutes) || 0),
+            borderColor: chartColors.success,
+            backgroundColor: chartGradients.createGradient('healthChart', chartColors.success, 0.2),
+            yAxisID: 'y1'
+        },
+        {
+            label: 'Water (L)',
+            data: healthData.map(h => parseFloat(h.water_intake) || 0),
+            borderColor: chartColors.info,
+            backgroundColor: chartGradients.createGradient('healthChart', chartColors.info, 0.2),
+            yAxisID: 'y1'
+        }
+    ];
+    
+    const canvas = document.getElementById('healthChart');
+    if (!canvas) return;
+    
+    new Chart(canvas, {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                legend: { position: 'top' }
+            },
+            scales: {
+                y: { type: 'linear', position: 'left', title: { display: true, text: 'Weight (kg)' } },
+                y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Exercise/Water' } }
+            }
+        }
+    });
+}
+
+function renderInvestmentChart() {
+    if (typeof investmentData === 'undefined' || !investmentData.length) return;
+    
+    const labels = investmentData.map(i => i.name);
+    const currentValues = investmentData.map(i => parseFloat(i.current_value) || 0);
+    const investedAmounts = investmentData.map(i => parseFloat(i.invested_amount) || 0);
+    
+    createBarChart('investmentChart', labels, [
+        {
+            label: 'Invested',
+            data: investedAmounts,
+            backgroundColor: chartColors.warning + '80'
+        },
+        {
+            label: 'Current Value',
+            data: currentValues,
+            backgroundColor: chartColors.success + '80'
+        }
+    ]);
 }

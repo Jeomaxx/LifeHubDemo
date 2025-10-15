@@ -37,9 +37,9 @@ $goalsByStatus = $db->fetchAll("
 ", [$userId]);
 
 $habitCompletion = $db->fetchAll("
-    SELECT h.name, COUNT(hc.id) as completions
+    SELECT h.name, COUNT(hl.id) as completions
     FROM habits h
-    LEFT JOIN habit_completions hc ON h.id = hc.habit_id
+    LEFT JOIN habit_logs hl ON h.id = hl.habit_id
     WHERE h.user_id = ?
     GROUP BY h.id, h.name
     ORDER BY completions DESC
@@ -73,6 +73,20 @@ $learningProgress = $db->fetchAll("
     WHERE user_id = ?
     ORDER BY progress DESC
     LIMIT 10
+", [$userId]);
+
+$healthData = $db->fetchAll("
+    SELECT date, weight, exercise_minutes, water_intake, sleep_hours
+    FROM health
+    WHERE user_id = ?
+    AND date >= CURRENT_DATE - INTERVAL '30 days'
+    ORDER BY date
+", [$userId]);
+
+$investmentPerformance = $db->fetchAll("
+    SELECT name, COALESCE(current_value, 0) as current_value, COALESCE(invested_amount, 0) as invested_amount
+    FROM investments
+    WHERE user_id = ?
 ", [$userId]);
 
 $pageTitle = 'Analytics Dashboard';
@@ -173,6 +187,44 @@ include 'includes/header.php';
             <canvas id="learningChart"></canvas>
         </div>
     </div>
+    
+    <div class="dashboard-card full-width">
+        <div class="card-header">
+            <h3><i class="fas fa-heartbeat"></i> Health Tracking (Last 30 Days)</h3>
+        </div>
+        <div class="card-body">
+            <canvas id="healthChart" height="80"></canvas>
+        </div>
+    </div>
+    
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h3><i class="fas fa-chart-pie"></i> Investment Performance</h3>
+        </div>
+        <div class="card-body">
+            <canvas id="investmentChart"></canvas>
+        </div>
+    </div>
+    
+    <div class="dashboard-card">
+        <div class="card-header">
+            <h3><i class="fas fa-download"></i> Data Management</h3>
+        </div>
+        <div class="card-body">
+            <div class="data-management">
+                <button class="btn btn-primary" onclick="exportData('json')">
+                    <i class="fas fa-file-export"></i> Export as JSON
+                </button>
+                <button class="btn btn-secondary" onclick="exportData('csv')">
+                    <i class="fas fa-file-csv"></i> Export as CSV
+                </button>
+                <button class="btn btn-info" onclick="document.getElementById('importFile').click()">
+                    <i class="fas fa-file-import"></i> Import Data
+                </button>
+                <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -226,6 +278,43 @@ const habitsData = <?php echo json_encode($habitCompletion); ?>;
 const assetsData = <?php echo json_encode($assetsByCategory); ?>;
 const moodData = <?php echo json_encode($journalMoods); ?>;
 const learningData = <?php echo json_encode($learningProgress); ?>;
+const healthData = <?php echo json_encode($healthData); ?>;
+const investmentData = <?php echo json_encode($investmentPerformance); ?>;
+
+function exportData(format) {
+    showToast('Preparing export...', 'info');
+    window.location.href = `/api/export.php?format=${format}`;
+}
+
+async function importData(input) {
+    const file = input.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+        try {
+            const data = JSON.parse(e.target.result);
+            
+            const response = await fetch('/api/import.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                showToast(result.message, 'success');
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                showToast(result.message, 'error');
+            }
+        } catch (error) {
+            showToast('Failed to import data', 'error');
+        }
+    };
+    reader.readAsText(file);
+}
 </script>
 
 <?php include 'includes/footer.php'; ?>

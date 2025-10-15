@@ -1,0 +1,27 @@
+# PHP
+vendor/
+composer.lock
+*.log
+
+# Uploads and backups
+uploads/backups/*.json
+uploads/backups/*.csv
+
+# Environment and config
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache
+cache/
+temp/

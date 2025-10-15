@@ -118,7 +118,7 @@ switch ($action) {
                         
                         if ($shouldTrigger) {
                             $db->execute(
-                                "UPDATE crypto_alerts SET is_triggered = TRUE, triggered_at = NOW() WHERE id = ?",
+                                "UPDATE crypto_alerts SET is_triggered = TRUE, triggered_at = CURRENT_TIMESTAMP WHERE id = ?",
                                 [$alert['id']]
                             );
                             
@@ -136,6 +136,154 @@ switch ($action) {
             echo json_encode(['success' => true, 'triggered' => $triggeredAlerts]);
         } catch (Exception $e) {
             echo json_encode(['success' => false, 'message' => 'Failed to check alerts']);
+        }
+        break;
+    
+    case 'import_csv':
+        if (!isset($_FILES['csv_file'])) {
+            echo json_encode(['success' => false, 'message' => 'No file uploaded']);
+            exit;
+        }
+        
+        try {
+            $file = $_FILES['csv_file'];
+            $handle = fopen($file['tmp_name'], 'r');
+            
+            if (!$handle) {
+                throw new Exception('Unable to read file');
+            }
+            
+            $header = fgetcsv($handle);
+            $imported = 0;
+            $errors = [];
+            
+            while (($row = fgetcsv($handle)) !== false) {
+                try {
+                    if (count($row) < 6) continue;
+                    
+                    $cryptoSymbol = strtolower(trim($row[0]));
+                    $cryptoName = trim($row[1]);
+                    $amount = floatval($row[2]);
+                    $purchasePrice = floatval($row[3]);
+                    $purchaseDate = $row[4];
+                    $notes = $row[5] ?? '';
+                    
+                    $apiUrl = "https://api.coingecko.com/api/v3/search?query=" . urlencode($cryptoSymbol);
+                    $response = @file_get_contents($apiUrl);
+                    
+                    if ($response) {
+                        $searchData = json_decode($response, true);
+                        if (!empty($searchData['coins'])) {
+                            $firstMatch = $searchData['coins'][0];
+                            $cryptoId = $firstMatch['id'];
+                            $cryptoName = $firstMatch['name'];
+                        } else {
+                            $cryptoId = $cryptoSymbol;
+                        }
+                    } else {
+                        $cryptoId = $cryptoSymbol;
+                    }
+                    
+                    if ($amount > 0 && $purchasePrice > 0) {
+                        $db->execute(
+                            "INSERT INTO crypto_portfolio (user_id, crypto_id, crypto_symbol, crypto_name, amount, purchase_price, purchase_date, notes) 
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                            [$userId, $cryptoId, $cryptoSymbol, $cryptoName, $amount, $purchasePrice, $purchaseDate, $notes]
+                        );
+                        $imported++;
+                    }
+                    
+                    usleep(200000);
+                } catch (Exception $e) {
+                    $errors[] = "Row " . ($imported + 1) . ": " . $e->getMessage();
+                }
+            }
+            
+            fclose($handle);
+            
+            echo json_encode([
+                'success' => true, 
+                'message' => "Successfully imported {$imported} transactions",
+                'imported' => $imported,
+                'errors' => $errors
+            ]);
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => 'Import failed: ' . $e->getMessage()]);
+        }
+        break;
+    
+    case 'get_history':
+        try {
+            $symbol = $_GET['symbol'] ?? '';
+            $days = intval($_GET['days'] ?? 30);
+            
+            $history = $db->fetchAll(
+                "SELECT DATE(timestamp) as date, AVG(price_usd) as price, AVG(change_24h) as change 
+                FROM crypto_price_history 
+                WHERE crypto_symbol = ? AND timestamp >= CURRENT_DATE - INTERVAL '{$days} days'
+                GROUP BY DATE(timestamp)
+                ORDER BY date ASC",
+                [$symbol]
+            );
+            
+            echo json_encode(['success' => true, 'data' => $history]);
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => 'Failed to get history']);
+        }
+        break;
+    
+    case 'get_portfolio_stats':
+        try {
+            $stats = [
+                'total_holdings' => 0,
+                'total_invested' => 0,
+                'total_pnl' => 0,
+                'pnl_percentage' => 0,
+                'best_performer' => null,
+                'worst_performer' => null,
+                'distribution' => []
+            ];
+            
+            $portfolio = $db->fetchAll(
+                "SELECT * FROM crypto_portfolio WHERE user_id = ?",
+                [$userId]
+            );
+            
+            echo json_encode(['success' => true, 'stats' => $stats, 'portfolio' => $portfolio]);
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => 'Failed to get stats']);
+        }
+        break;
+    
+    case 'export':
+        try {
+            $portfolio = $db->fetchAll(
+                "SELECT crypto_symbol, crypto_name, amount, purchase_price, purchase_date, notes 
+                FROM crypto_portfolio WHERE user_id = ? ORDER BY created_at DESC",
+                [$userId]
+            );
+            
+            header('Content-Type: text/csv');
+            header('Content-Disposition: attachment; filename="crypto_portfolio_' . date('Y-m-d') . '.csv"');
+            
+            $output = fopen('php://output', 'w');
+            fputcsv($output, ['Symbol', 'Name', 'Amount', 'Purchase Price', 'Purchase Date', 'Notes']);
+            
+            foreach ($portfolio as $item) {
+                fputcsv($output, [
+                    $item['crypto_symbol'],
+                    $item['crypto_name'],
+                    $item['amount'],
+                    $item['purchase_price'],
+                    $item['purchase_date'],
+                    $item['notes']
+                ]);
+            }
+            
+            fclose($output);
+            exit;
+        } catch (Exception $e) {
+            echo json_encode(['success' => false, 'message' => 'Export failed']);
         }
         break;
     

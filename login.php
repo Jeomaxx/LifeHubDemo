@@ -12,17 +12,25 @@ if ($auth->isLoggedIn()) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = sanitize($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
+    $csrfToken = $_POST['csrf_token'] ?? '';
     
-    $result = $auth->login($email, $password);
-    
-    if ($result['success']) {
-        redirect('/dashboard.php');
+    if (!$auth->validateCSRFToken($csrfToken)) {
+        $error = 'Invalid security token. Please try again.';
     } else {
-        $error = $result['message'];
+        $email = sanitize($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
+        
+        $result = $auth->login($email, $password);
+        
+        if ($result['success']) {
+            redirect('/dashboard.php');
+        } else {
+            $error = $result['message'];
+        }
     }
 }
+
+$csrfToken = $auth->generateCSRFToken();
 
 $pageTitle = 'Login';
 include 'includes/header.php';
@@ -52,6 +60,7 @@ include 'includes/header.php';
     <?php endif; ?>
     
     <form method="POST" class="auth-form">
+        <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
         <div class="form-group">
             <label for="email">
                 <i class="fas fa-envelope"></i>

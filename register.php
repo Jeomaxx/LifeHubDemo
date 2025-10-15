@@ -12,23 +12,31 @@ if ($auth->isLoggedIn()) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name = sanitize($_POST['name'] ?? '');
-    $email = sanitize($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
-    $confirmPassword = $_POST['confirm_password'] ?? '';
+    $csrfToken = $_POST['csrf_token'] ?? '';
     
-    if ($password !== $confirmPassword) {
-        $error = 'Passwords do not match';
+    if (!$auth->validateCSRFToken($csrfToken)) {
+        $error = 'Invalid security token. Please try again.';
     } else {
-        $result = $auth->register($name, $email, $password);
+        $name = sanitize($_POST['name'] ?? '');
+        $email = sanitize($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
+        $confirmPassword = $_POST['confirm_password'] ?? '';
         
-        if ($result['success']) {
-            $success = 'Registration successful! Please login.';
+        if ($password !== $confirmPassword) {
+            $error = 'Passwords do not match';
         } else {
-            $error = $result['message'];
+            $result = $auth->register($name, $email, $password);
+            
+            if ($result['success']) {
+                $success = 'Registration successful! Please login.';
+            } else {
+                $error = $result['message'];
+            }
         }
     }
 }
+
+$csrfToken = $auth->generateCSRFToken();
 
 $pageTitle = 'Register';
 include 'includes/header.php';
@@ -58,6 +66,7 @@ include 'includes/header.php';
     <?php endif; ?>
     
     <form method="POST" class="auth-form">
+        <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
         <div class="form-group">
             <label for="name">
                 <i class="fas fa-user"></i>

@@ -18,6 +18,14 @@ $db = Database::getInstance();
 $action = $_GET['action'] ?? '';
 $module = $_GET['module'] ?? '';
 
+if (in_array($action, ['create', 'update', 'delete'])) {
+    $csrfToken = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? $_POST['csrf_token'] ?? '';
+    
+    if (!$auth->validateCSRFToken($csrfToken)) {
+        jsonResponse(['success' => false, 'message' => 'Invalid security token'], 403);
+    }
+}
+
 $allowedModules = ['assets', 'bills', 'birthdays', 'finance', 'goals', 'habits', 'health', 'hobbies', 'investments', 'journal', 'learning', 'media', 'subscriptions', 'tasks'];
 
 if (!in_array($module, $allowedModules)) {

@@ -11,9 +11,17 @@ $userId = $auth->getUserId();
 $db = Database::getInstance();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_backup'])) {
-    $filename = generateBackup($userId);
-    $message = "Backup created successfully: $filename";
+    $csrfToken = $_POST['csrf_token'] ?? '';
+    
+    if (!$auth->validateCSRFToken($csrfToken)) {
+        $message = 'Invalid security token. Please try again.';
+    } else {
+        $filename = generateBackup($userId);
+        $message = "Backup created successfully: $filename";
+    }
 }
+
+$csrfToken = $auth->generateCSRFToken();
 
 $backups = $db->fetchAll("SELECT * FROM backups WHERE user_id = ? ORDER BY created_at DESC", [$userId]);
 
@@ -39,6 +47,7 @@ include 'includes/header.php';
     </div>
     <div class="card-body">
         <form method="POST">
+            <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
             <p>Create a complete backup of all your data. This will generate a JSON file containing all your information.</p>
             <button type="submit" name="create_backup" class="btn btn-primary">
                 <i class="fas fa-download"></i> Create Backup Now

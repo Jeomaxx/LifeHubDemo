@@ -124,7 +124,7 @@ class Auth {
     }
     
     public function generateCSRFToken() {
-        if (!isset($_SESSION['csrf_token'])) {
+        if (!isset($_SESSION['csrf_token']) || !isset($_SESSION['csrf_token_time']) || (time() - $_SESSION['csrf_token_time']) > CSRF_TOKEN_EXPIRY) {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
             $_SESSION['csrf_token_time'] = time();
         }
@@ -137,6 +137,8 @@ class Auth {
         }
         
         if (time() - $_SESSION['csrf_token_time'] > CSRF_TOKEN_EXPIRY) {
+            unset($_SESSION['csrf_token']);
+            unset($_SESSION['csrf_token_time']);
             return false;
         }
         

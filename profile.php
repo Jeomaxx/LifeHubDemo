@@ -14,34 +14,42 @@ $user = $db->fetchOne("SELECT * FROM users WHERE id = ?", [$userId]);
 $message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? '';
+    $csrfToken = $_POST['csrf_token'] ?? '';
     
-    if ($action === 'update_profile') {
-        $name = sanitize($_POST['name']);
-        $telegram_chat_id = sanitize($_POST['telegram_chat_id'] ?? '');
+    if (!$auth->validateCSRFToken($csrfToken)) {
+        $message = 'Invalid security token. Please try again.';
+    } else {
+        $action = $_POST['action'] ?? '';
         
-        $db->update('users', [
-            'name' => $name,
-            'telegram_chat_id' => $telegram_chat_id
-        ], 'id = :id', [':id' => $userId]);
-        
-        $_SESSION['user_name'] = $name;
-        $message = 'Profile updated successfully';
-    } elseif ($action === 'change_password') {
-        $current_password = $_POST['current_password'];
-        $new_password = $_POST['new_password'];
-        
-        if (password_verify($current_password, $user['password'])) {
-            $hashed = password_hash($new_password, PASSWORD_BCRYPT);
-            $db->update('users', ['password' => $hashed], 'id = :id', [':id' => $userId]);
-            $message = 'Password changed successfully';
-        } else {
-            $message = 'Current password is incorrect';
+        if ($action === 'update_profile') {
+            $name = sanitize($_POST['name']);
+            $telegram_chat_id = sanitize($_POST['telegram_chat_id'] ?? '');
+            
+            $db->update('users', [
+                'name' => $name,
+                'telegram_chat_id' => $telegram_chat_id
+            ], 'id = :id', [':id' => $userId]);
+            
+            $_SESSION['user_name'] = $name;
+            $message = 'Profile updated successfully';
+        } elseif ($action === 'change_password') {
+            $current_password = $_POST['current_password'];
+            $new_password = $_POST['new_password'];
+            
+            if (password_verify($current_password, $user['password'])) {
+                $hashed = password_hash($new_password, PASSWORD_BCRYPT);
+                $db->update('users', ['password' => $hashed], 'id = :id', [':id' => $userId]);
+                $message = 'Password changed successfully';
+            } else {
+                $message = 'Current password is incorrect';
+            }
         }
     }
     
     $user = $db->fetchOne("SELECT * FROM users WHERE id = ?", [$userId]);
 }
+
+$csrfToken = $auth->generateCSRFToken();
 
 $pageTitle = 'Profile Settings';
 include 'includes/header.php';
@@ -66,6 +74,7 @@ include 'includes/header.php';
         </div>
         <div class="card-body">
             <form method="POST">
+                <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
                 <input type="hidden" name="action" value="update_profile">
                 <div class="form-group">
                     <label>Name</label>
@@ -90,6 +99,7 @@ include 'includes/header.php';
         </div>
         <div class="card-body">
             <form method="POST">
+                <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
                 <input type="hidden" name="action" value="change_password">
                 <div class="form-group">
                     <label>Current Password</label>

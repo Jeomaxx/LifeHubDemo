@@ -139,11 +139,17 @@ function updateNotificationBadge(count) {
     }
 }
 
+function getCSRFToken() {
+    const metaTag = document.querySelector('meta[name="csrf-token"]');
+    return metaTag ? metaTag.getAttribute('content') : '';
+}
+
 async function apiRequest(url, method = 'GET', data = null) {
     const options = {
         method: method,
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': getCSRFToken()
         }
     };
     

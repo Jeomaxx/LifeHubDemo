@@ -1,5 +1,4 @@
     <?php if (isset($auth) && $auth->isLoggedIn()): ?>
-            </div>
         </main>
     </div>
     <?php else: ?>

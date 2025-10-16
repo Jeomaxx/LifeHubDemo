@@ -1,6 +1,6 @@
 # Life Atlas Organizer - Production Deployment Guide
 
-A comprehensive personal life management platform that centralizes 16+ core life modules into a single secure dashboard with cryptocurrency tracking, analytics, automated backups, and real-time notifications.
+A comprehensive personal life management platform that centralizes **25+ core life modules** into a single secure dashboard with cryptocurrency tracking, analytics, automated backups, real-time notifications, and **universal CSV/Excel import/export system**.
 
 ## 🚀 Quick Start
 
@@ -71,6 +71,31 @@ Create your admin account through the registration page, then promote to admin:
 ```sql
 UPDATE users SET is_admin = TRUE WHERE email = 'your-email@example.com';
 ```
+
+## 📤 Using Import/Export System
+
+### Exporting Data
+
+1. Navigate to **Settings → Import/Export** in the sidebar
+2. Select module to export (Gifts, Bills, Tasks, Finance, etc.)
+3. Click "Export to CSV" button
+4. Download the CSV file with your data
+
+### Importing Data
+
+1. Navigate to **Settings → Import/Export** in the sidebar
+2. Click "Download CSV Template" for the desired module
+3. Fill in the template with your data (follow column headers exactly)
+4. Select the module from Import dropdown
+5. Upload your CSV file
+6. Review validation results and confirm import
+
+**Pro Tips:**
+- Always use the provided templates to ensure correct format
+- Date format: YYYY-MM-DD (e.g., 2025-10-16)
+- Numeric fields: No currency symbols, just numbers
+- Required fields are marked in templates
+- Import validation shows errors before saving
 
 ## ⚙️ Cron Jobs Configuration
 
@@ -222,36 +247,67 @@ Backup Directory: 755 (writable)
 
 ## 🎨 Features Overview
 
-### Core Modules (16+)
+### Core Modules (25+)
 
 1. **Dashboard** - Centralized overview with statistics
-2. **Assets** - Item tracking with values and categories
-3. **Bills** - Recurring bill management
+2. **Assets & Home Management** - Item tracking with values, categories, warranty tracking
+3. **Bills** - Recurring bill management with budget impact analysis
 4. **Birthdays** - Never forget important dates
-5. **Finance** - Income/expense tracking with analytics
-6. **Goals** - Personal goal setting and tracking
+5. **Finance** - Income/expense tracking with advanced analytics
+6. **Goals** - Personal goal setting and tracking with milestones
 7. **Habits** - Daily habit tracking with streaks
-8. **Health** - Medical records, exercise, vitals
-9. **Hobbies** - Hobby time and resource management
-10. **Investments** - Portfolio tracking with ROI
-11. **Journal** - Daily journaling with mood tracking
-12. **Learning** - Course and book progress
-13. **Media** - Watchlist management
-14. **Subscriptions** - Subscription tracking with alerts
-15. **Tasks** - To-do list with priorities and due dates
-16. **Cryptocurrency** - Live price tracking, alerts, portfolio
+8. **Health Dashboard** - Medical records, comprehensive health metrics
+9. **Gym Routine Tracker** - Workout planning with progress analytics
+10. **Diet Planner** - Meal planning with nutrition tracking (calories, protein, carbs, fats)
+11. **Water Intake Tracker** - Daily hydration monitoring with reminders
+12. **Hobbies** - Hobby time and resource management
+13. **Investments** - Portfolio tracking with ROI analytics
+14. **Journal** - Daily journaling with mood tracking
+15. **Learning** - Course and book progress tracking
+16. **Media** - Watchlist management
+17. **Subscriptions** - Subscription tracking with alerts
+18. **Tasks** - Advanced to-do list with priorities and due dates
+19. **Cryptocurrency** - Live price tracking, alerts, portfolio
+20. **Gift Ideas** - Never miss a special occasion
+21. **Document Hub** - Secure document storage with categorization and search
+22. **AI Assistant** - Contextual suggestions and insights
+23. **Security Vault** - Encrypted password and sensitive information storage
+24. **Device Management** - Track all your devices and their details
+25. **Advanced Analytics** - Cross-module insights and visualizations
 
 ### Advanced Features
 
+- **Universal Import/Export System** - CSV/Excel support for 9+ modules with template generation
 - **Real-time Crypto Prices** - CoinGecko API integration
 - **Price Alerts** - Email & Telegram notifications
-- **Automated Backups** - Daily scheduled backups
-- **Multi-channel Notifications** - Email, Telegram, in-app
-- **CSV Import/Export** - Data portability
+- **Automated Backups** - Daily scheduled backups with encryption
+- **Multi-channel Notifications** - Email, Telegram, in-app smart reminders
+- **PWA Support** - Install as app with offline capabilities
 - **System Management** - Admin dashboard for monitoring
 - **Analytics & Charts** - Visual insights with Chart.js
 - **Dark/Light Theme** - User preference toggle
 - **Mobile Responsive** - Works on all devices
+- **Multi-language Support** - i18n system for internationalization
+
+### Import/Export Capabilities
+
+**Supported Modules (9+):**
+1. Gifts
+2. Bills
+3. Tasks
+4. Finance (Income/Expense)
+5. Goals
+6. Habits
+7. Gym Routines
+8. Diet Plans
+9. Water Intake
+
+**Features:**
+- Download CSV templates for each module
+- Bulk import hundreds of records
+- Export all your data anytime
+- Data portability and backup
+- Validation and error reporting
 
 ## 🔧 Troubleshooting
 

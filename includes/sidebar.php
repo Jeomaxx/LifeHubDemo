@@ -5,6 +5,7 @@ $userId = $auth->getUserId();
 
 $pendingTasks = $db->fetchColumn("SELECT COUNT(*) FROM tasks WHERE user_id = ? AND status != 'completed'", [$userId]) ?? 0;
 $pendingBills = $db->fetchColumn("SELECT COUNT(*) FROM bills WHERE user_id = ? AND payment_status = 'pending'", [$userId]) ?? 0;
+$overdueBills = $db->fetchColumn("SELECT COUNT(*) FROM bills WHERE user_id = ? AND payment_status != 'paid' AND due_date < CURRENT_DATE", [$userId]) ?? 0;
 $unreadNotifications = $db->fetchColumn("SELECT COUNT(*) FROM notifications WHERE user_id = ? AND is_read = FALSE", [$userId]) ?? 0;
 $activeGoals = $db->fetchColumn("SELECT COUNT(*) FROM goals WHERE user_id = ? AND status = 'active'", [$userId]) ?? 0;
 
@@ -79,6 +80,17 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     </a>
                     <a href="/crypto.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'crypto.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Cryptocurrency</span>
+                    </a>
+                    <a href="/bills.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'bills.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <div class="flex items-center gap-2">
+                            <span>Bills & Payments</span>
+                            <?php if ($overdueBills > 0): ?>
+                                <span class="bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full" title="Overdue bills"><?php echo $overdueBills; ?></span>
+                            <?php endif; ?>
+                        </div>
+                        <button class="quick-add-btn" data-module="bill" title="Add Bill">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
                     </a>
                 </div>
             </div>
@@ -173,21 +185,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <div class="flex items-center gap-3">
                         <i class="fas fa-calendar w-5"></i>
                         <span class="font-medium">Reminders & Events</span>
-                        <?php if ($pendingBills > 0): ?>
-                        <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full"><?php echo $pendingBills; ?></span>
-                        <?php endif; ?>
                     </div>
                     <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
                 </button>
                 <div class="category-items pl-11 mt-1 space-y-1 hidden">
                     <a href="/calendar.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'calendar.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Calendar View</span>
-                    </a>
-                    <a href="/bills.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'bills.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span>Bills & Payments</span>
-                        <button class="quick-add-btn" data-module="bill">
-                            <i class="fas fa-plus text-xs"></i>
-                        </button>
                     </a>
                     <a href="/birthdays.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'birthdays.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Birthdays</span>

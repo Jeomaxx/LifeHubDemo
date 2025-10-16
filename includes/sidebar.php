@@ -359,6 +359,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/profile.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'profile.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Profile</span>
                     </a>
+                    <a href="/import_export.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'import_export.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Import / Export</span>
+                    </a>
                     <a href="/backup.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'backup.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Backup & Restore</span>
                     </a>

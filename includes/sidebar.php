@@ -306,13 +306,15 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </a>
 
             <!-- Notifications -->
-            <a href="/logs.php" class="flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 <?php echo $currentPage == 'logs.php' ? 'bg-primary/10 text-primary' : 'text-gray-700 dark:text-gray-300'; ?>">
+            <a href="/notifications.php" class="flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 <?php echo $currentPage == 'notifications.php' ? 'bg-primary/10 text-primary' : 'text-gray-700 dark:text-gray-300'; ?>">
                 <div class="flex items-center gap-3">
                     <i class="fas fa-bell w-5"></i>
                     <span class="font-medium">Notifications</span>
                 </div>
                 <?php if ($unreadNotifications > 0): ?>
-                <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full"><?php echo $unreadNotifications; ?></span>
+                <span id="notificationCount" class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full"><?php echo $unreadNotifications; ?></span>
+                <?php else: ?>
+                <span id="notificationCount" class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full" style="display: none;">0</span>
                 <?php endif; ?>
             </a>
 

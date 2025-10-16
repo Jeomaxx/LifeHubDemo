@@ -1,9 +1,10 @@
-modules = ["php-8.2", "nodejs-20", "web", "postgresql-17"]
+modules = ["php-8.2", "nodejs-20", "web", "postgresql-16"]
 [agent]
 expertMode = true
 
 [nix]
 channel = "stable-25_05"
+packages = ["postgresql"]
 
 [workflows]
 runButton = "Project"
@@ -36,6 +37,10 @@ externalPort = 80
 [[ports]]
 localPort = 35607
 externalPort = 3000
+
+[[ports]]
+localPort = 37519
+externalPort = 3002
 
 [[ports]]
 localPort = 39777

@@ -66,7 +66,7 @@ include 'includes/header.php';
                 <i class="fas fa-envelope"></i>
                 Email Address
             </label>
-            <input type="email" id="email" name="email" required value="<?php echo $email ?? ''; ?>">
+            <input type="email" id="email" name="email" required autocomplete="email" value="<?php echo $email ?? ''; ?>">
         </div>
         
         <div class="form-group">
@@ -74,7 +74,7 @@ include 'includes/header.php';
                 <i class="fas fa-lock"></i>
                 Password
             </label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" required autocomplete="current-password">
         </div>
         
         <button type="submit" class="btn btn-primary btn-block">

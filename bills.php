@@ -301,7 +301,7 @@ include 'includes/header.php';
             </button>
         </div>
         <form id="billForm" class="p-6">
-            <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
+            <input type="hidden" name="csrf_token" value="<?php echo $auth->generateCSRFToken(); ?>">
             <input type="hidden" id="billId" name="id">
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -446,7 +446,7 @@ include 'includes/header.php';
                 <p class="text-xs text-gray-500 dark:text-gray-500"><?php echo t('Example: Electric Bill, 150.00, 2025-01-15, utilities, Power Company, true, monthly'); ?></p>
             </div>
             <form id="importBillForm" enctype="multipart/form-data">
-                <input type="hidden" name="csrf_token" value="<?php echo generateCsrfToken(); ?>">
+                <input type="hidden" name="csrf_token" value="<?php echo $auth->generateCSRFToken(); ?>">
                 <div class="mb-4">
                     <input type="file" name="csv_file" accept=".csv" required class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg">
                 </div>
@@ -654,7 +654,7 @@ async function markAsPaid(billId) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 bill_id: billId,
-                csrf_token: '<?php echo generateCsrfToken(); ?>'
+                csrf_token: '<?php echo $auth->generateCSRFToken(); ?>'
             })
         });
         
@@ -679,7 +679,7 @@ async function sendReminder(billId) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 bill_id: billId,
-                csrf_token: '<?php echo generateCsrfToken(); ?>'
+                csrf_token: '<?php echo $auth->generateCSRFToken(); ?>'
             })
         });
         
@@ -700,7 +700,7 @@ async function deleteBill(billId) {
     if (!confirm('<?php echo t('Are you sure you want to delete this bill?'); ?>')) return;
     
     try {
-        const response = await fetch(`/api/bills.php?id=${billId}&csrf_token=<?php echo generateCsrfToken(); ?>`, {
+        const response = await fetch(`/api/bills.php?id=${billId}&csrf_token=<?php echo $auth->generateCSRFToken(); ?>`, {
             method: 'DELETE'
         });
         
@@ -747,7 +747,7 @@ async function bulkMarkPaid() {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 bill_ids: billIds,
-                csrf_token: '<?php echo generateCsrfToken(); ?>'
+                csrf_token: '<?php echo $auth->generateCSRFToken(); ?>'
             })
         });
         

@@ -97,7 +97,8 @@ function initModals() {
     
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            const activeModal = document.querySelector('.modal.active');
+            // Check for both active and flex modal patterns
+            const activeModal = document.querySelector('.modal.active, .modal.flex');
             if (activeModal) {
                 closeModalWithAnimation(activeModal);
             }
@@ -135,15 +136,29 @@ function closeModal(modalId) {
 
 function closeModalWithAnimation(modal) {
     const modalContent = modal.querySelector('.modal-content');
+    
+    // Detect modal pattern: flex/hidden or active
+    const isFlexPattern = modal.classList.contains('flex');
+    
     if (modalContent) {
         modalContent.style.animation = 'scaleOut 0.3s ease-out';
         setTimeout(() => {
-            modal.classList.remove('active');
+            if (isFlexPattern) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            } else {
+                modal.classList.remove('active');
+            }
             document.body.style.overflow = '';
             modalContent.style.animation = '';
         }, 300);
     } else {
-        modal.classList.remove('active');
+        if (isFlexPattern) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        } else {
+            modal.classList.remove('active');
+        }
         document.body.style.overflow = '';
     }
 }

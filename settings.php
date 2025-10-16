@@ -4,7 +4,8 @@ require_once 'includes/db.php';
 require_once 'includes/auth.php';
 require_once 'includes/totp.php';
 
-requireLogin();
+$auth = new Auth();
+$auth->requireLogin();
 
 $db = Database::getInstance();
 $user_id = $_SESSION['user_id'];

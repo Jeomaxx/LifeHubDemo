@@ -3,9 +3,9 @@ require_once 'includes/config.php';
 require_once 'includes/auth.php';
 require_once 'includes/db.php';
 
-requireLogin();
-
 $auth = new Auth();
+$auth->requireLogin();
+
 $userId = $auth->getUserId();
 $db = Database::getInstance();
 

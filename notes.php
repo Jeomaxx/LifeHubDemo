@@ -3,7 +3,8 @@ require_once 'includes/config.php';
 require_once 'includes/db.php';
 require_once 'includes/auth.php';
 
-requireLogin();
+$auth = new Auth();
+$auth->requireLogin();
 
 $db = Database::getInstance();
 $user_id = $_SESSION['user_id'];

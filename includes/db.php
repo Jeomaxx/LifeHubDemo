@@ -52,6 +52,10 @@ class Database {
         return $stmt ? $stmt->fetch() : null;
     }
     
+    public function queryOne($sql, $params = []) {
+        return $this->fetchOne($sql, $params);
+    }
+    
     public function fetchColumn($sql, $params = []) {
         $stmt = $this->query($sql, $params);
         return $stmt ? $stmt->fetchColumn() : null;

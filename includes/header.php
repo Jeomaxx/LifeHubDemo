@@ -3,6 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/i18n.php';
+I18n::init($_SESSION['language'] ?? 'en');
 $auth = new Auth();
 $currentUser = $auth->getCurrentUser();
 ?>

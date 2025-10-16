@@ -103,4 +103,81 @@ include 'includes/header.php';
     </div>
 </div>
 
+<!-- Upload Document Modal -->
+<div id="uploadModal" class="modal hidden">
+    <div class="modal-content bg-white dark:bg-gray-800 rounded-lg w-full max-w-md mx-4">
+        <div class="modal-header p-6 border-b border-gray-200 dark:border-gray-700">
+            <h3 class="text-xl font-semibold">Upload Document</h3>
+            <button onclick="closeUploadModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
+        </div>
+        <form id="uploadForm" class="modal-body p-6" enctype="multipart/form-data">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Document Name</label>
+                <input type="text" id="docName" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Category</label>
+                <select id="docCategory" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    <option value="Personal">Personal</option>
+                    <option value="Financial">Financial</option>
+                    <option value="Legal">Legal</option>
+                    <option value="Medical">Medical</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">File</label>
+                <input type="file" id="docFile" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tags (comma separated)</label>
+                <input type="text" id="docTags" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="e.g. important, 2024, tax">
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
+                <textarea id="docDescription" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></textarea>
+            </div>
+            <div class="flex gap-3">
+                <button type="submit" class="flex-1 bg-primary hover:bg-blue-600 text-white px-6 py-2 rounded-lg">Upload</button>
+                <button type="button" onclick="closeUploadModal()" class="btn btn-secondary">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openUploadModal() {
+    document.getElementById('uploadModal').classList.remove('hidden');
+}
+
+function closeUploadModal() {
+    document.getElementById('uploadModal').classList.add('hidden');
+    document.getElementById('uploadForm').reset();
+}
+
+document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('document_name', document.getElementById('docName').value);
+    formData.append('category', document.getElementById('docCategory').value);
+    formData.append('file', document.getElementById('docFile').files[0]);
+    formData.append('tags', document.getElementById('docTags').value);
+    formData.append('description', document.getElementById('docDescription').value);
+    
+    const response = await fetch('/api/documents.php?action=create', {
+        method: 'POST',
+        headers: {'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content},
+        body: formData
+    });
+    
+    const result = await response.json();
+    if (result.success) {
+        alert('Document uploaded successfully');
+        window.location.reload();
+    } else {
+        alert('Error: ' + (result.message || 'Failed to upload document'));
+    }
+});
+</script>
+
 <?php include 'includes/footer.php'; ?>

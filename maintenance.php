@@ -81,4 +81,81 @@ include 'includes/header.php';
     </div>
 </div>
 
+<!-- Add Maintenance Modal -->
+<div id="maintenanceModal" class="modal hidden">
+    <div class="modal-content bg-white dark:bg-gray-800 rounded-lg w-full max-w-md mx-4">
+        <div class="modal-header p-6 border-b border-gray-200 dark:border-gray-700">
+            <h3 class="text-xl font-semibold">Log Maintenance</h3>
+            <button onclick="closeMaintenanceModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
+        </div>
+        <form id="maintenanceForm" class="modal-body p-6">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Asset</label>
+                <input type="text" id="maintenanceAsset" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Type</label>
+                <select id="maintenanceType" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+                    <option value="repair">Repair</option>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="inspection">Inspection</option>
+                    <option value="replacement">Replacement</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Date</label>
+                <input type="date" id="maintenanceDate" class="w-full px-4 py-2 border border-gray-300 rounded-lg" required>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Cost</label>
+                <input type="number" id="maintenanceCost" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
+                <textarea id="maintenanceDescription" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg"></textarea>
+            </div>
+            <div class="flex gap-3">
+                <button type="submit" class="flex-1 bg-primary hover:bg-blue-600 text-white px-6 py-2 rounded-lg">Save</button>
+                <button type="button" onclick="closeMaintenanceModal()" class="btn btn-secondary">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openMaintenanceModal() {
+    document.getElementById('maintenanceModal').classList.remove('hidden');
+}
+
+function closeMaintenanceModal() {
+    document.getElementById('maintenanceModal').classList.add('hidden');
+    document.getElementById('maintenanceForm').reset();
+}
+
+document.getElementById('maintenanceForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const data = {
+        asset_name: document.getElementById('maintenanceAsset').value,
+        maintenance_type: document.getElementById('maintenanceType').value,
+        maintenance_date: document.getElementById('maintenanceDate').value,
+        cost: parseFloat(document.getElementById('maintenanceCost').value) || 0,
+        description: document.getElementById('maintenanceDescription').value
+    };
+    
+    const response = await fetch('/api/home_assets.php?action=create_maintenance', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content},
+        body: JSON.stringify(data)
+    });
+    
+    const result = await response.json();
+    if (result.success) {
+        alert('Maintenance logged successfully');
+        window.location.reload();
+    } else {
+        alert('Error: ' + (result.message || 'Failed to log maintenance'));
+    }
+});
+</script>
+
 <?php include 'includes/footer.php'; ?>

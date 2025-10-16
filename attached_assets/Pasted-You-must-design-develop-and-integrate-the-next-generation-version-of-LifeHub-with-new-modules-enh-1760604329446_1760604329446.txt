@@ -1,0 +1,155 @@
+You must design, develop, and integrate the next-generation version of LifeHub with new modules, enhanced categorization, and a fully upgraded interface.
+Keep using the existing PHP + JS/Tailwind architecture and ensure full compatibility with Hostinger shared hosting and Cron jobs.
+
+🧱 New Modules & Major Features to Implement
+💰 Finances
+
+Accounts, Transactions, Budgets, Investments, and Bills
+
+Add a Bills system to manage recurring bills, due dates, payment status, categories, and attachments (PDF/image receipts).
+
+Each bill entry should support reminders (via email/telegram) and tagging.
+
+Add an Investment Dashboard (for stocks, crypto, savings tracking).
+
+Export/Import support for finances using Excel/CSV templates.
+
+🧠 Planner & Productivity
+
+Calendar, Tasks, Routines, Analytics
+
+Add a Gift Management System:
+
+Create and manage gift lists associated with specific people.
+
+Each gift entry can have a provider link, price, and notes.
+
+Option to tag events (birthdays, anniversaries, etc.).
+
+Add Advanced Analytics for task completion rates and productivity trends.
+
+Add Smart Suggestions (AI-based) for scheduling, reminders, and goals.
+
+❤️ Health
+
+Habits, Activity, and Wellbeing Tracker
+
+Add the following new features:
+
+Gym Routine Tracker — create, schedule, and log workout sessions with exercise types, duration, and goals.
+
+Diet Routine Planner — create daily meal plans, calorie goals, and nutrition logs.
+
+Water Drinking Reminder — automatic notifications based on user-set hydration goals.
+
+Integrate these with a Health Dashboard showing progress graphs.
+
+Add export/import for health data in Excel format.
+
+🏡 Home & Assets
+
+Smart Home & IoT Integration (optional API-based control for devices).
+
+Maintenance & Asset Management — track warranty dates, maintenance schedules, and asset costs.
+
+Smart reminders for upcoming maintenance or warranty expiration.
+
+📄 Documents
+
+Document & Knowledge Hub with:
+
+OCR support for scanned files.
+
+AI summarization of PDFs, bills, or notes.
+
+Tagging and quick search.
+
+Allow file upload and automatic categorization by document type.
+
+Add version history and encrypted cloud backup.
+
+💬 Assistant
+
+AI Personal Assistant (chat + voice)
+
+Contextual understanding: suggest actions based on user data.
+
+Optional Gemini / OpenAI API integration (via .env config).
+
+Daily summaries (“Good Morning” briefing).
+
+Voice recognition (if possible) and text-based fallback.
+
+🔒 Security & Privacy Center
+
+2FA & Session Management
+
+Encrypted Vault for sensitive notes/passwords (AES client-side).
+
+Data Export/Import with encryption.
+
+Device Management — list authorized devices/sessions.
+
+CSRF and SQL injection protection across all APIs.
+
+☁️ Cloud Sync & Backup
+
+PWA support (installable web app).
+
+Encrypted Sync across multiple devices.
+
+Offline Mode with local storage fallback.
+
+Export/import encrypted backups in .zip + JSON format.
+
+📈 Productivity & Analytics Center
+
+A global dashboard showing insights across all modules:
+
+Daily activity summary.
+
+Financial overview.
+
+Health stats.
+
+AI suggestions.
+
+Cross-module reports with charts and trend analysis.
+
+🧠 AI Integration
+
+Integrate an AI Core module for:
+
+Natural-language commands (“Show my expenses this week”).
+
+Summaries for documents and health logs.
+
+AI-based goal progress insights.
+
+Use local or cloud AI endpoints, configurable in /config/ai.php.
+
+🧩 Excel Import/Export for All Modules
+
+Implement a universal Excel/CSV import feature that allows the user to:
+
+Upload data to any module (Finances, Health, Tasks, etc.).
+
+Download a template Excel file per module to understand the correct format.
+
+Automatically validate imported data and show error logs.
+
+Generate visual progress once imported successfully.
+
+🎨 UI/UX Enhancements
+
+Improve dashboard visuals with smooth transitions and responsive design.
+
+Use Tailwind CSS with soft shadows, card layouts, and clean typography.
+
+Add light/dark mode toggle with remembered preferences.
+
+Implement collapsible sidebar categories and top search bar.
+
+Add notification center and quick-action shortcuts (e.g., “Add Expense”).
+
+Improve layout consistency, spacing, and iconography.

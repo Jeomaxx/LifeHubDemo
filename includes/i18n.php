@@ -39,3 +39,7 @@ class I18n {
 function __($key, $params = []) {
     return I18n::t($key, $params);
 }
+
+function t($key, $params = []) {
+    return I18n::t($key, $params);
+}

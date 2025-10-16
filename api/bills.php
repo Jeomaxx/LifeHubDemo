@@ -232,15 +232,19 @@ function getOverdueBills($userId, $db) {
 }
 
 function getUpcomingBills($userId, $db) {
-    $days = $_GET['days'] ?? 7;
+    $days = (int)($_GET['days'] ?? 7);
+    // Validate and cap the days value for safety
+    if ($days < 1) $days = 1;
+    if ($days > 365) $days = 365;
+    
     $bills = $db->fetchAll(
         "SELECT * FROM bills 
          WHERE user_id = ? 
          AND payment_status != 'paid' 
          AND due_date >= CURRENT_DATE 
-         AND due_date <= CURRENT_DATE + INTERVAL '$days days'
+         AND due_date <= CURRENT_DATE + INTERVAL '1 day' * ?
          ORDER BY due_date ASC",
-        [$userId]
+        [$userId, $days]
     );
     
     echo json_encode(['success' => true, 'bills' => $bills]);

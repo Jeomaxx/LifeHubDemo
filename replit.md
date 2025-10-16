@@ -1,7 +1,14 @@
 # Life Atlas Organizer
 
 ## Overview
-Life Atlas Organizer is a comprehensive personal life management web application designed to centralize over 16 core life modules into a single, secure dashboard. Built with PHP and PostgreSQL, it empowers users to efficiently manage finances, track assets, monitor health, maintain journals, organize tasks, and track cryptocurrency investments. The application prioritizes security, user experience, and data integrity, incorporating features like CSRF protection, automated backups, multi-channel notifications (email and Telegram), extensive analytics, and robust data export/import capabilities. Its purpose is to provide a holistic solution for personal organization and productivity.
+Life Atlas Organizer is a comprehensive personal life management web application designed to centralize over 25+ core life modules into a single, secure dashboard. Built with PHP and PostgreSQL, it empowers users to efficiently manage finances, track assets, monitor health, maintain journals, organize tasks, track cryptocurrency investments, and much more. The application prioritizes security, user experience, and data integrity, incorporating features like CSRF protection, automated backups, multi-channel notifications (email and Telegram), extensive analytics, AI assistant, and robust data export/import capabilities. Its purpose is to provide a holistic solution for personal organization and productivity.
+
+## Recent Changes (October 2025)
+- **Database Setup**: Migrated to Replit's managed PostgreSQL database with 40+ tables
+- **New Modules Added**: Gift Management, Gym Tracker, Diet Planner, Water Tracker, Home & Assets, Documents Hub, AI Assistant, Security Center
+- **Enhanced Tables**: Added categories, vendors, attachments to Bills; Added transaction tracking for Accounts
+- **Bug Fixes**: Fixed t() and requireLogin() function errors across all pages
+- **Performance**: Added indexes for all user-related queries across all tables
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.

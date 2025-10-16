@@ -215,15 +215,18 @@ switch ($action) {
     case 'get_history':
         try {
             $symbol = $_GET['symbol'] ?? '';
-            $days = intval($_GET['days'] ?? 30);
+            $days = (int)($_GET['days'] ?? 30);
+            // Validate and cap the days value for safety
+            if ($days < 1) $days = 1;
+            if ($days > 365) $days = 365;
             
             $history = $db->fetchAll(
                 "SELECT DATE(timestamp) as date, AVG(price_usd) as price, AVG(change_24h) as change 
                 FROM crypto_price_history 
-                WHERE crypto_symbol = ? AND timestamp >= CURRENT_DATE - INTERVAL '{$days} days'
+                WHERE crypto_symbol = ? AND timestamp >= CURRENT_DATE - INTERVAL '1 day' * ?
                 GROUP BY DATE(timestamp)
                 ORDER BY date ASC",
-                [$symbol]
+                [$symbol, $days]
             );
             
             echo json_encode(['success' => true, 'data' => $history]);

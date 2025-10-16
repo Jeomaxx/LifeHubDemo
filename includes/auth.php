@@ -146,7 +146,22 @@ class Auth {
     }
 }
 
-// Helper function
+// Helper functions
 function auth() {
     return new Auth();
+}
+
+function requireLogin() {
+    $auth = new Auth();
+    $auth->requireLogin();
+}
+
+function getUser() {
+    $auth = new Auth();
+    return $auth->getCurrentUser();
+}
+
+function getUserId() {
+    $auth = new Auth();
+    return $auth->getUserId();
 }

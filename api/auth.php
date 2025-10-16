@@ -7,13 +7,14 @@ require_once '../includes/totp.php';
 
 header('Content-Type: application/json');
 
-$action = $_GET['action'] ?? '';
+$input = json_decode(file_get_contents('php://input'), true);
+$action = $input['action'] ?? $_GET['action'] ?? '';
 $db = Database::getInstance();
 $auth = new Auth();
 $rateLimiter = new RateLimiter();
 
 switch ($action) {
-    case 'enable_2fa':
+    case 'generate_totp_secret':
         if (!$auth->isLoggedIn()) {
             echo json_encode(['success' => false, 'message' => 'Unauthorized']);
             exit;
@@ -24,59 +25,79 @@ switch ($action) {
         
         $secret = TOTP::generateSecret();
         $qrCodeUrl = TOTP::getQRCodeUrl($user['email'], $secret);
-        $backupCodes = TOTP::generateBackupCodes();
         
         $_SESSION['pending_totp_secret'] = $secret;
-        $_SESSION['pending_backup_codes'] = $backupCodes;
         
         echo json_encode([
             'success' => true,
             'secret' => $secret,
-            'qrCode' => $qrCodeUrl,
-            'backupCodes' => $backupCodes
+            'qr_code_url' => $qrCodeUrl
         ]);
         break;
     
-    case 'verify_2fa_setup':
+    case 'verify_totp_setup':
         if (!$auth->isLoggedIn()) {
             echo json_encode(['success' => false, 'message' => 'Unauthorized']);
             exit;
         }
         
-        $data = json_decode(file_get_contents('php://input'), true);
-        $code = $data['code'] ?? '';
+        $code = $input['code'] ?? '';
+        $secret = $input['secret'] ?? $_SESSION['pending_totp_secret'] ?? '';
         
-        if (!isset($_SESSION['pending_totp_secret'])) {
+        if (!$secret) {
             echo json_encode(['success' => false, 'message' => 'No pending 2FA setup']);
             exit;
         }
         
-        $secret = $_SESSION['pending_totp_secret'];
-        
         if (TOTP::verifyCode($secret, $code)) {
             $userId = $auth->getUserId();
-            $backupCodes = $_SESSION['pending_backup_codes'];
+            $backupCodes = TOTP::generateBackupCodes();
+            
+            $hashedBackupCodes = array_map(function($code) {
+                return password_hash($code, PASSWORD_BCRYPT);
+            }, $backupCodes);
             
             $db->execute(
-                "UPDATE users SET totp_secret = ?, totp_enabled = TRUE WHERE id = ?",
-                [$secret, $userId]
+                "UPDATE users SET totp_secret = ?, totp_enabled = TRUE, backup_codes = ? WHERE id = ?",
+                [$secret, json_encode($hashedBackupCodes), $userId]
             );
             
-            foreach ($backupCodes as $code) {
-                $db->execute(
-                    "INSERT INTO backup_codes (user_id, code) VALUES (?, ?)",
-                    [$userId, password_hash($code, PASSWORD_BCRYPT)]
-                );
-            }
-            
             unset($_SESSION['pending_totp_secret']);
-            unset($_SESSION['pending_backup_codes']);
             
-            echo json_encode(['success' => true, 'message' => '2FA enabled successfully']);
+            echo json_encode([
+                'success' => true,
+                'message' => '2FA enabled successfully',
+                'backup_codes' => $backupCodes
+            ]);
         } else {
             echo json_encode(['success' => false, 'message' => 'Invalid verification code']);
         }
         break;
+    
+    case 'regenerate_backup_codes':
+        if (!$auth->isLoggedIn()) {
+            echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+            exit;
+        }
+        
+        $userId = $auth->getUserId();
+        $backupCodes = TOTP::generateBackupCodes();
+        
+        $hashedBackupCodes = array_map(function($code) {
+            return password_hash($code, PASSWORD_BCRYPT);
+        }, $backupCodes);
+        
+        $db->execute(
+            "UPDATE users SET backup_codes = ? WHERE id = ?",
+            [json_encode($hashedBackupCodes), $userId]
+        );
+        
+        echo json_encode([
+            'success' => true,
+            'backup_codes' => $backupCodes
+        ]);
+        break;
+    
     
     case 'disable_2fa':
         if (!$auth->isLoggedIn()) {
@@ -84,19 +105,9 @@ switch ($action) {
             exit;
         }
         
-        $data = json_decode(file_get_contents('php://input'), true);
-        $password = $data['password'] ?? '';
-        
         $userId = $auth->getUserId();
-        $user = $db->fetchOne("SELECT password FROM users WHERE id = ?", [$userId]);
         
-        if (!password_verify($password, $user['password'])) {
-            echo json_encode(['success' => false, 'message' => 'Invalid password']);
-            exit;
-        }
-        
-        $db->execute("UPDATE users SET totp_secret = NULL, totp_enabled = FALSE WHERE id = ?", [$userId]);
-        $db->execute("DELETE FROM backup_codes WHERE user_id = ?", [$userId]);
+        $db->execute("UPDATE users SET totp_secret = NULL, totp_enabled = FALSE, backup_codes = NULL WHERE id = ?", [$userId]);
         
         echo json_encode(['success' => true, 'message' => '2FA disabled successfully']);
         break;
@@ -111,7 +122,7 @@ switch ($action) {
             exit;
         }
         
-        $user = $db->fetchOne("SELECT totp_secret FROM users WHERE id = ? AND totp_enabled = TRUE", [$userId]);
+        $user = $db->fetchOne("SELECT totp_secret, backup_codes FROM users WHERE id = ? AND totp_enabled = TRUE", [$userId]);
         
         if (!$user) {
             echo json_encode(['success' => false, 'message' => 'User not found or 2FA not enabled']);
@@ -123,15 +134,23 @@ switch ($action) {
             $_SESSION['2fa_verified_at'] = time();
             echo json_encode(['success' => true]);
         } else {
-            $backupCodes = $db->fetchAll("SELECT id, code FROM backup_codes WHERE user_id = ? AND used = FALSE", [$userId]);
-            
-            foreach ($backupCodes as $backupCode) {
-                if (password_verify($code, $backupCode['code'])) {
-                    $db->execute("UPDATE backup_codes SET used = TRUE WHERE id = ?", [$backupCode['id']]);
-                    $_SESSION['2fa_verified'] = true;
-                    $_SESSION['2fa_verified_at'] = time();
-                    echo json_encode(['success' => true, 'backup_used' => true]);
-                    exit;
+            $backupCodesJson = $user['backup_codes'];
+            if ($backupCodesJson) {
+                $backupCodes = json_decode($backupCodesJson, true);
+                if (is_array($backupCodes)) {
+                    foreach ($backupCodes as $index => $hashedCode) {
+                        if (password_verify($code, $hashedCode)) {
+                            unset($backupCodes[$index]);
+                            $db->execute(
+                                "UPDATE users SET backup_codes = ? WHERE id = ?",
+                                [json_encode(array_values($backupCodes)), $userId]
+                            );
+                            $_SESSION['2fa_verified'] = true;
+                            $_SESSION['2fa_verified_at'] = time();
+                            echo json_encode(['success' => true, 'backup_used' => true]);
+                            exit;
+                        }
+                    }
                 }
             }
             

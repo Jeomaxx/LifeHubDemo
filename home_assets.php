@@ -160,10 +160,38 @@ function closeAssetModal() {
     document.getElementById('assetForm').reset();
 }
 
-function saveAsset() {
-    // Implementation for saving asset
-    alert('Asset save functionality will be implemented with API');
-    closeAssetModal();
+async function saveAsset() {
+    const data = {
+        asset_name: document.getElementById('assetName').value,
+        category: document.getElementById('assetCategory').value,
+        purchase_date: document.getElementById('purchaseDate').value,
+        purchase_price: parseFloat(document.getElementById('purchaseValue').value) || null,
+        warranty_expiry: document.getElementById('warrantyExpiry').value || null,
+        status: document.getElementById('assetStatus').value,
+        notes: document.getElementById('assetNotes').value
+    };
+    
+    try {
+        const response = await fetch('/api/home_assets.php?action=create&type=assets', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        if (result.success) {
+            alert('Asset saved successfully!');
+            window.location.reload();
+        } else {
+            alert('Error: ' + (result.message || 'Failed to save asset'));
+        }
+    } catch (error) {
+        console.error('Error saving asset:', error);
+        alert('Failed to save asset. Please try again.');
+    }
 }
 </script>
 

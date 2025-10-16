@@ -71,14 +71,23 @@ function updatePortfolioPrices() {
 
 function updateAlertPrices() {
     document.querySelectorAll('#alerts-table tr[data-alert-id]').forEach(row => {
-        const symbol = row.getAttribute('data-crypto-symbol').toLowerCase();
+        const cryptoId = row.getAttribute('data-crypto-id');
+        const priceCell = row.querySelector('.alert-current-price');
         
-        Object.keys(cryptoPrices).forEach(cryptoId => {
-            if (cryptoId.includes(symbol) || symbol.includes(cryptoId)) {
-                const currentPrice = cryptoPrices[cryptoId].usd;
-                row.querySelector('.alert-current-price').textContent = '$' + currentPrice.toFixed(2);
-            }
-        });
+        if (!cryptoId) {
+            priceCell.textContent = 'Error: No ID';
+            priceCell.style.color = 'var(--danger)';
+            return;
+        }
+        
+        if (cryptoPrices[cryptoId]) {
+            const currentPrice = cryptoPrices[cryptoId].usd;
+            priceCell.textContent = '$' + currentPrice.toFixed(2);
+            priceCell.style.color = '';
+        } else {
+            priceCell.textContent = 'Price unavailable';
+            priceCell.style.color = 'var(--text-light)';
+        }
     });
 }
 

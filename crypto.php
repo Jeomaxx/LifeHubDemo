@@ -171,7 +171,7 @@ include 'includes/header.php';
                         </tr>
                         <?php else: ?>
                         <?php foreach ($alerts as $alert): ?>
-                        <tr data-alert-id="<?php echo $alert['id']; ?>" data-crypto-symbol="<?php echo $alert['crypto_symbol']; ?>">
+                        <tr data-alert-id="<?php echo $alert['id']; ?>" data-crypto-id="<?php echo $alert['crypto_id']; ?>" data-crypto-symbol="<?php echo $alert['crypto_symbol']; ?>">
                             <td><strong><?php echo strtoupper(sanitize($alert['crypto_symbol'])); ?></strong></td>
                             <td>
                                 <span class="badge badge-<?php echo $alert['alert_type'] === 'above' ? 'success' : 'danger'; ?>">

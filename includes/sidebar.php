@@ -387,7 +387,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <i class="fas fa-user text-primary"></i>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-gray-900 dark:text-white truncate"><?php echo sanitize($currentUser['name']); ?></p>
+                    <p class="text-sm font-medium text-gray-900 dark:text-white truncate"><?php echo sanitize($currentUser['name'] ?? 'User'); ?></p>
                 </div>
             </div>
             <div class="flex items-center gap-2">

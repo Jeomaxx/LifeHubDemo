@@ -36,10 +36,14 @@ class I18n {
     }
 }
 
-function __($key, $params = []) {
-    return I18n::t($key, $params);
+if (!function_exists('__')) {
+    function __($key, $params = []) {
+        return I18n::t($key, $params);
+    }
 }
 
-function t($key, $params = []) {
-    return I18n::t($key, $params);
+if (!function_exists('t')) {
+    function t($key, $params = []) {
+        return I18n::t($key, $params);
+    }
 }

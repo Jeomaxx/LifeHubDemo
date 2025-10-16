@@ -181,3 +181,15 @@ function getStats($userId) {
         'total_expense' => $db->fetchOne("SELECT COALESCE(SUM(amount), 0) as total FROM finance WHERE user_id = ? AND type = 'expense' AND EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURRENT_DATE)", [$userId])['total']
     ];
 }
+
+// Helper function to call Auth::requireLogin() for backwards compatibility
+if (!function_exists('requireLogin')) {
+    function requireLogin() {
+        global $auth;
+        if (!isset($auth)) {
+            require_once __DIR__ . '/auth.php';
+            $auth = new Auth();
+        }
+        $auth->requireLogin();
+    }
+}

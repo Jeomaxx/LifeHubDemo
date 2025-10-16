@@ -108,7 +108,13 @@ function initModals() {
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
-        modal.classList.add('active');
+        // Support both 'active' and 'flex/hidden' modal patterns
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        } else {
+            modal.classList.add('active');
+        }
         document.body.style.overflow = 'hidden';
     }
 }
@@ -116,7 +122,14 @@ function openModal(modalId) {
 function closeModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
-        closeModalWithAnimation(modal);
+        // Support both 'active' and 'flex/hidden' modal patterns
+        if (modal.classList.contains('flex')) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        } else {
+            closeModalWithAnimation(modal);
+        }
     }
 }
 

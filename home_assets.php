@@ -152,11 +152,15 @@ include 'includes/header.php';
 
 <script>
 function openAssetModal() {
-    document.getElementById('assetModal').classList.remove('hidden');
+    const modal = document.getElementById('assetModal');
+    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
 }
 
 function closeAssetModal() {
-    document.getElementById('assetModal').classList.add('hidden');
+    const modal = document.getElementById('assetModal');
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
     document.getElementById('assetForm').reset();
 }
 

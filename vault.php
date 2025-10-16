@@ -188,11 +188,15 @@ include 'includes/header.php';
 
 <script>
 function openVaultModal() {
-    document.getElementById('vaultModal').classList.remove('hidden');
+    const modal = document.getElementById('vaultModal');
+    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
 }
 
 function closeVaultModal() {
-    document.getElementById('vaultModal').classList.add('hidden');
+    const modal = document.getElementById('vaultModal');
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
     document.getElementById('vaultForm').reset();
 }
 

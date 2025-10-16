@@ -4,7 +4,7 @@ const COINGECKO_API = 'https://api.coingecko.com/api/v3';
 
 async function refreshPrices() {
     try {
-        showToast('Refreshing cryptocurrency prices...', 'info');
+        showToast('info', 'Refreshing', 'Refreshing cryptocurrency prices...');
         
         const symbols = [];
         document.querySelectorAll('[data-crypto-id]').forEach(el => {
@@ -23,10 +23,10 @@ async function refreshPrices() {
         updateAlertPrices();
         updateStats();
         
-        showToast('Prices updated successfully!', 'success');
+        showToast('success', 'Success', 'Prices updated successfully!');
     } catch (error) {
         console.error('Error fetching prices:', error);
-        showToast('Failed to fetch prices. Please try again.', 'error');
+        showToast('error', 'Error', 'Failed to fetch prices. Please try again.');
     }
 }
 
@@ -198,15 +198,15 @@ async function addCrypto(event) {
         const result = await response.json();
         
         if (result.success) {
-            showToast('Cryptocurrency added to portfolio!', 'success');
+            showToast('success', 'Success', 'Cryptocurrency added to portfolio!');
             closeModal('addCryptoModal');
             setTimeout(() => location.reload(), 1000);
         } else {
-            showToast(result.message || 'Failed to add cryptocurrency', 'error');
+            showToast('error', 'Error', result.message || 'Failed to add cryptocurrency');
         }
     } catch (error) {
         console.error('Error adding crypto:', error);
-        showToast('Failed to add cryptocurrency', 'error');
+        showToast('error', 'Error', 'Failed to add cryptocurrency');
     }
 }
 
@@ -226,15 +226,15 @@ async function createAlert(event) {
         const result = await response.json();
         
         if (result.success) {
-            showToast('Price alert created successfully!', 'success');
+            showToast('success', 'Success', 'Price alert created successfully!');
             closeModal('createAlertModal');
             setTimeout(() => location.reload(), 1000);
         } else {
-            showToast(result.message || 'Failed to create alert', 'error');
+            showToast('error', 'Error', result.message || 'Failed to create alert');
         }
     } catch (error) {
         console.error('Error creating alert:', error);
-        showToast('Failed to create alert', 'error');
+        showToast('error', 'Error', 'Failed to create alert');
     }
 }
 
@@ -249,14 +249,14 @@ async function deleteHolding(id) {
         const result = await response.json();
         
         if (result.success) {
-            showToast('Cryptocurrency removed from portfolio', 'success');
+            showToast('success', 'Success', 'Cryptocurrency removed from portfolio');
             setTimeout(() => location.reload(), 1000);
         } else {
-            showToast(result.message || 'Failed to remove cryptocurrency', 'error');
+            showToast('error', 'Error', result.message || 'Failed to remove cryptocurrency');
         }
     } catch (error) {
         console.error('Error deleting holding:', error);
-        showToast('Failed to remove cryptocurrency', 'error');
+        showToast('error', 'Error', 'Failed to remove cryptocurrency');
     }
 }
 
@@ -271,14 +271,14 @@ async function deleteAlert(id) {
         const result = await response.json();
         
         if (result.success) {
-            showToast('Alert deleted successfully', 'success');
+            showToast('success', 'Success', 'Alert deleted successfully');
             setTimeout(() => location.reload(), 1000);
         } else {
-            showToast(result.message || 'Failed to delete alert', 'error');
+            showToast('error', 'Error', result.message || 'Failed to delete alert');
         }
     } catch (error) {
         console.error('Error deleting alert:', error);
-        showToast('Failed to delete alert', 'error');
+        showToast('error', 'Error', 'Failed to delete alert');
     }
 }
 

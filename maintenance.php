@@ -124,11 +124,15 @@ include 'includes/header.php';
 
 <script>
 function openMaintenanceModal() {
-    document.getElementById('maintenanceModal').classList.remove('hidden');
+    const modal = document.getElementById('maintenanceModal');
+    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
 }
 
 function closeMaintenanceModal() {
-    document.getElementById('maintenanceModal').classList.add('hidden');
+    const modal = document.getElementById('maintenanceModal');
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
     document.getElementById('maintenanceForm').reset();
 }
 

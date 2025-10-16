@@ -147,11 +147,15 @@ include 'includes/header.php';
 
 <script>
 function openUploadModal() {
-    document.getElementById('uploadModal').classList.remove('hidden');
+    const modal = document.getElementById('uploadModal');
+    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
 }
 
 function closeUploadModal() {
-    document.getElementById('uploadModal').classList.add('hidden');
+    const modal = document.getElementById('uploadModal');
+    modal.classList.add('hidden');
+    modal.style.display = 'none';
     document.getElementById('uploadForm').reset();
 }
 

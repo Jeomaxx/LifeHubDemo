@@ -1,0 +1,66 @@
+
+ Fatal error: Uncaught Error: Call to undefined function sanitize() in /home/runner/workspace/includes/sidebar.php:387 Stack trace: #0 /home/runner/workspace/includes/header.php(37): require_once() #1 /home/runner/workspace/gym.php(13): include('/home/runner/wo...') #2 {main} thrown in /home/runner/workspace/includes/sidebar.php on line 387
+
+The requested resource /health_dashboard.php was not found on this server.
+
+The requested resource /home_assets.php was not found on this server.
+The requested resource /maintenance.php was not found on this server.
+The requested resource /documents.php was not found on this server.
+
+The requested resource /ai_assistant.php was not found on this server.
+The requested resource /ai_briefing.php was not found on this server.
+The requested resource /devices.php was not found on this server.
+The requested resource /vault.php was not found on this server.
+
+ Fatal error: Uncaught Error: Call to undefined function sanitize() in /home/runner/workspace/includes/sidebar.php:387 Stack trace: #0 /home/runner/workspace/includes/header.php(37): require_once() #1 /home/runner/workspace/water.php(13): include('/home/runner/wo...') #2 {main} thrown in /home/runner/workspace/includes/sidebar.php on line 387
+
+
+ Fatal error: Uncaught Error: Call to undefined function sanitize() in /home/runner/workspace/includes/sidebar.php:387 Stack trace: #0 /home/runner/workspace/includes/header.php(37): require_once() #1 /home/runner/workspace/diet.php(13): include('/home/runner/wo...') #2 {main} thrown in /home/runner/workspace/includes/sidebar.php on line 387
+
+
+
+Fatal error
+: Uncaught Error: Call to undefined function t() in /home/runner/workspace/bills.php:62 Stack trace: #0 {main} thrown in
+/home/runner/workspace/bills.php
+on line
+62
+
+pomodoro.php
+
+Fatal error: Uncaught Error: Call to undefined function requireLogin() in /home/runner/workspace/logs.php:6 Stack trace: #0 {main} thrown in /home/runner/workspace/logs.php on line 6
+
+ Fatal error: Uncaught Error: Call to undefined function requireLogin() in /home/runner/workspace/settings.php:7 Stack trace: #0 {main} thrown in /home/runner/workspace/settings.php on line 7
+
+Also the Notification option is not working so please check it 
+
+also please complete all the undeveloped features  features 
+
+Track investments with charts, analytics
+Track task completion, productivity trends
+Track health progress with graphs
+Sync data, backup files
+See productivity insights globally
+Import/export data for modules
+Improve look, feel, actions
+Improve search across all features
+Configure deployment for Hostinger
+Create guide for connecting features
+Test important features, endpoints
+Final testing, fixes, speed
+Create deployment and user guides
+
+Track tasks and user productivity
+Create health progress charts
+Import/Export data to files
+Complete gift management system
+Create advanced overview dashboard
+Create home and asset tracker
+Create document hub with AI
+Create AI helper with chat
+Create security center features
+Set up cloud saving system
+Improve finding things everywhere
+Improve look and feel
+Set up Hostinger with guide
+Create full checking system
+Final checks, speed, and guide

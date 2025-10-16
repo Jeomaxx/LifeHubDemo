@@ -1,0 +1,55 @@
+Context:
+We have an existing PHP-based LifeHub project (server rendered). Previously you analyzed the code and applied major features. Now implement a new patch that adds a fully-functional "Bills" module into Finances, and also add an expanded backlog of suggested features described below. The Bills module must be production-ready, secure, and integrated into the UI and scheduling system.
+
+Goals (Bills):
+1. Add DB schema for `bills` and `bill_payments` (migration scripts provided).
+2. Add REST API endpoints for CRUD and payment actions for bills.
+3. Add server-side and client-side validation; use prepared statements or ORM.
+4. Add a Bills page linked from the Finances sidebar (collapsible group). The Bills item must show an overdue badge count in the sidebar.
+5. Create UI elements: list view with filters, detail modal, quick-add, edit, mark-as-paid, send reminder, import CSV (resumable).
+6. Build a cron worker script `bill_worker.php` to:
+   - Send reminders (in-app, email, Telegram) based on `reminder_days_before`.
+   - Mark overdue bills and optionally escalate.
+   - For recurring bills, create the next occurrence when appropriate.
+7. CSV import must be resumable and report errors per-row.
+8. Integrate with Calendar export (ICS) and optionally Google Calendar.
+9. Document the API (OpenAPI or Postman) and add tests for critical endpoints.
+10. Provide README instructions for environment variables (SMTP, Telegram bot token, calendar), crontab entry, and migrations.
+
+Extra requested features (include as backlog and optionally scaffold):
+- Bill-to-budget linking and budget impact warnings.
+- Vendor management and subscription tracking.
+- Batch operations (mark multiple bills paid, export).
+- AI-assisted categorization of bills by payee/description.
+- Payment provider hooks (Stripe/PayPal) as optional connectors.
+
+UI & UX requirements:
+- Use Tailwind CSS or Bootstrap 5. Create accessible components (modals, toasts, tables).
+- Sidebar must be updated to include Bills under Finances with collapsible grouping and a search box.
+- Badges for overdue counts, and quick-add "+" actions available in the sidebar.
+- Provide both desktop and mobile responsive behaviors and support Arabic/English i18n.
+
+Security & Reliability:
+- Use prepared statements/ORM, CSRF tokens, rate-limiting for APIs, and server-side validation.
+- Cron worker must be idempotent and safe to run multiple times.
+- Ensure the CSV import resumes from last processed chunk.
+
+Deliverables:
+- Migration SQL files for bills and payments.
+- New/updated PHP controllers, API routes, and minimal service layer for bills.
+- Frontend pages/components for bills and additions to sidebar.
+- Cron script `bill_worker.php` and example crontab entry.
+- API docs and README with setup steps (SMTP, Telegram bot setup steps, env vars).
+- Unit/integration test examples for core flows: create bill, mark paid, reminder sending, import resume.
+- A short acceptance checklist and how to verify locally.
+
+Acceptance criteria to sign off:
+- Bills CRUD functions properly and syncs to the UI.
+- Reminders are scheduled and send via configured channels.
+- Recurring bills create subsequent occurrences correctly.
+- Import resumes after interruption and provides a per-row error report.
+- Sidebar shows Bills and overdue badge and quick-add action works.
+
+Notes:
+- If choosing a microframework helps speed (Slim/Lumen), you may scaffold but keep deployment on Hostinger-friendly architecture (vanilla PHP compatible).
+- Prefer minimal JS (Alpine.js acceptable). Use a chart lib for simple budget/bill visuals if needed.

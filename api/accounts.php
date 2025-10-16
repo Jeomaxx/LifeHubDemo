@@ -61,10 +61,10 @@ switch ($action) {
             'bank_name' => $data['bank_name'] ?? null,
             'account_number_last4' => $data['account_number_last4'] ?? null,
             'currency' => $data['currency'] ?? 'USD',
-            'current_balance' => $data['current_balance'] ?? 0,
-            'credit_limit' => $data['credit_limit'] ?? null,
-            'interest_rate' => $data['interest_rate'] ?? null,
-            'is_active' => $data['is_active'] ?? true,
+            'current_balance' => (float)($data['current_balance'] ?? 0),
+            'credit_limit' => isset($data['credit_limit']) ? (float)$data['credit_limit'] : null,
+            'interest_rate' => isset($data['interest_rate']) ? (float)$data['interest_rate'] : null,
+            'is_active' => (bool)($data['is_active'] ?? true),
             'notes' => $data['notes'] ?? null
         ];
         
@@ -135,16 +135,31 @@ switch ($action) {
         
         $data = json_decode(file_get_contents('php://input'), true);
         
+        // Validate required fields
+        if (empty($data['account_name']) || empty($data['account_type'])) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Account name and type are required']);
+            exit;
+        }
+        
+        // Validate account type
+        $validTypes = ['checking', 'savings', 'credit_card', 'investment', 'cash', 'other'];
+        if (!in_array($data['account_type'], $validTypes)) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'message' => 'Invalid account type']);
+            exit;
+        }
+        
         $updateData = [
             'account_name' => $data['account_name'],
             'account_type' => $data['account_type'],
             'bank_name' => $data['bank_name'] ?? null,
             'account_number_last4' => $data['account_number_last4'] ?? null,
             'currency' => $data['currency'] ?? 'USD',
-            'current_balance' => $data['current_balance'] ?? 0,
-            'credit_limit' => $data['credit_limit'] ?? null,
-            'interest_rate' => $data['interest_rate'] ?? null,
-            'is_active' => $data['is_active'] ?? true,
+            'current_balance' => (float)($data['current_balance'] ?? 0),
+            'credit_limit' => isset($data['credit_limit']) ? (float)$data['credit_limit'] : null,
+            'interest_rate' => isset($data['interest_rate']) ? (float)$data['interest_rate'] : null,
+            'is_active' => (bool)($data['is_active'] ?? true),
             'notes' => $data['notes'] ?? null,
             'updated_at' => date('Y-m-d H:i:s')
         ];

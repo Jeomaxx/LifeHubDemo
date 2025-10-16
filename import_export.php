@@ -41,6 +41,9 @@ include 'includes/header.php';
                         <option value="finance">Finance</option>
                         <option value="goals">Goals</option>
                         <option value="habits">Habits</option>
+                        <option value="gym">Gym Routines</option>
+                        <option value="diet">Diet Plans</option>
+                        <option value="water">Water Intake</option>
                     </select>
                 </div>
 

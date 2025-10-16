@@ -94,6 +94,38 @@ $modules = [
             'Category' => 'category'
         ],
         'numeric_fields' => ['target_count']
+    ],
+    'gym' => [
+        'table' => 'gym_routines',
+        'required_fields' => ['routine_name'],
+        'field_mapping' => [
+            'Routine Name' => 'routine_name',
+            'Description' => 'description'
+        ]
+    ],
+    'diet' => [
+        'table' => 'diet_plans',
+        'required_fields' => ['meal_name'],
+        'field_mapping' => [
+            'Meal Name' => 'meal_name',
+            'Meal Type' => 'meal_type',
+            'Calories' => 'calories',
+            'Protein (g)' => 'protein',
+            'Carbs (g)' => 'carbs',
+            'Fats (g)' => 'fats',
+            'Date (YYYY-MM-DD)' => 'date'
+        ],
+        'numeric_fields' => ['calories', 'protein', 'carbs', 'fats']
+    ],
+    'water' => [
+        'table' => 'water_intake',
+        'required_fields' => ['date', 'amount'],
+        'field_mapping' => [
+            'Date (YYYY-MM-DD)' => 'date',
+            'Amount (ml)' => 'amount',
+            'Daily Goal (ml)' => 'goal'
+        ],
+        'numeric_fields' => ['amount', 'goal']
     ]
 ];
 

@@ -206,9 +206,15 @@ function loadNotifications() {
         .then(data => {
             if (data.success) {
                 updateNotificationBadge(data.count);
+            } else if (data.message !== 'Unauthorized') {
+                // Log unexpected errors, but ignore expected unauthorized responses on login/register pages
+                console.error('Error loading notifications:', data.message);
             }
         })
-        .catch(error => console.error('Error loading notifications:', error));
+        .catch(error => {
+            // Log network/server errors
+            console.error('Network error loading notifications:', error);
+        });
 }
 
 function updateNotificationBadge(count) {

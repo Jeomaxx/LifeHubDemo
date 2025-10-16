@@ -69,16 +69,48 @@ class Database {
     }
     
     public function update($table, $data, $where, $whereParams = []) {
-        $setParts = [];
-        foreach (array_keys($data) as $key) {
-            $setParts[] = "$key = :$key";
+        // Detect placeholder type based on $whereParams structure
+        // Named placeholders: associative array (string keys)
+        // Positional placeholders: numeric array (sequential integer keys starting at 0)
+        $usesNamedPlaceholders = false;
+        if (is_array($whereParams) && !empty($whereParams)) {
+            // Check if associative array (has string keys or non-sequential numeric keys)
+            $usesNamedPlaceholders = array_keys($whereParams) !== range(0, count($whereParams) - 1);
         }
-        $setClause = implode(', ', $setParts);
         
-        $sql = "UPDATE $table SET $setClause WHERE $where";
-        $params = array_merge($data, $whereParams);
+        if ($usesNamedPlaceholders) {
+            // Build SET clause with named placeholders
+            $setParts = [];
+            $namedParams = [];
+            foreach ($data as $key => $value) {
+                $paramName = ":set_" . $key;
+                $setParts[] = "$key = $paramName";
+                $namedParams[$paramName] = $value;
+            }
+            $setClause = implode(', ', $setParts);
+            $sql = "UPDATE $table SET $setClause WHERE $where";
+            
+            // Normalize named parameters to include colons
+            $normalizedWhereParams = [];
+            foreach ($whereParams as $k => $v) {
+                $key = is_string($k) && strpos($k, ':') !== 0 ? ":$k" : $k;
+                $normalizedWhereParams[$key] = $v;
+            }
+            $allParams = array_merge($namedParams, $normalizedWhereParams);
+        } else {
+            // Build SET clause with positional placeholders
+            $setParts = [];
+            $params = [];
+            foreach ($data as $key => $value) {
+                $setParts[] = "$key = ?";
+                $params[] = $value;
+            }
+            $setClause = implode(', ', $setParts);
+            $sql = "UPDATE $table SET $setClause WHERE $where";
+            $allParams = array_merge($params, is_array($whereParams) ? $whereParams : [$whereParams]);
+        }
         
-        return $this->query($sql, $params) !== false;
+        return $this->query($sql, $allParams) !== false;
     }
     
     public function delete($table, $where, $params = []) {

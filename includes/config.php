@@ -10,7 +10,7 @@ define('DB_PASS', getenv('PGPASSWORD') ?: '');
 
 // Application Settings
 define('SITE_NAME', 'Life Atlas Organizer');
-define('SITE_URL', 'http://' . $_SERVER['HTTP_HOST']);
+define('SITE_URL', 'http://' . ($_SERVER['HTTP_HOST'] ?? 'localhost'));
 define('BASE_PATH', dirname(__DIR__));
 
 // Security

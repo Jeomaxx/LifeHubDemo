@@ -1,0 +1,96 @@
+Context:
+You have access to a PHP server-rendered application called "LifeHub" (files uploaded). The app currently includes server-side pages, a basic finance entry form, a goals page, and an "includes" folder with header/footer/config. The goal is to upgrade it into a full-featured personal life-management suite with a modern, responsive UI, robust backend practices, integrations, and a categorized sidebar that includes both existing and new features.
+
+Objectives:
+1. Analyze the current codebase thoroughly (file structure, DB schema, routes, forms). Produce a short analysis report listing:
+   - Main pages and modules found.
+   - Database tables and fields (or migration suggestions if missing).
+   - Security issues (unsanitized inputs, direct SQL usage, CSRF holes).
+   - Areas for immediate refactor.
+
+2. Implement new modules and features (start with essentials):
+   - Financial Engine: accounts, transactions, recurring transactions, CSV import.
+   - Budget planner (monthly budgets, category limits).
+   - Goal & Milestones module: tasks attachment, progress %, timeline.
+   - Tasks & Projects with Kanban board.
+   - Habit tracker + reminders.
+   - Journal/Mood tracker.
+   - Notifications: in-app + email + Telegram bot notifications.
+   - REST API endpoints for Transactions, Tasks, Goals, Users.
+   - Authentication: add OAuth (Google), sessions hardening, and RBAC.
+
+3. Sidebar categorization & UI:
+   - Replace current navigation with a left sidebar that has collapsible categories (see category list below).
+   - Sidebar must include both existing pages (e.g., Goals, Transaction forms) and new modules.
+   - Add a top search box in the sidebar for fuzzy search across modules.
+   - Each category item should support badges (e.g., unread alerts) and quick-add actions (e.g., "+ txn", "+ task").
+   - Create a responsive design that becomes a top nav on small screens and a pinned sidebar on desktop.
+   - Implement theming toggle (light/dark) and Arabic/English i18n support.
+
+4. UI/UX design specifics:
+   - Use a modern UI framework (Bootstrap 5 or Tailwind CSS). Ensure accessibility (ARIA attributes).
+   - Provide reusable UI components: Modal, Form inputs with validation hints, Toast notifications, Table with server-side pagination, Tag input.
+   - Dashboard with charts (spending by category, goal progress) using a JS chart library.
+
+5. Reliability & Ops:
+   - Implement job queue for background tasks (notifications, CSV import), and ensure resumable processing if import or scanning stops mid-way.
+   - Provide DB migration scripts and sample seed data.
+   - Add health endpoints and a diagnostics page for cron jobs/queues.
+   - Provide backup & restore scripts (DB dump and file archive).
+
+6. Security & QA:
+   - Use prepared statements or an ORM for DB access; sanitize all inputs; add CSRF tokens to forms.
+   - Add rate-limiting for sensitive endpoints, password rules, and brute-force protection.
+   - Create unit tests and integration test examples.
+   - Provide a checklist of manual security tests to run post-deploy.
+
+Deliverables (what to commit to repository):
+- Updated codebase with new modules and refactors.
+- New frontend pages/components + updated header/footer.
+- Sidebar implementation integrating existing + new modules.
+- API documentation (OpenAPI/Swagger or Postman collection).
+- Setup guide (README) that explains: environment variables, DB migrations, how to set up cron jobs on Replit/Hostinger, Telegram bot setup steps, and instructions to deploy as PWA.
+- DB migration scripts and sample seed data.
+- Automated tests + instructions to run tests.
+- A short video/GIF walkthrough (optional) showing sidebar usage, creating a transaction, creating a goal, and toggling theme.
+
+Acceptance criteria:
+- The sidebar shows all categories and items (collapsible) and contains quick-add actions.
+- Existing pages (goals.php and transaction forms) continue to work or have migrated equivalents.
+- Telegram alert and Email alert can be configured from UI (with environment variable instructions).
+- CSV import resumes if interrupted and reports which rows failed.
+- Basic security checklist items are implemented and documented.
+
+Technical notes for implementation:
+- Keep PHP backend but modularize into controllers/models (or add a lightweight framework like Slim/Laravel Lumen if appropriate).
+- Use PDO with prepared statements or Eloquent ORM.
+- Use Tailwind CSS or Bootstrap 5 and keep JS minimal (Alpine.js or lightweight framework OK) for performance.
+- Make sure all forms validate server-side and client-side.
+- Ensure i18n strings externalized for Arabic and English.
+
+UI Example for Sidebar (skeleton):
+- Search bar
+- Dashboard
+- Finances
+  - Accounts
+  - Transactions (Income, Expenses)
+  - Budgets
+  - Import/Export
+- Tasks & Projects
+- Goals & Habits
+- Journal & Mood
+- Calendar & Sync
+- Notifications
+- Integrations
+- Admin (visible to admins)
+
+Iteration policy:
+- Start by producing the analysis report and a proposed DB schema + sidebar wireframe (HTML mockup). Wait for review only if I request it — otherwise proceed implementing features in the prioritized order.
+- Provide small incremental PRs with changelogs and testing instructions.
+
+Extra:
+- Where UI decisions are ambiguous, choose defaults that prioritize clarity and speed of development.
+- Keep performance in mind (paginate large lists, lazy-load charts).
+- Ensure the system can be set up on low-end shared hosting (Hostinger) as well as Replit with instructions for both.
+
+End of prompt.

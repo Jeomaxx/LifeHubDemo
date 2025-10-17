@@ -136,30 +136,30 @@ include 'includes/header.php';
                 <div class="score-item">
                     <span>Financial</span>
                     <div class="score-bar">
-                        <div class="score-fill bg-blue" style="width: <?php echo $financialScore; ?>%"></div>
+                        <div class="score-fill bg-blue" style="width: <?php echo $financialScore . '%'; ?>"></div>
                     </div>
-                    <span><?php echo number_format($financialScore, 0); ?>%</span>
+                    <span><?php echo number_format($financialScore, 0) . '%'; ?></span>
                 </div>
                 <div class="score-item">
                     <span>Productivity</span>
                     <div class="score-bar">
-                        <div class="score-fill bg-green" style="width: <?php echo $productivityScore; ?>%"></div>
+                        <div class="score-fill bg-green" style="width: <?php echo $productivityScore . '%'; ?>"></div>
                     </div>
-                    <span><?php echo number_format($productivityScore, 0); ?>%</span>
+                    <span><?php echo number_format($productivityScore, 0) . '%'; ?></span>
                 </div>
                 <div class="score-item">
                     <span>Wellness</span>
                     <div class="score-bar">
-                        <div class="score-fill bg-purple" style="width: <?php echo $wellnessScore; %>%"></div>
+                        <div class="score-fill bg-purple" style="width: <?php echo $wellnessScore . '%'; ?>"></div>
                     </div>
-                    <span><?php echo number_format($wellnessScore, 0); ?>%</span>
+                    <span><?php echo number_format($wellnessScore, 0) . '%'; ?></span>
                 </div>
                 <div class="score-item">
                     <span>Learning</span>
                     <div class="score-bar">
-                        <div class="score-fill bg-orange" style="width: <?php echo $learningScore; ?>%"></div>
+                        <div class="score-fill bg-orange" style="width: <?php echo $learningScore . '%'; ?>"></div>
                     </div>
-                    <span><?php echo number_format($learningScore, 0); ?>%</span>
+                    <span><?php echo number_format($learningScore, 0) . '%'; ?></span>
                 </div>
             </div>
         </div>

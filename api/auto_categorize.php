@@ -34,21 +34,24 @@ if ($method === 'POST') {
 }
 
 function categorizeExpense($description, $userId, $db) {
-    // Standard expense categories with keywords
+    // Enhanced expense categories with comprehensive keywords
     $categories = [
-        'Groceries' => ['grocery', 'supermarket', 'food', 'walmart', 'costco', 'whole foods', 'trader joe', 'safeway', 'kroger', 'albertsons', 'market'],
-        'Dining & Restaurants' => ['restaurant', 'cafe', 'coffee', 'starbucks', 'mcdonald', 'pizza', 'burger', 'dining', 'bar', 'pub', 'lunch', 'dinner', 'breakfast', 'takeout', 'delivery', 'uber eats', 'doordash', 'grubhub'],
-        'Transportation' => ['gas', 'fuel', 'uber', 'lyft', 'taxi', 'parking', 'toll', 'bus', 'train', 'subway', 'metro', 'car', 'auto', 'vehicle', 'transport'],
-        'Utilities' => ['electric', 'water', 'gas bill', 'internet', 'phone', 'mobile', 'cable', 'utility', 'verizon', 'at&t', 't-mobile', 'comcast', 'spectrum'],
-        'Shopping' => ['amazon', 'ebay', 'target', 'walmart', 'clothing', 'shoes', 'apparel', 'store', 'shop', 'retail', 'purchase', 'buy'],
-        'Entertainment' => ['movie', 'cinema', 'theater', 'netflix', 'spotify', 'hulu', 'disney', 'gaming', 'game', 'concert', 'event', 'ticket', 'entertainment'],
-        'Healthcare' => ['pharmacy', 'doctor', 'hospital', 'clinic', 'medical', 'health', 'dentist', 'vision', 'cvs', 'walgreens', 'prescription', 'medicine'],
-        'Housing' => ['rent', 'mortgage', 'apartment', 'condo', 'property', 'house', 'hoa', 'housing'],
-        'Insurance' => ['insurance', 'policy', 'premium', 'coverage', 'geico', 'state farm', 'allstate'],
-        'Education' => ['school', 'tuition', 'course', 'education', 'training', 'book', 'learning', 'university', 'college'],
-        'Personal Care' => ['salon', 'haircut', 'spa', 'gym', 'fitness', 'personal care', 'beauty', 'cosmetics'],
-        'Subscriptions' => ['subscription', 'membership', 'annual fee', 'monthly fee', 'recurring'],
-        'Travel' => ['hotel', 'flight', 'airbnb', 'booking', 'travel', 'vacation', 'trip', 'airline'],
+        'Groceries' => ['grocery', 'supermarket', 'food', 'walmart', 'costco', 'whole foods', 'trader joe', 'safeway', 'kroger', 'albertsons', 'market', 'aldi', 'lidl', 'wegmans', 'publix', 'fresh', 'organic', 'produce'],
+        'Dining & Restaurants' => ['restaurant', 'cafe', 'coffee', 'starbucks', 'mcdonald', 'pizza', 'burger', 'dining', 'bar', 'pub', 'lunch', 'dinner', 'breakfast', 'takeout', 'delivery', 'uber eats', 'doordash', 'grubhub', 'chipotle', 'subway', 'kfc', 'taco bell', 'wendy', 'chick-fil-a', 'panera', 'dunkin', 'brunch', 'dine'],
+        'Transportation' => ['gas', 'fuel', 'uber', 'lyft', 'taxi', 'parking', 'toll', 'bus', 'train', 'subway', 'metro', 'car', 'auto', 'vehicle', 'transport', 'shell', 'chevron', 'exxon', 'bp', 'mobil', 'gas station', 'ride share', 'carpool'],
+        'Utilities' => ['electric', 'electricity', 'water', 'gas bill', 'internet', 'phone', 'mobile', 'cable', 'utility', 'verizon', 'at&t', 't-mobile', 'comcast', 'spectrum', 'pge', 'power', 'energy', 'wifi', 'broadband', 'cellular'],
+        'Shopping' => ['amazon', 'ebay', 'target', 'walmart', 'clothing', 'shoes', 'apparel', 'store', 'shop', 'retail', 'purchase', 'buy', 'nike', 'adidas', 'zara', 'h&m', 'gap', 'online shopping', 'electronics', 'best buy', 'apple store'],
+        'Entertainment' => ['movie', 'cinema', 'theater', 'netflix', 'spotify', 'hulu', 'disney', 'gaming', 'game', 'concert', 'event', 'ticket', 'entertainment', 'youtube', 'amazon prime', 'hbo', 'apple music', 'steam', 'playstation', 'xbox', 'nintendo'],
+        'Healthcare' => ['pharmacy', 'doctor', 'hospital', 'clinic', 'medical', 'health', 'dentist', 'vision', 'cvs', 'walgreens', 'prescription', 'medicine', 'rite aid', 'wellness', 'therapy', 'checkup', 'copay', 'lab', 'x-ray'],
+        'Housing' => ['rent', 'mortgage', 'apartment', 'condo', 'property', 'house', 'hoa', 'housing', 'lease', 'landlord', 'home repair', 'maintenance'],
+        'Insurance' => ['insurance', 'policy', 'premium', 'coverage', 'geico', 'state farm', 'allstate', 'progressive', 'liberty mutual', 'farmers', 'usaa'],
+        'Education' => ['school', 'tuition', 'course', 'education', 'training', 'book', 'learning', 'university', 'college', 'udemy', 'coursera', 'skillshare', 'textbook', 'supplies', 'student'],
+        'Personal Care' => ['salon', 'haircut', 'spa', 'gym', 'fitness', 'personal care', 'beauty', 'cosmetics', 'barber', 'manicure', 'pedicure', 'massage', 'yoga', 'pilates', 'sephora', 'ulta'],
+        'Subscriptions' => ['subscription', 'membership', 'annual fee', 'monthly fee', 'recurring', 'prime', 'plus', 'premium', 'pro'],
+        'Travel' => ['hotel', 'flight', 'airbnb', 'booking', 'travel', 'vacation', 'trip', 'airline', 'expedia', 'kayak', 'united', 'delta', 'southwest', 'american airlines', 'marriott', 'hilton', 'rental car'],
+        'Pets' => ['pet', 'vet', 'veterinary', 'petco', 'petsmart', 'dog', 'cat', 'animal', 'pet food', 'grooming'],
+        'Gifts & Donations' => ['gift', 'donation', 'charity', 'present', 'donate', 'contribution', 'nonprofit'],
+        'Bills & Fees' => ['bill', 'fee', 'charge', 'payment', 'late fee', 'service charge', 'overdraft'],
         'Other' => []
     ];
     

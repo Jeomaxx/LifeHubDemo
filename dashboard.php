@@ -30,62 +30,62 @@ include 'includes/header.php';
 </div>
 
 <div class="stats-grid stagger-animation">
-    <div class="stat-card">
+    <div class="stat-card hover-lift icon-hover">
         <div class="stat-icon bg-blue">
             <i class="fas fa-box"></i>
         </div>
         <div class="stat-info">
-            <h3><?php echo $stats['assets']; ?></h3>
+            <h3 class="counter"><?php echo $stats['assets']; ?></h3>
             <p>Total Assets</p>
         </div>
     </div>
     
-    <div class="stat-card">
+    <div class="stat-card hover-lift icon-hover">
         <div class="stat-icon bg-red">
             <i class="fas fa-file-invoice-dollar"></i>
         </div>
         <div class="stat-info">
-            <h3><?php echo $stats['bills']; ?></h3>
+            <h3 class="counter"><?php echo $stats['bills']; ?></h3>
             <p>Pending Bills</p>
         </div>
     </div>
     
-    <div class="stat-card">
+    <div class="stat-card hover-lift icon-hover">
         <div class="stat-icon bg-green">
             <i class="fas fa-bullseye"></i>
         </div>
         <div class="stat-info">
-            <h3><?php echo $stats['goals']; ?></h3>
+            <h3 class="counter"><?php echo $stats['goals']; ?></h3>
             <p>Active Goals</p>
         </div>
     </div>
     
-    <div class="stat-card">
+    <div class="stat-card hover-lift icon-hover">
         <div class="stat-icon bg-purple">
             <i class="fas fa-tasks"></i>
         </div>
         <div class="stat-info">
-            <h3><?php echo $stats['tasks']; ?></h3>
+            <h3 class="counter"><?php echo $stats['tasks']; ?></h3>
             <p>Pending Tasks</p>
         </div>
     </div>
     
-    <div class="stat-card">
+    <div class="stat-card hover-lift icon-hover">
         <div class="stat-icon bg-orange">
             <i class="fas fa-check-circle"></i>
         </div>
         <div class="stat-info">
-            <h3><?php echo $stats['habits']; ?></h3>
+            <h3 class="counter"><?php echo $stats['habits']; ?></h3>
             <p>Active Habits</p>
         </div>
     </div>
     
-    <div class="stat-card">
+    <div class="stat-card hover-lift icon-hover shine-effect">
         <div class="stat-icon bg-teal">
             <i class="fas fa-dollar-sign"></i>
         </div>
         <div class="stat-info">
-            <h3><?php echo formatCurrency($stats['total_income'] - $stats['total_expense']); ?></h3>
+            <h3 class="counter"><?php echo formatCurrency($stats['total_income'] - $stats['total_expense']); ?></h3>
             <p>Net Balance (This Month)</p>
         </div>
     </div>

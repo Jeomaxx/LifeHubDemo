@@ -179,7 +179,7 @@ function renderInvestmentChart() {
     
     const labels = investmentData.map(i => i.name);
     const currentValues = investmentData.map(i => parseFloat(i.current_value) || 0);
-    const investedAmounts = investmentData.map(i => parseFloat(i.invested_amount) || 0);
+    const investedAmounts = investmentData.map(i => parseFloat(i.amount_invested) || 0);
     
     createBarChart('investmentChart', labels, [
         {

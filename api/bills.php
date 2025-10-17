@@ -73,7 +73,11 @@ function handleGet($action, $userId, $db) {
             getOverdueBills($userId, $db);
             break;
         case 'upcoming':
-            getUpcomingBills($userId, $db);
+            $days = (int)($_GET['days'] ?? 7);
+            if ($days < 1) $days = 1;
+            if ($days > 365) $days = 365;
+            $bills = getUpcomingBills($userId, $days);
+            echo json_encode(['success' => true, 'bills' => $bills]);
             break;
         case 'payment-history':
             getPaymentHistory($userId, $db);
@@ -231,24 +235,6 @@ function getOverdueBills($userId, $db) {
     echo json_encode(['success' => true, 'bills' => $bills]);
 }
 
-function getUpcomingBills($userId, $db) {
-    $days = (int)($_GET['days'] ?? 7);
-    // Validate and cap the days value for safety
-    if ($days < 1) $days = 1;
-    if ($days > 365) $days = 365;
-    
-    $bills = $db->fetchAll(
-        "SELECT * FROM bills 
-         WHERE user_id = ? 
-         AND payment_status != 'paid' 
-         AND due_date >= CURRENT_DATE 
-         AND due_date <= CURRENT_DATE + INTERVAL '1 day' * ?
-         ORDER BY due_date ASC",
-        [$userId, $days]
-    );
-    
-    echo json_encode(['success' => true, 'bills' => $bills]);
-}
 
 function getPaymentHistory($userId, $db) {
     $billId = $_GET['bill_id'] ?? null;

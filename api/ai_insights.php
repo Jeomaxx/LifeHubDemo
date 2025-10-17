@@ -20,7 +20,7 @@ switch ($action) {
         try {
             $insights = [];
             
-            $latestForecast = $db->fetch(
+            $latestForecast = $db->fetchOne(
                 "SELECT * FROM financial_forecasts WHERE user_id = ? ORDER BY created_at DESC LIMIT 1",
                 [$userId]
             );

@@ -23,10 +23,10 @@ $financeByMonth = $db->fetchAll("
 ", [$userId]);
 
 $billsByStatus = $db->fetchAll("
-    SELECT status, COUNT(*) as count 
+    SELECT payment_status as status, COUNT(*) as count 
     FROM bills 
     WHERE user_id = ? 
-    GROUP BY status
+    GROUP BY payment_status
 ", [$userId]);
 
 $goalsByStatus = $db->fetchAll("
@@ -84,7 +84,7 @@ $healthData = $db->fetchAll("
 ", [$userId]);
 
 $investmentPerformance = $db->fetchAll("
-    SELECT name, COALESCE(current_value, 0) as current_value, COALESCE(invested_amount, 0) as invested_amount
+    SELECT name, COALESCE(current_value, 0) as current_value, COALESCE(amount_invested, 0) as amount_invested
     FROM investments
     WHERE user_id = ?
 ", [$userId]);

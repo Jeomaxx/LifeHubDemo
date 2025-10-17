@@ -120,6 +120,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/kanban.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'kanban.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Kanban Board</span>
                     </a>
+                    <a href="/career_hub.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'career_hub.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span><i class="fas fa-briefcase"></i> Career Hub</span>
+                    </a>
                     <a href="/pomodoro.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'pomodoro.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Pomodoro Timer</span>
                     </a>
@@ -188,6 +191,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/water.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'water.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Water Tracker</span>
                     </a>
+                    <a href="/mindfulness_sleep.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'mindfulness_sleep.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span><i class="fas fa-spa"></i> Mindfulness & Sleep</span>
+                    </a>
                     <a href="/health.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'health.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Health Records</span>
                     </a>
@@ -209,6 +215,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     </a>
                     <a href="/learning.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'learning.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Learning</span>
+                    </a>
+                    <a href="/learning_center.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'learning_center.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span><i class="fas fa-graduation-cap"></i> Skill Growth</span>
                     </a>
                     <a href="/hobbies.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'hobbies.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Hobbies</span>
@@ -303,6 +312,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/ai_briefing.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'ai_briefing.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Daily Briefing</span>
                     </a>
+                    <a href="/life_advisor.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'life_advisor.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span><i class="fas fa-magic"></i> Life Advisor</span>
+                    </a>
                     <a href="/financial_forecast.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'financial_forecast.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span><i class="fas fa-chart-line"></i> Financial Forecast</span>
                     </a>
@@ -324,6 +336,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <a href="/analytics.php" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 <?php echo $currentPage == 'analytics.php' ? 'bg-primary/10 text-primary' : 'text-gray-700 dark:text-gray-300'; ?>">
                 <i class="fas fa-chart-bar w-5"></i>
                 <span class="font-medium">Analytics</span>
+            </a>
+            
+            <!-- Life Analytics -->
+            <a href="/life_analytics.php" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 <?php echo $currentPage == 'life_analytics.php' ? 'bg-primary/10 text-primary' : 'text-gray-700 dark:text-gray-300'; ?>">
+                <i class="fas fa-chart-pie w-5"></i>
+                <span class="font-medium">Life Analytics</span>
             </a>
 
             <!-- Notifications -->

@@ -112,8 +112,8 @@ include 'includes/header.php';
                 </select>
             </div>
             <div class="form-group">
-                <label>Category</label>
-                <input type="text" name="category">
+                <label>Category <small class="text-muted">(auto-fills based on description)</small></label>
+                <input type="text" id="category" name="category" placeholder="e.g., Groceries, Dining, Transportation">
             </div>
             <div class="form-group">
                 <label>Amount</label>
@@ -125,7 +125,7 @@ include 'includes/header.php';
             </div>
             <div class="form-group">
                 <label>Description</label>
-                <textarea name="description" rows="3"></textarea>
+                <textarea id="description" name="description" rows="3" placeholder="e.g., Walmart groceries, Starbucks coffee..."></textarea>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Save Transaction</button>
         </form>
@@ -133,6 +133,32 @@ include 'includes/header.php';
 </div>
 
 <script>
+// Auto-categorize based on description
+document.getElementById('description')?.addEventListener('blur', async function() {
+    const description = this.value.trim();
+    const categoryInput = document.getElementById('category');
+    
+    if (description && !categoryInput.value) {
+        try {
+            const response = await fetch('/api/auto_categorize.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ description })
+            });
+            
+            const result = await response.json();
+            if (result.success && result.category) {
+                categoryInput.value = result.category;
+                categoryInput.style.animation = 'fadeInUp 0.3s ease-out';
+            }
+        } catch (error) {
+            console.error('Auto-categorization failed:', error);
+        }
+    }
+});
+
 async function saveTransaction(e) {
     e.preventDefault();
     const formData = new FormData(e.target);

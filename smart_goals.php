@@ -10,7 +10,8 @@ $auth->requireLogin();
 $userId = $auth->getUserId();
 $db = Database::getInstance();
 
-$activeGoals = $db->fetchAll("SELECT * FROM smart_goals WHERE user_id = ? AND status = 'active' ORDER BY time_bound_deadline ASC", [$userId]) ?: [];
+$activeGoals = $db->fetchAll("SELECT * FROM smart_goals WHERE user_id = ? AND status = 'active' ORDER BY time_bound_deadline ASC", [$userId]);
+$activeGoals = is_array($activeGoals) ? $activeGoals : [];
 $completedGoals = (int)$db->fetchColumn("SELECT COUNT(*) FROM smart_goals WHERE user_id = ? AND status = 'completed'", [$userId]);
 
 $pageTitle = 'SMART Goals';

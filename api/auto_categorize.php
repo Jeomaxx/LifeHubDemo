@@ -70,7 +70,7 @@ function categorizeExpense($description, $userId, $db) {
         "SELECT category FROM finance 
          WHERE user_id = ? AND LOWER(description) LIKE ? AND category IS NOT NULL 
          ORDER BY date DESC LIMIT 1",
-        [$userId, '%' . $db->getConnection()->quote($description) . '%']
+        [$userId, '%' . strtolower($description) . '%']
     );
     
     if ($historicalCategory) {

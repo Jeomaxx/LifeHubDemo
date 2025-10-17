@@ -24,12 +24,12 @@ $pageTitle = 'Dashboard';
 include 'includes/header.php';
 ?>
 
-<div class="page-header">
+<div class="page-header animate-fadeInDown">
     <h1><i class="fas fa-home"></i> Dashboard</h1>
     <p class="page-subtitle">Welcome back, <?php echo sanitize($auth->getCurrentUser()['name']); ?>!</p>
 </div>
 
-<div class="stats-grid">
+<div class="stats-grid stagger-animation">
     <div class="stat-card">
         <div class="stat-icon bg-blue">
             <i class="fas fa-box"></i>
@@ -92,7 +92,7 @@ include 'includes/header.php';
 </div>
 
 <!-- AI Insights Panel -->
-<div class="ai-insights-panel" id="ai-insights-panel">
+<div class="ai-insights-panel animate-fadeInUp" id="ai-insights-panel">
     <div class="card-header">
         <h3><i class="fas fa-robot"></i> AI Insights & Predictions</h3>
         <button class="btn btn-sm" onclick="refreshAIInsights()"><i class="fas fa-sync-alt"></i> Refresh</button>
@@ -105,7 +105,7 @@ include 'includes/header.php';
     </div>
 </div>
 
-<div class="dashboard-grid">
+<div class="dashboard-grid page-transition">
     <div class="dashboard-card">
         <div class="card-header">
             <h3><i class="fas fa-birthday-cake"></i> Upcoming Birthdays</h3>

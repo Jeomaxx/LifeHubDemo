@@ -91,6 +91,20 @@ include 'includes/header.php';
     </div>
 </div>
 
+<!-- AI Insights Panel -->
+<div class="ai-insights-panel" id="ai-insights-panel">
+    <div class="card-header">
+        <h3><i class="fas fa-robot"></i> AI Insights & Predictions</h3>
+        <button class="btn btn-sm" onclick="refreshAIInsights()"><i class="fas fa-sync-alt"></i> Refresh</button>
+    </div>
+    <div class="ai-insights-grid" id="ai-insights-grid">
+        <div class="text-center py-4">
+            <i class="fas fa-spinner fa-spin fa-2x text-gray-400"></i>
+            <p class="mt-2 text-gray-500">Loading AI insights...</p>
+        </div>
+    </div>
+</div>
+
 <div class="dashboard-grid">
     <div class="dashboard-card">
         <div class="card-header">
@@ -195,7 +209,86 @@ include 'includes/header.php';
     </div>
 </div>
 
+<style>
+.ai-insights-panel {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.ai-insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.ai-insight-card {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    border-left: 4px solid;
+    transition: transform 0.2s;
+}
+
+.ai-insight-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.ai-insight-card.blue { border-left-color: #3b82f6; }
+.ai-insight-card.green { border-left-color: #10b981; }
+.ai-insight-card.purple { border-left-color: #8b5cf6; }
+.ai-insight-card.orange { border-left-color: #f59e0b; }
+.ai-insight-card.pink { border-left-color: #ec4899; }
+.ai-insight-card.red { border-left-color: #ef4444; }
+.ai-insight-card.yellow { border-left-color: #eab308; }
+
+.ai-insight-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.ai-insight-icon {
+    font-size: 1.25rem;
+}
+</style>
+
 <script>
+async function loadAIInsights() {
+    try {
+        const response = await fetch('/api/ai_insights.php?action=get_all');
+        const result = await response.json();
+        
+        if (result.success && result.insights.length > 0) {
+            const container = document.getElementById('ai-insights-grid');
+            container.innerHTML = result.insights.map(insight => `
+                <a href="${insight.link}" class="ai-insight-card ${insight.color}">
+                    <div class="ai-insight-header">
+                        <i class="fas fa-${insight.icon} ai-insight-icon"></i>
+                        <strong>${insight.title}</strong>
+                    </div>
+                    <p class="text-sm text-gray-600">${insight.message}</p>
+                </a>
+            `).join('');
+        } else {
+            document.getElementById('ai-insights-grid').innerHTML = '<p class="text-center text-gray-500">No AI insights available yet. Start using AI features to see predictions here!</p>';
+        }
+    } catch (error) {
+        console.error('Error loading AI insights:', error);
+        document.getElementById('ai-insights-grid').innerHTML = '<p class="text-center text-red-500">Failed to load AI insights</p>';
+    }
+}
+
+function refreshAIInsights() {
+    loadAIInsights();
+    showToast('info', 'Refreshing', 'Updating AI insights...');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const ctx = document.getElementById('financeChart').getContext('2d');
     new Chart(ctx, {
@@ -216,6 +309,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+    
+    loadAIInsights();
 });
 </script>
 

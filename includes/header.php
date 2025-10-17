@@ -17,8 +17,12 @@ $currentUser = $auth->getCurrentUser();
     <title><?php echo (isset($pageTitle) ? $pageTitle . ' - ' : ''); ?><?php echo SITE_NAME; ?></title>
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/animations.css">
+    <link rel="stylesheet" href="/assets/css/enhanced-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/motion@latest/+esm"></script>
+    <script src="/assets/js/enhanced-ui.js" defer></script>
     <script>
         tailwind.config = {
             darkMode: 'class',

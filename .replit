@@ -1,4 +1,4 @@
-modules = ["php-8.2", "nodejs-20", "web", "php-8.3", "postgresql-16"]
+modules = ["php-8.2", "nodejs-20", "web"]
 [agent]
 expertMode = true
 
@@ -33,6 +33,10 @@ outputType = "webview"
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 33457
+externalPort = 6800
 
 [[ports]]
 localPort = 33869

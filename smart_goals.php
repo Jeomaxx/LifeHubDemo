@@ -11,8 +11,9 @@ $userId = $auth->getUserId();
 $db = Database::getInstance();
 
 $activeGoals = $db->fetchAll("SELECT * FROM smart_goals WHERE user_id = ? AND status = 'active' ORDER BY time_bound_deadline ASC", [$userId]);
-$activeGoals = is_array($activeGoals) ? $activeGoals : [];
-$completedGoals = (int)$db->fetchColumn("SELECT COUNT(*) FROM smart_goals WHERE user_id = ? AND status = 'completed'", [$userId]);
+$activeGoals = is_array($activeGoals) && $activeGoals !== false ? $activeGoals : [];
+$completedGoals = $db->fetchColumn("SELECT COUNT(*) FROM smart_goals WHERE user_id = ? AND status = 'completed'", [$userId]);
+$completedGoals = is_numeric($completedGoals) ? (int)$completedGoals : 0;
 
 $pageTitle = 'SMART Goals';
 $extraScripts = ['/assets/js/smart_goals.js'];

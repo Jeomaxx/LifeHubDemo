@@ -10,9 +10,11 @@ $auth->requireLogin();
 $userId = $auth->getUserId();
 $db = Database::getInstance();
 
-$recentEntries = $db->fetchAll("SELECT * FROM mood_entries WHERE user_id = ? ORDER BY mood_date DESC LIMIT 10", [$userId]) ?: [];
-$avgMood = $db->fetchColumn("SELECT COALESCE(AVG(mood_rating), 0) FROM mood_entries WHERE user_id = ? AND mood_date >= CURRENT_DATE - INTERVAL '7 days'", [$userId]);
-$entriesThisWeek = $db->fetchColumn("SELECT COUNT(*) FROM mood_entries WHERE user_id = ? AND mood_date >= CURRENT_DATE - INTERVAL '7 days'", [$userId]);
+$recentEntries = $db->fetchAll("SELECT * FROM mood_entries WHERE user_id = ? ORDER BY entry_date DESC LIMIT 10", [$userId]) ?: [];
+$avgMood = $db->fetchColumn("SELECT COALESCE(AVG(intensity), 0) FROM mood_entries WHERE user_id = ? AND entry_date >= CURRENT_DATE - INTERVAL '7 days'", [$userId]);
+$avgMood = is_numeric($avgMood) ? (float)$avgMood : 0;
+$entriesThisWeek = $db->fetchColumn("SELECT COUNT(*) FROM mood_entries WHERE user_id = ? AND entry_date >= CURRENT_DATE - INTERVAL '7 days'", [$userId]);
+$entriesThisWeek = is_numeric($entriesThisWeek) ? (int)$entriesThisWeek : 0;
 
 $pageTitle = 'Mood Tracker';
 $extraScripts = ['/assets/js/mood_tracker.js'];

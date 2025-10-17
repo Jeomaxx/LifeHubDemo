@@ -10,7 +10,7 @@ $auth->requireLogin();
 $userId = $auth->getUserId();
 $db = Database::getInstance();
 
-$recentEntries = $db->fetchAll("SELECT * FROM mood_entries WHERE user_id = ? ORDER BY mood_date DESC LIMIT 10", [$userId]);
+$recentEntries = $db->fetchAll("SELECT * FROM mood_entries WHERE user_id = ? ORDER BY mood_date DESC LIMIT 10", [$userId]) ?: [];
 $avgMood = $db->fetchColumn("SELECT COALESCE(AVG(mood_rating), 0) FROM mood_entries WHERE user_id = ? AND mood_date >= CURRENT_DATE - INTERVAL '7 days'", [$userId]);
 $entriesThisWeek = $db->fetchColumn("SELECT COUNT(*) FROM mood_entries WHERE user_id = ? AND mood_date >= CURRENT_DATE - INTERVAL '7 days'", [$userId]);
 

@@ -10,7 +10,7 @@ $auth->requireLogin();
 $userId = $auth->getUserId();
 $db = Database::getInstance();
 
-$relationships = $db->fetchAll("SELECT * FROM relationships WHERE user_id = ? ORDER BY last_interaction_date DESC", [$userId]);
+$relationships = $db->fetchAll("SELECT * FROM relationships WHERE user_id = ? ORDER BY last_interaction_date DESC", [$userId]) ?: [];
 
 $pageTitle = 'Relationship Insights';
 include 'includes/header.php';

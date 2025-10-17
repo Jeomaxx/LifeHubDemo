@@ -12,13 +12,13 @@ $db = Database::getInstance();
 
 $stats = getStats($userId);
 
-$upcomingBirthdays = getUpcomingBirthdays($userId, 7);
-$upcomingBills = getUpcomingBills($userId, 7);
+$upcomingBirthdays = getUpcomingBirthdays($userId, 7) ?: [];
+$upcomingBills = getUpcomingBills($userId, 7) ?: [];
 
-$recentGoals = $db->fetchAll("SELECT * FROM goals WHERE user_id = ? AND status = 'active' ORDER BY created_at DESC LIMIT 5", [$userId]);
-$recentTasks = $db->fetchAll("SELECT * FROM tasks WHERE user_id = ? AND status != 'completed' ORDER BY created_at DESC LIMIT 5", [$userId]);
+$recentGoals = $db->fetchAll("SELECT * FROM goals WHERE user_id = ? AND status = 'active' ORDER BY created_at DESC LIMIT 5", [$userId]) ?: [];
+$recentTasks = $db->fetchAll("SELECT * FROM tasks WHERE user_id = ? AND status != 'completed' ORDER BY created_at DESC LIMIT 5", [$userId]) ?: [];
 
-$financeData = $db->fetchAll("SELECT type, SUM(amount) as total FROM finance WHERE user_id = ? AND EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURRENT_DATE) GROUP BY type", [$userId]);
+$financeData = $db->fetchAll("SELECT type, SUM(amount) as total FROM finance WHERE user_id = ? AND EXTRACT(MONTH FROM date) = EXTRACT(MONTH FROM CURRENT_DATE) GROUP BY type", [$userId]) ?: [];
 
 $pageTitle = 'Dashboard';
 include 'includes/header.php';

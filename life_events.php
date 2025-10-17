@@ -10,7 +10,7 @@ $auth->requireLogin();
 $userId = $auth->getUserId();
 $db = Database::getInstance();
 
-$predictions = $db->fetchAll("SELECT * FROM life_event_predictions WHERE user_id = ? AND is_confirmed = FALSE ORDER BY predicted_date ASC LIMIT 10", [$userId]);
+$predictions = $db->fetchAll("SELECT * FROM life_event_predictions WHERE user_id = ? AND is_confirmed = FALSE ORDER BY predicted_date ASC LIMIT 10", [$userId]) ?: [];
 
 $pageTitle = 'Life Event Predictor';
 include 'includes/header.php';

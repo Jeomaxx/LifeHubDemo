@@ -10,7 +10,7 @@ $auth->requireLogin();
 $userId = $auth->getUserId();
 $db = Database::getInstance();
 
-$tasks = $db->fetchAll("SELECT * FROM tasks WHERE user_id = ? ORDER BY created_at DESC", [$userId]);
+$tasks = $db->fetchAll("SELECT * FROM tasks WHERE user_id = ? ORDER BY created_at DESC", [$userId]) ?: [];
 $pendingCount = $db->fetchOne("SELECT COUNT(*) as count FROM tasks WHERE user_id = ? AND status != 'completed'", [$userId]);
 
 $pageTitle = 'Tasks';

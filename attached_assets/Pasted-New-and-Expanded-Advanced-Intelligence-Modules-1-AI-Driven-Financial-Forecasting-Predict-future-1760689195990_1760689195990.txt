@@ -1,0 +1,102 @@
+New and Expanded Advanced Intelligence Modules
+💹 1. AI-Driven Financial Forecasting
+
+Predict future income, expenses, and savings using historical data.
+Show cash-flow trends, forecast scenarios (Optimistic / Realistic / Pessimistic), and generate budget adjustment suggestions.
+Add a Forecast Dashboard in /modules/finances/forecast/ with Excel/PDF export.
+
+😊 2. Mood Tracker & Emotional Insights
+
+Daily mood logs (emoji + notes), sentiment analysis, mood trends graph, and correlation with tasks, bills, or sleep.
+Suggest wellness actions and support optional encrypted storage in /modules/health/mood/.
+
+🎯 3. Goal Achievement Engine
+
+Create SMART goals linked across modules (finance → savings, health → gym, productivity → tasks).
+Show predictive success rates, progress charts, motivational AI feedback, and milestone badges.
+Module path /modules/productivity/goals/.
+
+🔮 4. Life Event Predictor
+
+Use cross-module data to anticipate upcoming life patterns (financial stress, productivity dips, burnout signals).
+Display an “Upcoming Life Moments” timeline with confidence levels and preventive recommendations.
+Module path /modules/assistant/life_events/.
+
+💞 5. AI Relationship Insights
+
+Analyze communication patterns, shared events, and emotional trends to enhance relationships.
+Show “Connection Health Scores,” highlight important dates, and suggest actions (“Reach out to X”).
+Integrate with Planner & Gifts at /modules/social/relationships/.
+
+🌐 6. AI Life Advisor (NEW)
+
+Goal: Deliver a unified, daily, personalized “life operating system.”
+
+Features:
+
+Aggregate insights from Finances, Health, Mood, Goals, Relationships.
+
+Generate daily action plans, including:
+
+“Pay your electricity bill today.”
+
+“Drink 1.5 L more water to reach your goal.”
+
+“Schedule a break — mood declining this week.”
+
+Create a Daily Briefing card on Dashboard (summary of day’s priorities + recommendations).
+
+Support voice playback (“Good Morning briefing”).
+
+Allow manual feedback (mark suggestion helpful / not).
+
+Module path /modules/assistant/life_advisor/.
+
+Option for scheduled cron job to auto-generate daily plan emails or Telegram messages.
+
+🧩 Integration Notes
+
+Each module → /modules/<module_name>/ with controller.php, model.php, view.php.
+APIs in /routes/api.php; shared helpers in /core/helpers/data_bridge.php.
+Database migrations for each.
+Sidebar updates:
+
+💰 Finances → Forecasting
+
+❤️ Health → Mood Tracker
+
+🧠 Planner → Goal Engine
+
+💬 Assistant → Life Event Predictor + Life Advisor
+
+💞 Social → Relationship Insights
+
+🎨 UI / UX Enhancements
+
+TailwindCSS cards, radial progress rings, subtle animations.
+
+“AI Insights Panel” on Dashboard displaying key messages:
+
+“You’re 80 % on track to reach your financial goal.”
+
+“Mood improving—great job!”
+
+“Upcoming bill tomorrow.”
+
+Dark/light mode, responsive grid, and unified icon set (Lucide / FontAwesome).
+
+⚙️ Technical & AI Configuration
+
+Backend: PHP + MySQL, Frontend: JS + Tailwind.
+
+AI layer:
+
+Local PHP-based prompt engine or external API (Gemini / OpenAI).
+
+Config in /config/ai.php and /config/ai.json.
+
+.env variables for API keys.
+
+Excel/CSV/PDF import + export for every module.
+
+Hostinger Cron compatibility for scheduled AI tasks.

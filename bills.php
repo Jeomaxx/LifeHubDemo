@@ -11,9 +11,9 @@ $userId = $auth->getUserId();
 $db = Database::getInstance();
 
 // Get categories and vendors for filters
-$categories = $db->fetchAll("SELECT DISTINCT category FROM bills WHERE user_id = ? AND category IS NOT NULL ORDER BY category", [$userId]);
-$vendors = $db->fetchAll("SELECT DISTINCT vendor FROM bills WHERE user_id = ? AND vendor IS NOT NULL ORDER BY vendor", [$userId]);
-$budgets = $db->fetchAll("SELECT id, category, monthly_limit FROM budgets WHERE user_id = ? ORDER BY category", [$userId]);
+$categories = $db->fetchAll("SELECT DISTINCT category FROM bills WHERE user_id = ? AND category IS NOT NULL ORDER BY category", [$userId]) ?: [];
+$vendors = $db->fetchAll("SELECT DISTINCT vendor FROM bills WHERE user_id = ? AND vendor IS NOT NULL ORDER BY vendor", [$userId]) ?: [];
+$budgets = $db->fetchAll("SELECT id, category, monthly_limit FROM budgets WHERE user_id = ? ORDER BY category", [$userId]) ?: [];
 
 // Get bills with filters
 $status = $_GET['status'] ?? '';
@@ -39,7 +39,7 @@ if ($vendor) {
 }
 
 $query .= " ORDER BY due_date ASC";
-$bills = $db->fetchAll($query, $params);
+$bills = $db->fetchAll($query, $params) ?: [];
 
 // Get stats
 $stats = [

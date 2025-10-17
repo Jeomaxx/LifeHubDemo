@@ -10,7 +10,7 @@ $auth->requireLogin();
 $userId = $auth->getUserId();
 $db = Database::getInstance();
 
-$assets = $db->fetchAll("SELECT * FROM assets WHERE user_id = ? ORDER BY created_at DESC", [$userId]);
+$assets = $db->fetchAll("SELECT * FROM assets WHERE user_id = ? ORDER BY created_at DESC", [$userId]) ?: [];
 $totalValue = $db->fetchOne("SELECT COALESCE(SUM(value), 0) as total FROM assets WHERE user_id = ?", [$userId]);
 
 $pageTitle = 'Assets';

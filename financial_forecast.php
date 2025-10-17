@@ -10,8 +10,8 @@ $auth->requireLogin();
 $userId = $auth->getUserId();
 $db = Database::getInstance();
 
-$forecasts = $db->fetchAll("SELECT * FROM financial_forecasts WHERE user_id = ? ORDER BY created_at DESC LIMIT 5", [$userId]);
-$upcomingBills = $db->fetchAll("SELECT * FROM bills WHERE user_id = ? AND due_date >= CURRENT_DATE ORDER BY due_date LIMIT 10", [$userId]);
+$forecasts = $db->fetchAll("SELECT * FROM financial_forecasts WHERE user_id = ? ORDER BY created_at DESC LIMIT 5", [$userId]) ?: [];
+$upcomingBills = $db->fetchAll("SELECT * FROM bills WHERE user_id = ? AND due_date >= CURRENT_DATE ORDER BY due_date LIMIT 10", [$userId]) ?: [];
 
 $pageTitle = 'AI Financial Forecasting';
 $extraScripts = ['/assets/js/financial_forecast.js'];

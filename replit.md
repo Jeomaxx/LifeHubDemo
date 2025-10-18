@@ -1,7 +1,25 @@
 # Life Atlas Organizer
 
 ## Overview
-Life Atlas Organizer is a comprehensive personal life management web application designed to centralize over 25+ core life modules into a single, secure dashboard. Built with PHP and PostgreSQL, it empowers users to efficiently manage finances, track assets, monitor health, maintain journals, organize tasks, track cryptocurrency investments, and much more. The application features AI-powered insights using Google Gemini for intelligent financial forecasting, emotional wellness tracking, SMART goal achievement analysis, life event predictions, and relationship insights. It prioritizes security, user experience, and data integrity, offering a holistic, intelligent solution for personal organization and productivity.
+Life Atlas Organizer is a comprehensive personal life management web application designed to centralize over 30+ core life modules into a single, secure dashboard. Built with PHP 8.2+ and PostgreSQL, it empowers users to efficiently manage finances, track assets, monitor health, maintain journals, organize tasks, track cryptocurrency investments, and much more. The application features AI-powered insights using Google Gemini for intelligent financial forecasting, emotional wellness tracking, SMART goal achievement analysis, life event predictions, and relationship insights. It prioritizes security, user experience, and data integrity, offering a holistic, intelligent solution for personal organization and productivity.
+
+## Recent Changes (October 2025)
+### New Modules Added
+1. **Debt Payoff Planner** (`debts.php`, `api/debts.php`) - Full debt management with payment tracking, snowball/avalanche strategies, and payoff projections
+2. **Recipe Book & Meal Planner** (`recipes.php`, `api/recipes.php`) - Recipe storage, meal planning, and grocery list integration
+3. **Vehicle Maintenance** (`vehicles.php`, `api/vehicles.php`) - Vehicle tracking with maintenance logs, service reminders, and mileage tracking
+4. **Medication & Supplement Tracker** (`medications.php`, `api/medications.php`) - Medication management with intake logging and refill reminders
+5. **Symptom Tracker** (`symptoms.php`, `api/symptoms.php`) - Health symptom logging with severity tracking and pattern analysis
+6. **Personal CRM - Contacts** (`contacts.php`, `api/contacts.php`) - Contact management with relationship tracking and interaction history
+7. **Event Planner** (`events.php`, `api/events.php`) - Event planning with guest lists, checklists, and budget tracking
+
+### Technical Updates
+- Created consolidated JavaScript module (`assets/js/new-modules.js`) for efficient frontend management
+- All new modules implement full CRUD operations with authentication and validation
+- Updated navigation sidebar with all new modules organized by category
+- Enhanced calendar module with improved views and functionality
+- Database expanded with 60+ new tables supporting all new features
+- All API endpoints follow RESTful patterns with proper error handling
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.

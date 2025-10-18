@@ -95,6 +95,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             <i class="fas fa-plus text-xs"></i>
                         </button>
                     </a>
+                    <a href="/debts.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'debts.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Debt Payoff Planner</span>
+                        <button class="quick-add-btn" data-module="debt">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </a>
                 </div>
             </div>
 
@@ -200,6 +206,18 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/health.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'health.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Health Records</span>
                     </a>
+                    <a href="/medications.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'medications.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Medications</span>
+                        <button class="quick-add-btn" data-module="medication">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </a>
+                    <a href="/symptoms.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'symptoms.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Symptom Tracker</span>
+                        <button class="quick-add-btn" data-module="symptom">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </a>
                 </div>
             </div>
 
@@ -239,6 +257,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     </a>
                     <a href="/family_manager.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'family_manager.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span><i class="fas fa-home-user"></i> Family Manager</span>
+                    </a>
+                    <a href="/contacts.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'contacts.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Personal CRM</span>
+                        <button class="quick-add-btn" data-module="contact">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
                     </a>
                 </div>
             </div>
@@ -293,6 +317,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/ai_lifemap.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'ai_lifemap.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span><i class="fas fa-brain"></i> AI Life Map</span>
                     </a>
+                    <a href="/events.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'events.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Event Planner</span>
+                        <button class="quick-add-btn" data-module="event">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </a>
                 </div>
             </div>
 
@@ -324,6 +354,18 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/assets.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'assets.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Personal Assets</span>
                         <button class="quick-add-btn" data-module="asset">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </a>
+                    <a href="/vehicles.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'vehicles.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Vehicle Maintenance</span>
+                        <button class="quick-add-btn" data-module="vehicle">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </a>
+                    <a href="/recipes.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'recipes.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Recipe Book</span>
+                        <button class="quick-add-btn" data-module="recipe">
                             <i class="fas fa-plus text-xs"></i>
                         </button>
                     </a>

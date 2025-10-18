@@ -2983,3 +2983,21 @@ CREATE INDEX idx_vault_items_user_id ON vault_items(user_id);
 CREATE INDEX idx_user_devices_user_id ON user_devices(user_id);
 CREATE INDEX idx_activity_logs_user_id ON activity_logs(user_id);
 CREATE INDEX idx_activity_logs_created_at ON activity_logs(created_at);
+
+-- Additional columns for bills table (added post-migration)
+ALTER TABLE bills 
+ADD COLUMN IF NOT EXISTS category VARCHAR(100),
+ADD COLUMN IF NOT EXISTS vendor VARCHAR(150),
+ADD COLUMN IF NOT EXISTS reminder_days_before INTEGER DEFAULT 3,
+ADD COLUMN IF NOT EXISTS notes TEXT,
+ADD COLUMN IF NOT EXISTS auto_pay BOOLEAN DEFAULT FALSE,
+ADD COLUMN IF NOT EXISTS budget_id INTEGER REFERENCES budgets(id) ON DELETE SET NULL,
+ADD COLUMN IF NOT EXISTS payment_method VARCHAR(100),
+ADD COLUMN IF NOT EXISTS last_paid_date DATE,
+ADD COLUMN IF NOT EXISTS next_due_date DATE;
+
+-- Create indexes for performance optimization on new columns
+CREATE INDEX IF NOT EXISTS idx_bills_category ON bills(category);
+CREATE INDEX IF NOT EXISTS idx_bills_vendor ON bills(vendor);
+CREATE INDEX IF NOT EXISTS idx_bills_budget_id ON bills(budget_id);
+CREATE INDEX IF NOT EXISTS idx_bills_due_date ON bills(due_date);

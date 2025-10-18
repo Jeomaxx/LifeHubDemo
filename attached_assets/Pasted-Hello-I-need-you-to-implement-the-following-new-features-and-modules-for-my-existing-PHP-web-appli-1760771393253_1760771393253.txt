@@ -1,0 +1,49 @@
+Hello, I need you to implement the following new features and modules for my existing PHP  web application, "Life Atlas Organizer."
+
+Please focus on building only these features as described below:
+
+Core Functionality & Planning
+
+Full Calendar Module: A dedicated module with Day, Week, and Month views that automatically pulls in data from other modules like Tasks (due dates), Bills (payment dates), Birthdays, and Gym Routines (planned workouts).
+
+Notes / Knowledge Base: A dedicated module (like a personal wiki or Notion-lite) for unstructured information, code snippets, research, and general notes. This should be separate from the "Journal" (which is date-based) and "Documents" (which is file-based).
+
+Project Management (Kanban): An expansion of the "Goals" module. This should allow a user to manage complex projects (e.g., "Plan Vacation," "Renovate Kitchen") using Kanban boards (To Do, In Progress, Done) with sub-tasks, checklists, and file attachments.
+
+Pomodoro Timer: A simple timer utility built into the dashboard or task module to help users focus on work sessions, integrating directly with the "Tasks" and "Habits" modules.
+
+💰 Finance & Home Management
+
+Dedicated Budgeting Module: A proactive budgeting module that implements envelope budgeting (assigning funds to categories like "Groceries," "Dining Out") and shows real-time spending against those budgets. This is an upgrade to the existing "Finance" module.
+
+Debt Payoff Planner: A module to track loans (student loans, mortgage, credit cards) and model different payoff strategies, such as the "Snowball" or "Avalanche" methods, calculating interest saved and payoff dates.
+
+Recipe Book & Meal Planner: An enhancement to the "Diet Planner" that includes:
+
+A Recipe Book to save recipes (manually or via URL import).
+
+A Meal Planner (weekly/monthly) where users can drag recipes onto a calendar.
+
+A Shopping List Generator that automatically compiles ingredients from the week's meal plan.
+
+Vehicle Maintenance: A dedicated module to track vehicle information (make, model, VIN), log maintenance history (oil changes, tire rotations), and set reminders based on date or mileage.
+
+🩺 Health & Wellness
+
+Sleep Tracker: A module for manually logging sleep duration and quality, with analytics to show correlations (e.g., "How does sleep affect my mood in the Journal?").
+
+Medication & Supplement Tracker: A way to log daily medications and supplements, set reminders, and track remaining quantities.
+
+Symptom Tracker: A simple log for tracking recurring symptoms (e.g., headaches, allergies) to help identify patterns or correlations with diet, sleep, or habits.
+
+👥 Social & Relationships
+
+Personal CRM (Contacts): A module to manage important relationships (family, friends, professional network). It should allow logging notes, setting "keep in touch" reminders (e.g., "Call Mom every 7 days"), and remembering important details (e.g., kids' names, interests).
+
+Event Planner: A simple tool for planning personal events (e.g., a party or a trip) with checklists, a guest list (linking to the Personal CRM), and budget tracking (linking to the Finance module).
+
+⚙️ Technical & Integrations
+
+Multi-User / Family Sharing: An architectural update to allow a user to share specific modules (e.g., a shared Calendar, a shared Shopping List, or shared Bills) with family members or a partner.
+
+Calendar Sync (Google/Outlook): Implement 2-way sync (via CalDAV or an API) for the new "Full Calendar Module" to allow events to sync between Life Atlas and external calendars.

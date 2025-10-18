@@ -25,10 +25,35 @@ include 'includes/header.php';
             <p class="text-gray-600 dark:text-gray-400 mt-1">Manage all your events, tasks, and appointments in one place</p>
         </div>
         <div class="flex gap-2">
+            <button onclick="showCalendarSyncModal()" class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center gap-2">
+                <i class="fab fa-google"></i>
+                Calendar Sync
+            </button>
             <button onclick="showAddEventModal()" class="btn btn-primary flex items-center gap-2">
                 <i class="fas fa-plus"></i>
                 Add Event
             </button>
+        </div>
+    </div>
+    
+    <!-- Calendar Sync Status Card -->
+    <div id="syncStatusCard" class="hidden bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <i class="fab fa-google text-2xl text-blue-600"></i>
+                <div>
+                    <p class="font-semibold text-gray-900 dark:text-white">Google Calendar Connected</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">Last synced: <span id="lastSyncTime">Never</span></p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="syncCalendar()" class="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm">
+                    <i class="fas fa-sync-alt"></i> Sync Now
+                </button>
+                <button onclick="disconnectCalendar()" class="px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 text-sm">
+                    <i class="fas fa-unlink"></i> Disconnect
+                </button>
+            </div>
         </div>
     </div>
 
@@ -195,5 +220,159 @@ include 'includes/header.php';
         </div>
     </div>
 </div>
+
+<!-- Calendar Sync Modal -->
+<div id="calendarSyncModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 rounded-lg w-full max-w-lg">
+        <div class="p-6 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Calendar Sync Settings</h2>
+            <button onclick="closeCalendarSyncModal()" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="p-6 space-y-4">
+            <div id="syncNotConfigured" class="hidden">
+                <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-4">
+                    <p class="text-sm text-yellow-800 dark:text-yellow-200">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        Google Calendar sync requires OAuth configuration. Please add GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET to your environment variables.
+                    </p>
+                </div>
+            </div>
+            
+            <div id="syncNotConnected">
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Connect your Google Calendar to automatically sync your Life Atlas events.</p>
+                <button onclick="connectGoogleCalendar()" class="w-full px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2">
+                    <i class="fab fa-google"></i>
+                    Connect Google Calendar
+                </button>
+            </div>
+            
+            <div id="syncConnected" class="hidden">
+                <div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4 mb-4">
+                    <p class="text-sm text-green-800 dark:text-green-200">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        Your Google Calendar is connected and syncing.
+                    </p>
+                </div>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Last sync: <span id="modalLastSync">Never</span></p>
+            </div>
+            
+            <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
+                <h3 class="font-semibold text-gray-900 dark:text-white mb-3">Manual Export</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Download your calendar as an ICS file to import into any calendar application.</p>
+                <button onclick="exportICS()" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-center gap-2">
+                    <i class="fas fa-download"></i>
+                    Download ICS File
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Calendar Sync Functions
+let syncStatus = null;
+
+async function checkSyncStatus() {
+    try {
+        const response = await fetch('/api/calendar_sync.php?action=status');
+        const data = await response.json();
+        syncStatus = data;
+        
+        if (data.connected) {
+            document.getElementById('syncStatusCard').classList.remove('hidden');
+            if (data.last_sync) {
+                document.getElementById('lastSyncTime').textContent = new Date(data.last_sync).toLocaleString();
+                document.getElementById('modalLastSync').textContent = new Date(data.last_sync).toLocaleString();
+            }
+        }
+    } catch (error) {
+        console.error('Error checking sync status:', error);
+    }
+}
+
+function showCalendarSyncModal() {
+    document.getElementById('calendarSyncModal').classList.remove('hidden');
+    
+    if (syncStatus) {
+        if (!syncStatus.oauth_configured) {
+            document.getElementById('syncNotConfigured').classList.remove('hidden');
+        }
+        
+        if (syncStatus.connected) {
+            document.getElementById('syncNotConnected').classList.add('hidden');
+            document.getElementById('syncConnected').classList.remove('hidden');
+        } else {
+            document.getElementById('syncNotConnected').classList.remove('hidden');
+            document.getElementById('syncConnected').classList.add('hidden');
+        }
+    }
+}
+
+function closeCalendarSyncModal() {
+    document.getElementById('calendarSyncModal').classList.add('hidden');
+}
+
+async function connectGoogleCalendar() {
+    try {
+        const response = await fetch('/api/calendar_sync.php?action=connect');
+        const data = await response.json();
+        
+        if (data.success && data.auth_url) {
+            window.location.href = data.auth_url;
+        } else {
+            alert(data.message || 'Unable to connect to Google Calendar');
+        }
+    } catch (error) {
+        console.error('Error connecting calendar:', error);
+        alert('Error connecting to Google Calendar');
+    }
+}
+
+async function syncCalendar() {
+    try {
+        const response = await fetch('/api/calendar_sync.php?action=sync');
+        const data = await response.json();
+        
+        if (data.success) {
+            alert(data.message);
+            checkSyncStatus();
+        } else {
+            alert(data.message || 'Sync failed');
+        }
+    } catch (error) {
+        console.error('Error syncing calendar:', error);
+        alert('Error syncing calendar');
+    }
+}
+
+async function disconnectCalendar() {
+    if (!confirm('Are you sure you want to disconnect Google Calendar?')) return;
+    
+    try {
+        const response = await fetch('/api/calendar_sync.php?action=disconnect');
+        const data = await response.json();
+        
+        if (data.success) {
+            alert(data.message);
+            document.getElementById('syncStatusCard').classList.add('hidden');
+            checkSyncStatus();
+        }
+    } catch (error) {
+        console.error('Error disconnecting calendar:', error);
+        alert('Error disconnecting calendar');
+    }
+}
+
+function exportICS() {
+    window.location.href = '/api/calendar_sync.php?action=export_ics';
+}
+
+// Check sync status on page load
+document.addEventListener('DOMContentLoaded', () => {
+    checkSyncStatus();
+});
+</script>
 
 <?php include 'includes/footer.php'; ?>

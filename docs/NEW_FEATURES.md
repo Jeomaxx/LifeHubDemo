@@ -419,7 +419,13 @@ Client-side AES-256-GCM encryption ensures server never has access to plaintext 
 1. Create Telegram bot via @BotFather
 2. Add bot token to settings
 3. Link your Telegram account (store chat_id)
-4. Set webhook URL to `telegram_bot.php`
+4. Set webhook URL to `telegram_bot.php?token=<sha256_hash_of_bot_token>`
+
+**Security:**
+- Webhook token verification using SHA-256 hash of bot token
+- Requests without valid token are rejected with 403 Forbidden
+- Secret token must match hash(TELEGRAM_BOT_TOKEN)
+- Example webhook URL: `https://your-domain.com/telegram_bot.php?token=abc123...`
 
 **Report Example:**
 ```

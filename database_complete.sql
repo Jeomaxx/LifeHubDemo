@@ -152,6 +152,15 @@ CREATE TABLE public.bills (
     payment_status character varying(50) DEFAULT 'pending'::character varying,
     recurring boolean DEFAULT false,
     frequency character varying(50),
+    category character varying(100),
+    vendor character varying(150),
+    reminder_days_before integer DEFAULT 3,
+    notes text,
+    auto_pay boolean DEFAULT false,
+    budget_id integer,
+    payment_method character varying(100),
+    last_paid_date date,
+    next_due_date date,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
 );

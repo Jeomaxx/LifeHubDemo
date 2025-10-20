@@ -268,6 +268,14 @@ function showToast(type, title, message, duration = 4000) {
     }, duration);
 }
 
+// Global notification wrapper for backwards compatibility
+window.showNotification = function(message, type = 'info', title = null) {
+    if (!title) {
+        title = type.charAt(0).toUpperCase() + type.slice(1);
+    }
+    showToast(type, title, message);
+};
+
 function initAnimations() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;

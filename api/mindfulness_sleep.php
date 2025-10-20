@@ -65,6 +65,18 @@ try {
             echo json_encode(['success' => true, 'sleep_data' => $sleepData]);
             break;
             
+        case 'delete_sleep':
+            $id = $_POST['id'] ?? 0;
+            $db->delete("DELETE FROM sleep_logs WHERE id = ? AND user_id = ?", [$id, $userId]);
+            echo json_encode(['success' => true]);
+            break;
+            
+        case 'delete_meditation':
+            $id = $_POST['id'] ?? 0;
+            $db->delete("DELETE FROM meditation_sessions WHERE id = ? AND user_id = ?", [$id, $userId]);
+            echo json_encode(['success' => true]);
+            break;
+            
         case 'insights':
             require_once '../includes/ai_config.php';
             $aiConfig = AIConfig::getInstance();

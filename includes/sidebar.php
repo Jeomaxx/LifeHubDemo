@@ -78,12 +78,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             <i class="fas fa-plus text-xs"></i>
                         </button>
                     </a>
-                    <a href="/investments.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'investments.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span>Investments</span>
-                    </a>
-                    <a href="/crypto.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'crypto.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span>Cryptocurrency</span>
-                    </a>
                     <a href="/bills.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'bills.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <div class="flex items-center gap-2">
                             <span>Bills & Payments</span>
@@ -95,11 +89,32 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             <i class="fas fa-plus text-xs"></i>
                         </button>
                     </a>
+                    <a href="/subscriptions.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'subscriptions.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Subscriptions</span>
+                        <button class="quick-add-btn" data-module="subscription">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </a>
                     <a href="/debts.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'debts.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Debt Payoff Planner</span>
                         <button class="quick-add-btn" data-module="debt">
                             <i class="fas fa-plus text-xs"></i>
                         </button>
+                    </a>
+                    <a href="/investments.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'investments.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Investments</span>
+                    </a>
+                    <a href="/crypto.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'crypto.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Cryptocurrency</span>
+                    </a>
+                    <a href="/finance_advanced.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'finance_advanced.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Finance Advanced</span>
+                    </a>
+                    <a href="/financial_forecast.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'financial_forecast.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Financial Forecast</span>
+                    </a>
+                    <a href="/tax_reports.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'tax_reports.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Tax Reports & PDF</span>
                     </a>
                 </div>
             </div>
@@ -126,9 +141,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/kanban.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'kanban.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Kanban Board</span>
                     </a>
-                    <a href="/career_center.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'career_center.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-briefcase"></i> Career Center</span>
-                    </a>
                     <a href="/pomodoro.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'pomodoro.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Pomodoro Timer</span>
                     </a>
@@ -154,6 +166,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             <i class="fas fa-plus text-xs"></i>
                         </button>
                     </a>
+                    <a href="/smart_goals.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'smart_goals.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>SMART Goals</span>
+                    </a>
                     <a href="/habits.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'habits.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Habits</span>
                         <button class="quick-add-btn" data-module="habit">
@@ -176,15 +191,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/health_dashboard.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'health_dashboard.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Health Dashboard</span>
                     </a>
+                    <a href="/health.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'health.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Health Records</span>
+                    </a>
                     <a href="/gym.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'gym.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Gym Routines</span>
                         <button class="quick-add-btn" data-module="gym">
-                            <i class="fas fa-plus text-xs"></i>
-                        </button>
-                    </a>
-                    <a href="/mood_tracker.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'mood_tracker.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span>Mood Tracker</span>
-                        <button class="quick-add-btn" data-module="mood">
                             <i class="fas fa-plus text-xs"></i>
                         </button>
                     </a>
@@ -194,17 +206,23 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             <i class="fas fa-plus text-xs"></i>
                         </button>
                     </a>
+                    <a href="/nutrition_ai.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'nutrition_ai.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Nutrition AI</span>
+                    </a>
                     <a href="/water.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'water.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Water Tracker</span>
                     </a>
+                    <a href="/mood_tracker.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'mood_tracker.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Mood Tracker</span>
+                        <button class="quick-add-btn" data-module="mood">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </a>
                     <a href="/mindfulness_sleep.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'mindfulness_sleep.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-spa"></i> Mindfulness Hub</span>
+                        <span>Mindfulness Hub</span>
                     </a>
                     <a href="/sleep_tracking.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'sleep_tracking.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-moon"></i> Sleep Tracker</span>
-                    </a>
-                    <a href="/health.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'health.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span>Health Records</span>
+                        <span>Sleep Tracker</span>
                     </a>
                     <a href="/medications.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'medications.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Medications</span>
@@ -217,6 +235,53 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <button class="quick-add-btn" data-module="symptom">
                             <i class="fas fa-plus text-xs"></i>
                         </button>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Professional & Career Category -->
+            <div class="sidebar-category">
+                <button class="category-toggle w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-briefcase w-5"></i>
+                        <span class="font-medium">Professional & Career</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
+                </button>
+                <div class="category-items pl-11 mt-1 space-y-1 hidden">
+                    <a href="/career_center.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'career_center.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Career Center</span>
+                    </a>
+                    <a href="/freelance_tracker.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'freelance_tracker.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Freelance Tracker</span>
+                    </a>
+                    <a href="/portfolio_generator.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'portfolio_generator.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Portfolio Generator</span>
+                    </a>
+                    <a href="/team_collaboration.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'team_collaboration.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Team Collaboration</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Learning & Knowledge Category -->
+            <div class="sidebar-category">
+                <button class="category-toggle w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-graduation-cap w-5"></i>
+                        <span class="font-medium">Learning & Knowledge</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
+                </button>
+                <div class="category-items pl-11 mt-1 space-y-1 hidden">
+                    <a href="/learning.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'learning.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Learning</span>
+                    </a>
+                    <a href="/learning_center.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'learning_center.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Learning Hub</span>
+                    </a>
+                    <a href="/knowledge_vault.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'knowledge_vault.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Knowledge Vault</span>
                     </a>
                 </div>
             </div>
@@ -234,17 +299,23 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/journal.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'journal.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Journal & Mood</span>
                     </a>
-                    <a href="/learning.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'learning.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span>Learning</span>
-                    </a>
-                    <a href="/learning_center.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'learning_center.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-graduation-cap"></i> Learning Hub</span>
-                    </a>
                     <a href="/hobbies.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'hobbies.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Hobbies</span>
                     </a>
                     <a href="/media.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'media.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Media & Entertainment</span>
+                    </a>
+                    <a href="/relationships.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'relationships.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Relationships</span>
+                    </a>
+                    <a href="/family_manager.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'family_manager.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Family Manager</span>
+                    </a>
+                    <a href="/contacts.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'contacts.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Personal CRM</span>
+                        <button class="quick-add-btn" data-module="contact">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
                     </a>
                     <a href="/gifts.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'gifts.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Gift Management</span>
@@ -252,17 +323,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             <i class="fas fa-plus text-xs"></i>
                         </button>
                     </a>
-                    <a href="/relationships.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'relationships.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-users"></i> Relationships</span>
-                    </a>
-                    <a href="/family_manager.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'family_manager.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-home-user"></i> Family Manager</span>
-                    </a>
-                    <a href="/contacts.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'contacts.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span>Personal CRM</span>
-                        <button class="quick-add-btn" data-module="contact">
-                            <i class="fas fa-plus text-xs"></i>
-                        </button>
+                    <a href="/life_events.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'life_events.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Life Events</span>
                     </a>
                 </div>
             </div>
@@ -278,20 +340,20 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </button>
                 <div class="category-items pl-11 mt-1 space-y-1 hidden">
                     <a href="/travel_planner.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'travel_planner.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-suitcase"></i> Travel Planner</span>
+                        <span>Travel Planner</span>
                     </a>
                     <a href="/travel_journal.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'travel_journal.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-book-open"></i> Travel Journal</span>
+                        <span>Travel Journal</span>
                     </a>
                 </div>
             </div>
 
-            <!-- Reminders & Events Category -->
+            <!-- Calendar & Events Category -->
             <div class="sidebar-category">
                 <button class="category-toggle w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
                     <div class="flex items-center gap-3">
                         <i class="fas fa-calendar w-5"></i>
-                        <span class="font-medium">Reminders & Events</span>
+                        <span class="font-medium">Calendar & Events</span>
                     </div>
                     <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
                 </button>
@@ -299,27 +361,15 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/calendar.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'calendar.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Calendar View</span>
                     </a>
-                    <a href="/birthdays.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'birthdays.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span>Birthdays</span>
-                        <button class="quick-add-btn" data-module="birthday">
-                            <i class="fas fa-plus text-xs"></i>
-                        </button>
-                    </a>
-                    <a href="/subscriptions.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'subscriptions.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span>Subscriptions</span>
-                        <button class="quick-add-btn" data-module="subscription">
-                            <i class="fas fa-plus text-xs"></i>
-                        </button>
-                    </a>
-                    <a href="/finance_advanced.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'finance_advanced.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-chart-line"></i> Finance Advanced</span>
-                    </a>
-                    <a href="/ai_lifemap.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'ai_lifemap.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-brain"></i> AI Life Map</span>
-                    </a>
                     <a href="/events.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'events.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Event Planner</span>
                         <button class="quick-add-btn" data-module="event">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </a>
+                    <a href="/birthdays.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'birthdays.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Birthdays</span>
+                        <button class="quick-add-btn" data-module="birthday">
                             <i class="fas fa-plus text-xs"></i>
                         </button>
                     </a>
@@ -342,15 +392,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             <i class="fas fa-plus text-xs"></i>
                         </button>
                     </a>
-                    <a href="/maintenance.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'maintenance.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span>Maintenance Logs</span>
-                    </a>
-                    <a href="/documents.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'documents.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span>Documents</span>
-                        <button class="quick-add-btn" data-module="document">
-                            <i class="fas fa-plus text-xs"></i>
-                        </button>
-                    </a>
                     <a href="/assets.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'assets.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Personal Assets</span>
                         <button class="quick-add-btn" data-module="asset">
@@ -360,6 +401,15 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/vehicles.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'vehicles.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Vehicle Maintenance</span>
                         <button class="quick-add-btn" data-module="vehicle">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </a>
+                    <a href="/maintenance.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'maintenance.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Maintenance Logs</span>
+                    </a>
+                    <a href="/documents.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'documents.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Documents</span>
+                        <button class="quick-add-btn" data-module="document">
                             <i class="fas fa-plus text-xs"></i>
                         </button>
                     </a>
@@ -389,62 +439,19 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         <span>Daily Briefing</span>
                     </a>
                     <a href="/life_advisor.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'life_advisor.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-magic"></i> Life Advisor</span>
+                        <span>Life Advisor</span>
                     </a>
-                    <a href="/financial_forecast.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'financial_forecast.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-chart-line"></i> Financial Forecast</span>
-                    </a>
-                    <a href="/smart_goals.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'smart_goals.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-bullseye"></i> SMART Goals</span>
-                    </a>
-                    <a href="/life_events.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'life_events.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-crystal-ball"></i> Life Events</span>
-                    </a>
-                    <a href="/relationships.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'relationships.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-users"></i> Relationships</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="my-2 border-t border-gray-200 dark:border-gray-700"></div>
-
-            <!-- V3.0 Professional & AI Tools -->
-            <div class="sidebar-category">
-                <button class="category-toggle w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
-                    <div class="flex items-center gap-3">
-                        <i class="fas fa-rocket w-5"></i>
-                        <span class="font-medium">V3.0 Professional & AI</span>
-                        <span class="bg-gradient-to-r from-primary to-purple-600 text-white text-xs px-2 py-0.5 rounded-full">NEW</span>
-                    </div>
-                    <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
-                </button>
-                <div class="category-items pl-11 mt-1 space-y-1 hidden">
-                    <a href="/freelance_tracker.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'freelance_tracker.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-briefcase"></i> Freelance Tracker</span>
-                    </a>
-                    <a href="/tax_reports.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'tax_reports.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-receipt"></i> Tax Reports & PDF</span>
-                    </a>
-                    <a href="/team_collaboration.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'team_collaboration.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-users"></i> Team Collaboration</span>
-                    </a>
-                    <a href="/knowledge_vault.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'knowledge_vault.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-brain"></i> Knowledge Vault</span>
-                    </a>
-                    <a href="/unified_search.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'unified_search.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-search"></i> Unified Search</span>
+                    <a href="/ai_lifemap.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'ai_lifemap.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>AI Life Map</span>
                     </a>
                     <a href="/life_orchestrator.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'life_orchestrator.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-zap"></i> Life Orchestrator</span>
+                        <span>Life Orchestrator</span>
                     </a>
                     <a href="/custom_dashboards.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'custom_dashboards.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-layout-dashboard"></i> Custom Dashboards</span>
+                        <span>Custom Dashboards</span>
                     </a>
-                    <a href="/portfolio_generator.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'portfolio_generator.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-award"></i> Portfolio Generator</span>
-                    </a>
-                    <a href="/nutrition_ai.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'nutrition_ai.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span><i class="fas fa-apple"></i> Nutrition AI</span>
+                    <a href="/unified_search.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'unified_search.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Unified Search</span>
                     </a>
                 </div>
             </div>
@@ -647,40 +654,11 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             e.stopPropagation();
             const module = this.dataset.module;
-            // Trigger the add modal for the specific module
-            const modalId = module + 'Modal';
-            const modal = document.getElementById(modalId);
-            if (modal && typeof openModal === 'function') {
-                openModal(modalId);
+            // Trigger quick add modal for the specific module
+            if (window.quickAddModal) {
+                window.quickAddModal.open(module);
             }
         });
     });
-
-    // Theme toggle
-    const themeToggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
-    
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    html.classList.toggle('dark', savedTheme === 'dark');
-    updateThemeIcon(savedTheme);
-
-    themeToggle?.addEventListener('click', function() {
-        const isDark = html.classList.toggle('dark');
-        const newTheme = isDark ? 'dark' : 'light';
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme);
-    });
-
-    function updateThemeIcon(theme) {
-        const icon = themeToggle.querySelector('i');
-        if (theme === 'dark') {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        } else {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-        }
-    }
 });
 </script>

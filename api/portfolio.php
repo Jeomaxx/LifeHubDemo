@@ -2,10 +2,19 @@
 require_once __DIR__ . '/../includes/config.php';
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/rate_limiter.php';
 
 $auth = new Auth();
 if (!$auth->isLoggedIn()) {
     echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+    exit;
+}
+
+// Rate limiting - 30 requests per minute for portfolio/resume generation
+$rateLimiter = new RateLimiter();
+if (!$rateLimiter->checkLimit($_SERVER['REMOTE_ADDR'], 'portfolio_api', 30, 60)) {
+    http_response_code(429);
+    echo json_encode(['success' => false, 'message' => 'Too many requests. Please try again later.']);
     exit;
 }
 
@@ -98,20 +107,39 @@ try {
             
             $resumeHtml = generateResumeHTML($user, $skills, $projects, $milestones);
             
-            $filename = 'resume_' . $userId . '_' . time() . '.html';
-            $filepath = __DIR__ . '/../exports/' . $filename;
-            
             if (!is_dir(__DIR__ . '/../exports/')) {
                 mkdir(__DIR__ . '/../exports/', 0755, true);
             }
             
-            file_put_contents($filepath, $resumeHtml);
+            $format = $_GET['format'] ?? 'pdf';
             
-            echo json_encode([
-                'success' => true,
-                'resume_url' => '/exports/' . $filename,
-                'message' => 'Resume generated successfully! (HTML format - PDF conversion coming soon)'
-            ]);
+            if ($format === 'pdf') {
+                require_once __DIR__ . '/../vendor/autoload.php';
+                $dompdf = new \Dompdf\Dompdf();
+                $dompdf->loadHtml($resumeHtml);
+                $dompdf->setPaper('A4', 'portrait');
+                $dompdf->render();
+                
+                $filename = 'resume_' . $userId . '_' . time() . '.pdf';
+                $filepath = __DIR__ . '/../exports/' . $filename;
+                file_put_contents($filepath, $dompdf->output());
+                
+                echo json_encode([
+                    'success' => true,
+                    'resume_url' => '/exports/' . $filename,
+                    'message' => 'Resume PDF generated successfully!'
+                ]);
+            } else {
+                $filename = 'resume_' . $userId . '_' . time() . '.html';
+                $filepath = __DIR__ . '/../exports/' . $filename;
+                file_put_contents($filepath, $resumeHtml);
+                
+                echo json_encode([
+                    'success' => true,
+                    'resume_url' => '/exports/' . $filename,
+                    'message' => 'Resume HTML generated successfully!'
+                ]);
+            }
             break;
             
         default:

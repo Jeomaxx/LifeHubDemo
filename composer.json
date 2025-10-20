@@ -1,5 +1,6 @@
 {
     "require": {
-        "league/oauth2-google": "^4.0"
+        "league/oauth2-google": "^4.0",
+        "dompdf/dompdf": "^3.1"
     }
 }

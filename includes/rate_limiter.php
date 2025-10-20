@@ -78,4 +78,45 @@ class RateLimiter {
         }
         return $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
     }
+    
+    public function checkLimit($identifier, $action, $maxRequests = 60, $timeWindow = 60) {
+        $cacheKey = "rate_limit_{$action}_{$identifier}";
+        $now = time();
+        $windowStart = $now - $timeWindow;
+        
+        $query = "SELECT COUNT(*) FROM rate_limit_log 
+                  WHERE identifier = ? 
+                  AND action = ? 
+                  AND request_time > TO_TIMESTAMP(?)";
+        
+        try {
+            $count = $this->db->fetchColumn($query, [$identifier, $action, $windowStart]) ?? 0;
+            
+            if ($count >= $maxRequests) {
+                return false;
+            }
+            
+            $this->db->execute(
+                "INSERT INTO rate_limit_log (identifier, action, request_time) VALUES (?, ?, NOW())",
+                [$identifier, $action]
+            );
+            
+            $this->cleanOldRateLimitEntries($timeWindow);
+            
+            return true;
+        } catch (Exception $e) {
+            error_log("Rate limiter error: " . $e->getMessage());
+            return true;
+        }
+    }
+    
+    private function cleanOldRateLimitEntries($timeWindow) {
+        try {
+            $this->db->execute(
+                "DELETE FROM rate_limit_log WHERE request_time < NOW() - INTERVAL '{$timeWindow} seconds'"
+            );
+        } catch (Exception $e) {
+            error_log("Rate limit cleanup error: " . $e->getMessage());
+        }
+    }
 }

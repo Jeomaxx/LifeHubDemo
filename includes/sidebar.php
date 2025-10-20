@@ -2,6 +2,15 @@
 // Load required functions
 require_once __DIR__ . '/functions.php';
 
+// Ensure auth is loaded
+if (!isset($auth)) {
+    require_once __DIR__ . '/auth.php';
+    $auth = new Auth();
+}
+if (!isset($currentUser)) {
+    $currentUser = $auth->getCurrentUser();
+}
+
 // Get notification counts and stats for badges
 $db = Database::getInstance();
 $userId = $auth->getUserId();

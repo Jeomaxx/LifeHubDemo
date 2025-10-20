@@ -2,12 +2,21 @@
 require_once '../includes/config.php';
 require_once '../includes/auth.php';
 require_once '../includes/db.php';
+require_once '../includes/rate_limiter.php';
 
 header('Content-Type: application/json');
 
 $auth = new Auth();
 if (!$auth->isLoggedIn()) {
     echo json_encode(['success' => false, 'message' => 'Unauthorized']);
+    exit;
+}
+
+// Rate limiting - 50 requests per minute for AI assistant
+$rateLimiter = new RateLimiter();
+if (!$rateLimiter->checkLimit($_SERVER['REMOTE_ADDR'], 'ai_assistant', 50, 60)) {
+    http_response_code(429);
+    echo json_encode(['success' => false, 'message' => 'Too many requests. Please try again later.']);
     exit;
 }
 
@@ -83,8 +92,29 @@ try {
                     [$data['conversation_id']]
                 );
                 
-                // Here you would integrate with AI API (OpenAI, Gemini, etc.)
-                $aiResponse = "This is a placeholder response. Integrate with your AI API here.";
+                // Integrate with AI using Gemini
+                try {
+                    require_once '../includes/ai_config.php';
+                    $aiConfig = AIConfig::getInstance();
+                    
+                    $conversationHistory = $db->fetchAll(
+                        "SELECT role, content FROM ai_messages 
+                        WHERE conversation_id = ? 
+                        ORDER BY created_at ASC 
+                        LIMIT 10",
+                        [$data['conversation_id']]
+                    );
+                    
+                    $prompt = "You are a helpful AI assistant. Previous conversation:\n";
+                    foreach ($conversationHistory as $msg) {
+                        $prompt .= "{$msg['role']}: {$msg['content']}\n";
+                    }
+                    $prompt .= "\nUser: {$data['content']}\n\nAssistant:";
+                    
+                    $aiResponse = $aiConfig->generateContent($prompt, 0.7);
+                } catch (Exception $e) {
+                    $aiResponse = "I'm currently unable to generate a response. Please check your AI API configuration.";
+                }
                 
                 $responseId = $db->insert('ai_messages', [
                     'conversation_id' => $data['conversation_id'],

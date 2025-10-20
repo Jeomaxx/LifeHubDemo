@@ -1,76 +1,223 @@
 # Life Atlas Organizer
 
 ## Overview
-Life Atlas Organizer is a comprehensive personal life management web application designed to centralize over 30+ core life modules into a single, secure dashboard. Built with PHP 8.2+ and PostgreSQL, it empowers users to efficiently manage finances, track assets, monitor health, maintain journals, organize tasks, and track cryptocurrency investments. The application features AI-powered insights using Google Gemini for intelligent financial forecasting, emotional wellness tracking, SMART goal achievement analysis, life event predictions, and relationship insights. It prioritizes security, user experience, and data integrity, offering a holistic, intelligent solution for personal organization and productivity. The latest version (V3.0) introduces professional and AI tools such as a Freelance & Side-Hustle Tracker, Tax Reports & PDF Export, Team Collaboration, Knowledge Vault, Unified Semantic Search, Life Orchestrator (automation engine), Custom Dashboard Builder, Career Portfolio & Resume Generator, and Nutrition AI.
+Life Atlas Organizer is a comprehensive personal life management system built with PHP, PostgreSQL, and modern web technologies. It provides 60+ modules for managing finances, health, career, tasks, goals, and much more, with AI-powered features for insights and automation.
 
-## Recent Updates (October 20, 2025)
-- ✅ **Database Setup**: PostgreSQL database created with 40 fully functional tables
-- ✅ **Import Complete**: Successfully migrated project to Replit environment
-- ✅ **Authentication Verified**: User registration and login tested and working
-- ✅ **UI/UX Enhanced**: Added modern-enhancements.css with animated gradients, glassmorphism, and premium visual effects
-- ✅ **All Modules Verified**: Tested Finance, Goals, Habits, Tasks, Bills, Gym, and other core modules
-- ✅ **Composer Dependencies**: Installed league/oauth2-google and dependencies
-- ✅ **Database Script Created**: setup_database.sh for repeatable deployments
+## Current State
+- **Status**: Fully functional with 41 database tables
+- **Environment**: Replit deployment with PostgreSQL database
+- **PHP Version**: 8.2.23
+- **Database**: PostgreSQL (Neon-backed)
+- **Framework**: Custom PHP with modern CSS/JS
+
+## Recent Changes (October 20, 2025)
+### Database
+- Migrated to Replit environment with 41 tables
+- Created `database_MASTER_COMPLETE.sql` as the single source of truth
+- Database includes all core and V3 feature tables
+- Added rate_limit_log table for API rate limiting
+
+### Features Developed
+- **PDF Resume Generation**: Implemented using Dompdf library
+- **AI Assistant Integration**: Connected to Gemini API via AIConfig class
+- **Rate Limiting**: Fully implemented for API security
+- **Sidebar Navigation**: Enhanced with defensive variable checks
+
+### Libraries Installed
+- `league/oauth2-google` for Google OAuth
+- `dompdf/dompdf` for PDF generation
+
+## Project Architecture
+
+### Directory Structure
+```
+/
+├── api/                    # Backend API endpoints (60+ files)
+├── assets/                 # Static assets (CSS, JS, images)
+│   ├── css/               # Style sheets (style, animations, enhanced-ui)
+│   └── js/                # JavaScript files
+├── attached_assets/        # Generated/uploaded assets
+├── cron/                   # Scheduled tasks
+├── docs/                   # Documentation
+├── exports/                # Generated files (PDFs, CSVs)
+├── includes/               # Core PHP includes
+│   ├── auth.php           # Authentication system
+│   ├── db.php             # Database class (singleton)
+│   ├── config.php         # Configuration
+│   ├── functions.php      # Helper functions
+│   ├── sidebar.php        # Navigation sidebar
+│   ├── header.php         # Page header
+│   ├── footer.php         # Page footer
+│   ├── ai_config.php      # AI/Gemini integration
+│   └── rate_limiter.php   # API rate limiting
+├── lang/                   # Internationalization files
+├── tests/                  # Test files
+├── vendor/                 # Composer dependencies
+├── database_MASTER_COMPLETE.sql  # Complete database schema
+└── *.php                   # Frontend modules (60+ files)
+```
+
+### Database Schema
+The system uses PostgreSQL with 41 tables organized into categories:
+
+**Core Tables:**
+- users, api_tokens, backups, notifications
+
+**Finance Modules:**
+- finance, accounts, bills, budgets, debts, subscriptions, investments, crypto_portfolio, crypto_alerts, tax_documents
+
+**Tasks & Productivity:**
+- tasks, team_tasks, goals, smart_goals, habits, kanban_boards
+
+**Health & Wellness:**
+- health, gym_routines, gym_sessions, gym_exercises, diet_plans, mood_entries, medications, symptoms, water_intake, sleep_tracking
+
+**Career & Professional:**
+- career_skills, portfolio_projects, career_milestones, freelance_clients, freelance_projects, freelance_invoices
+
+**Life Management:**
+- calendar_events, contacts, birthdays, gifts, documents, recipes, vehicles, home_assets
+
+**AI & Analytics:**
+- ai_conversations, ai_messages, ai_briefings, automation_rules, automation_execution_log
 
 ## User Preferences
-Preferred communication style: Simple, everyday language.
+- System uses Tailwind CSS via CDN (note: should migrate to PostCSS for production)
+- Dark/light theme toggle supported
+- Mobile-responsive design
+- PWA capabilities
 
-## System Architecture
+## Module Categories
 
-### Backend Architecture
-**Technology Stack:** PHP 8.2+, PostgreSQL. Employs session-based authentication with secure cookie handling, CSRF token protection, Bcrypt password hashing, and prepared SQL statements.
-**Architectural Pattern:** Traditional MVC-style structure with a module-based organization, allowing each feature to operate independently. Centralized configuration and shared utility functions.
-**Security Design Decisions:** httponly cookies, auto-refreshing CSRF tokens, prepared statements, multi-layer input validation, comprehensive authorization checks (including cross-entity and role-based), and user-scoped queries.
+### 1. Finances (11 modules)
+- Transactions, Accounts, Budgets
+- Bills & Payments, Subscriptions
+- Debt Payoff Planner, Investments
+- Cryptocurrency, Finance Advanced
+- Financial Forecast, Tax Reports & PDF
 
-### Frontend Architecture
-**Technology Choices:** Vanilla JavaScript, CSS custom properties, Chart.js for data visualization, and Tailwind CSS for modern, responsive design. Integrates Lucide Icons and a motion animation library.
-**Theme System:** Dark/Light mode toggle with localStorage persistence.
-**UI/UX Patterns:** Responsive design (mobile-first), fixed topbar, sidebar navigation, modal-based interactions, and a toast notification system. Global search functionality is available.
-**Enhanced UI (New):** Modern gradient backgrounds, glassmorphism effects, animated transitions, enhanced form inputs with focus states, premium button styles with ripple effects, improved card shadows and hover animations. See `assets/css/modern-enhancements.css` for all visual enhancements.
+### 2. Tasks & Projects (3 modules)
+- All Tasks, Kanban Board
+- Pomodoro Timer
 
-### Data Storage
-**Database:** PostgreSQL (Neon), with a comprehensive schema (40 tables) comprising foreign key constraints, cascade deletes, and indexing for performance. Key tables cover user authentication, profiles, and module-specific data.
-**Data Integrity:** Enforced by foreign key relationships and transaction support.
-**Verified Tables:** users, finance, goals, habits, tasks, bills, gym_routines, gym_exercises, gym_sessions, diet_plans, recipes, freelance_clients, freelance_projects, freelance_invoices, team_boards, team_tasks, knowledge_items, financial_accounts, water_intake, mood_entries, sleep_logs, and more.
+### 3. Goals & Habits (3 modules)
+- Goals, SMART Goals
+- Habits
 
-### Module Architecture
-The application integrates over 30+ core modules, including: Dashboard, Assets & Home Management, Bills, Finance, Goals, Habits, Health Dashboard, Gym Routines, Diet Planner, Water Tracker, Investments, Journal, Learning, Subscriptions, Tasks, Cryptocurrency, Gift Ideas, Document Hub, AI Assistant, Security Vault, Device Management, Advanced Analytics, Debt Payoff Planner, Recipe Book & Meal Planner, Vehicle Maintenance, Medication & Supplement Tracker, Symptom Tracker, Personal CRM, Event Planner, Multi-User Family Sharing, and Calendar Sync Integration. Each module operates as a self-contained feature, sharing authentication, authorization, UI components, and a centralized notification system. V3.0 additions include Freelance & Side-Hustle Tracker, Tax Reports, Team Collaboration, Knowledge Vault, Unified Semantic Search, Life Orchestrator, Custom Dashboard Builder, Career Portfolio, and Nutrition AI.
+### 4. Health & Wellness (9 modules)
+- Health Dashboard, Health Records
+- Gym Routines, Diet Plans, Nutrition AI
+- Water Tracker, Mood Tracker
+- Mindfulness Hub, Sleep Tracker
+- Medications, Symptom Tracker
 
-### AI Integration
-Google Gemini API is integrated via an `AIConfig` class to power modules like Financial Forecasting, Mood Tracker & Emotional Insights, SMART Goals Engine, Life Event Predictor, and Relationship Insights, as well as Nutrition AI and AI Report Generator. These modules utilize structured prompts for reliable data parsing and store insights in dedicated database tables.
+### 5. Professional & Career (4 modules)
+- Career Center, Freelance Tracker
+- Portfolio Generator, Team Collaboration
 
-### Universal Import/Export System
-A comprehensive CSV/Excel import/export system supports multiple core modules, offering template generation, validation, and bulk operations for data portability.
+### 6. Learning & Knowledge (3 modules)
+- Learning, Learning Hub
+- Knowledge Vault
 
-### Notification System
-**Multi-Channel Architecture:** Supports email (via SMTP) and Telegram (via Bot API) notifications for scheduled alerts and automated reports.
+### 7. Life Management (9 modules)
+- Journal & Mood, Hobbies
+- Media & Entertainment, Relationships
+- Family Manager, Personal CRM
+- Gift Management, Life Events
 
-### Backup and Recovery
-Features manual and automatic scheduled backups, full database export, and restore capabilities. Data portability is supported through JSON and CSV export formats.
+### 8. Travel & Lifestyle (2 modules)
+- Travel Planner, Travel Journal
 
-### Performance Optimizations
-**Database:** Strategic indexing and query optimization using prepared statements.
-**Frontend:** CSS custom properties, lazy loading, Chart.js for visualizations, and localStorage for client-side state management.
+### 9. Calendar & Events (3 modules)
+- Calendar View, Event Planner
+- Birthdays
 
-## External Dependencies
+### 10. Home & Assets (6 modules)
+- Home Assets, Personal Assets
+- Vehicle Maintenance, Maintenance Logs
+- Documents, Recipe Book
 
-### Third-Party Libraries
-*   **Chart.js:** For data visualization.
-*   **Lucide Icons:** SVG icon library.
-*   **Motion Animation Library:** For UI interactions.
-*   **Tailwind CSS:** For styling and responsive design.
-*   **Tesseract.js:** For OCR (Expense OCR Scanner).
-*   **OAuth2 Google library (via Composer):** For Google Calendar integration.
+### 11. AI & Productivity (7 modules)
+- AI Assistant (Gemini-powered)
+- Daily Briefing, Life Advisor
+- AI Life Map, Life Orchestrator
+- Custom Dashboards, Unified Search
 
-### External Services
-*   **Google Gemini API:** For AI-powered insights.
-*   **SMTP Email Service:** For transactional email notifications.
-*   **Telegram Bot API:** For instant push notifications and real-time alerts.
-*   **CoinGecko API:** For live cryptocurrency price updates.
-*   **Google Calendar API:** For calendar synchronization.
+### 12. Analytics & Reports (2 modules)
+- Analytics, Life Analytics
 
-### Database Service
-*   **PostgreSQL:** The primary database.
+### 13. Security & Privacy (3 modules)
+- Secure Vault, Device Management
+- 2FA Security
 
-### Hosting Requirements
-*   **Hostinger Deployment Specifications:** Requires PHP 8.2+, PostgreSQL database access, a web server (Apache/Nginx), file upload capability, cron job support, and SMTP/external API access.
+### 14. Settings (4 modules)
+- Profile, Import/Export
+- Backup & Restore, Preferences
+
+## API Integration
+
+### Gemini AI (Google)
+- **Status**: Configured via AIConfig class
+- **Environment Variable**: `GEMINI_API_KEY`
+- **Features**: AI Assistant, Mood Analysis, Financial Predictions, Goal Progress Analysis
+
+### Google OAuth
+- **Status**: Configured for authentication
+- **Library**: league/oauth2-google
+- **Features**: Login with Google
+
+## Security Features
+- CSRF protection on all forms
+- Rate limiting on API endpoints
+- Password hashing (bcrypt)
+- Prepared statements (SQL injection prevention)
+- Session management
+- 2FA support
+- Secure vault for sensitive data
+
+## Known Limitations
+1. **Tailwind CSS**: Using CDN in development (should use PostCSS for production)
+2. **Google Calendar Sync**: Placeholder - needs full API implementation
+3. **WhatsApp Integration**: Planned but not yet implemented
+
+## Development Guidelines
+
+### Database Changes
+1. Always update `database_MASTER_COMPLETE.sql`
+2. Use PostgreSQL-compatible SQL
+3. Include proper indexes for performance
+4. Never run destructive SQL without backups
+
+### Adding New Modules
+1. Create frontend PHP file in root
+2. Create corresponding API in `api/` folder
+3. Add to sidebar in `includes/sidebar.php`
+4. Update database schema if needed
+5. Add JavaScript handlers if needed
+
+### Code Conventions
+- Use prepared statements for all database queries
+- Sanitize all user input with `sanitize()` function
+- Use `Auth` class for authentication
+- Use `Database::getInstance()` for DB access
+- Follow existing naming conventions
+- Add error handling and logging
+
+## Deployment
+- **Development**: PHP built-in server on port 5000
+- **Workflow**: Configured via `workflows_set_run_config_tool`
+- **Command**: `php -S 0.0.0.0:5000 -t .`
+
+## Testing
+- Test user created: test@test.com / test123
+- 41 database tables verified and operational
+- All major modules functional
+- PDF generation working (Dompdf)
+- AI integration working (Gemini API)
+- Rate limiting implemented on all API endpoints
+
+## Support & Documentation
+- See `README.md` for feature list
+- See `DATABASE_SETUP_GUIDE.md` for database info
+- See `DEPLOYMENT.md` for deployment instructions
+- See individual module docs in `docs/` folder

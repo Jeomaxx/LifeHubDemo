@@ -408,6 +408,49 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
             <div class="my-2 border-t border-gray-200 dark:border-gray-700"></div>
 
+            <!-- V3.0 Professional & AI Tools -->
+            <div class="sidebar-category">
+                <button class="category-toggle w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-rocket w-5"></i>
+                        <span class="font-medium">V3.0 Professional & AI</span>
+                        <span class="bg-gradient-to-r from-primary to-purple-600 text-white text-xs px-2 py-0.5 rounded-full">NEW</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
+                </button>
+                <div class="category-items pl-11 mt-1 space-y-1 hidden">
+                    <a href="/freelance_tracker.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'freelance_tracker.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span><i class="fas fa-briefcase"></i> Freelance Tracker</span>
+                    </a>
+                    <a href="/tax_reports.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'tax_reports.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span><i class="fas fa-receipt"></i> Tax Reports & PDF</span>
+                    </a>
+                    <a href="/team_collaboration.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'team_collaboration.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span><i class="fas fa-users"></i> Team Collaboration</span>
+                    </a>
+                    <a href="/knowledge_vault.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'knowledge_vault.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span><i class="fas fa-brain"></i> Knowledge Vault</span>
+                    </a>
+                    <a href="/unified_search.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'unified_search.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span><i class="fas fa-search"></i> Unified Search</span>
+                    </a>
+                    <a href="/life_orchestrator.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'life_orchestrator.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span><i class="fas fa-zap"></i> Life Orchestrator</span>
+                    </a>
+                    <a href="/custom_dashboards.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'custom_dashboards.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span><i class="fas fa-layout-dashboard"></i> Custom Dashboards</span>
+                    </a>
+                    <a href="/portfolio_generator.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'portfolio_generator.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span><i class="fas fa-award"></i> Portfolio Generator</span>
+                    </a>
+                    <a href="/nutrition_ai.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'nutrition_ai.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span><i class="fas fa-apple"></i> Nutrition AI</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="my-2 border-t border-gray-200 dark:border-gray-700"></div>
+
             <!-- Analytics & Reports -->
             <a href="/analytics.php" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 <?php echo $currentPage == 'analytics.php' ? 'bg-primary/10 text-primary' : 'text-gray-700 dark:text-gray-300'; ?>">
                 <i class="fas fa-chart-bar w-5"></i>

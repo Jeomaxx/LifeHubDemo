@@ -1,209 +1,7 @@
 # Life Atlas Organizer
 
 ## Overview
-Life Atlas Organizer is a comprehensive personal life management web application designed to centralize over 30+ core life modules into a single, secure dashboard. Built with PHP 8.2+ and PostgreSQL, it empowers users to efficiently manage finances, track assets, monitor health, maintain journals, organize tasks, track cryptocurrency investments, and much more. The application features AI-powered insights using Google Gemini for intelligent financial forecasting, emotional wellness tracking, SMART goal achievement analysis, life event predictions, and relationship insights. It prioritizes security, user experience, and data integrity, offering a holistic, intelligent solution for personal organization and productivity.
-
-## Recent Changes (October 2025)
-
-### System Migration & Verification (October 18, 2025)
-**Status:** Complete - All systems operational
-
-**Import & Setup:**
-- Composer dependencies installed (OAuth2 Google library)
-- PostgreSQL database provisioned and configured
-- 134 database tables created and verified
-- All migration scripts executed successfully
-
-**Comprehensive Deep Check Results:**
-- ✅ Database: 134 tables operational
-- ✅ Authentication: Registration & login tested end-to-end
-- ✅ UI/UX: 73 modules with icons, 44 with dark mode
-- ✅ Responsive: 42 pages mobile-optimized (768px/480px breakpoints)
-- ✅ Interactivity: 23 pages with modals & CRUD operations
-- ✅ Performance: Scripts optimized with defer loading
-- ✅ Animations: Comprehensive CSS animations across all modules
-
-**Security Notes:**
-- Created `DEPLOYMENT_CHECKLIST.md` for production deployment
-- **CRITICAL:** `session.cookie_secure` set to 0 for development (no HTTPS)
-- **MUST** be changed to 1 before production deployment with HTTPS
-- All authentication uses Bcrypt password hashing
-- CSRF protection active on all forms
-
-## Recent Changes (October 2025)
-
-### V3.0 Professional & AI Tools (October 20, 2025)
-**Status:** Core features implemented, security hardened, testing in progress
-
-**Major New Features:**
-1. **Freelance & Side-Hustle Tracker** (`freelance_tracker.php`, `api/freelance.php`) - Complete freelance business management with:
-   - Client relationship management (CRM for freelancers)
-   - Project tracking with status, budgets, and hourly rates
-   - Invoice generation with auto-numbering and payment tracking
-   - Time entry logging with billable/non-billable categorization
-   - Real-time profitability and revenue analytics
-   - Full CRUD operations with cross-entity authorization
-
-2. **Tax Reports & PDF Export** (`tax_reports.php`, `api/tax_reports.php`) - Professional tax management featuring:
-   - Tax document categorization and organization
-   - Deductible expense tracking by category
-   - Year-over-year tax reporting with automatic calculations
-   - Income aggregation and tax estimation (22% default rate)
-   - PDF export functionality for tax season
-   - Integration with finance module for comprehensive reporting
-
-3. **Team Collaboration** (`team_collaboration.php`, `api/team_collaboration.php`) - Multi-user collaboration system with:
-   - Shared boards with role-based permissions (Owner/Admin/Editor/Viewer)
-   - Team task management with Kanban workflow (To Do → In Progress → Review → Done)
-   - Member invitation and management by email
-   - Permission-based CRUD operations with comprehensive authorization
-   - Real-time collaboration on shared projects and tasks
-   - Activity tracking and team analytics
-
-4. **Knowledge Vault** (`knowledge_vault.php`, `api/knowledge_vault.php`) - AI-curated personal knowledge library with:
-   - Multi-format knowledge storage (articles, notes, links, documents)
-   - AI-powered summarization and keyword extraction
-   - Semantic category organization
-   - Favorites and read-count tracking
-   - Knowledge connection mapping
-   - Full-text search with category filtering
-
-5. **Unified Semantic Search** (`unified_search.php`, `api/unified_search.php`) - Cross-module intelligent search featuring:
-   - Global search across all data: tasks, notes, finances, goals, journal entries, documents
-   - Semantic understanding of user queries
-   - Module-specific filtering
-   - Real-time results with relevance ranking
-   - Quick-filter buttons for common searches
-   - Natural language query processing
-
-6. **Life Orchestrator - Automation Engine** (`life_orchestrator.php`, `api/life_orchestrator.php`) - Intelligent automation system with:
-   - Rule-based automation (trigger → condition → action)
-   - Pre-built templates (weekly reports, budget alerts, sleep warnings, bill sync)
-   - Execution history and success rate tracking
-   - Time-saved analytics
-   - Priority-based rule execution
-   - Manual and scheduled automation triggers
-
-7. **Custom Dashboard Builder** (`custom_dashboards.php`) - Personalized dashboard creation with:
-   - Drag-and-drop widget interface
-   - Multiple dashboard support with tab switching
-   - Widget library (stats cards, charts, tasks, calendar, notes, goals)
-   - Edit mode for customization
-   - Responsive grid layout
-   - Dashboard export and import (planned)
-
-8. **Career Portfolio & Resume Generator** (`portfolio_generator.php`) - Professional showcase tool with:
-   - Skills inventory and proficiency tracking
-   - Project portfolio management with media attachments
-   - Career milestone timeline
-   - Automated resume PDF generation
-   - Portfolio website generation (HTML/CSS export)
-   - Experience calculation and analytics
-
-9. **Nutrition AI** (`nutrition_ai.php`) - AI-powered meal planning with:
-   - Personalized nutrition profile (age, gender, height, weight, activity level)
-   - BMR and calorie target calculations
-   - AI-generated meal plans based on dietary restrictions
-   - Macro nutrient tracking (protein, carbs, fats)
-   - Recipe saving and meal plan management
-   - Integration with health data for adaptive recommendations
-
-**Security Hardening:**
-- **Critical Fix:** Resolved vertical privilege escalation vulnerabilities across all V3 APIs
-- Comprehensive authorization checks on all CRUD operations
-- Foreign key validation to prevent cross-tenant data access
-- Affected-row verification on all UPDATE/DELETE operations
-- Role-based access control in Team Collaboration
-- User-scoped queries throughout all endpoints
-- Input validation and SQL injection prevention via prepared statements
-
-**Database Expansion:**
-- Created `database_v3.sql` with 60+ new tables for V3 features
-- Tables for freelance business (clients, projects, invoices, time entries)
-- Team collaboration tables (boards, tasks, members with permissions)
-- Knowledge management tables (vault items, connections, categories)
-- Automation engine tables (rules, execution logs)
-- Tax and nutrition data structures
-- Dashboard and portfolio configuration tables
-
-**Navigation Enhancement:**
-- Added new "V3.0 Professional & AI" category in sidebar with "NEW" badge
-- All 9 major V3 features accessible from main navigation
-- Icon-based navigation for intuitive access
-- Integrated seamlessly with existing module structure
-
-**API Architecture:**
-- RESTful design patterns across all new endpoints
-- Consistent error handling with descriptive messages
-- JSON response format for all operations
-- Authentication required on all endpoints
-- Multi-level authorization (user ownership + role-based permissions)
-- Transaction support for complex operations
-
-**Technical Debt Addressed:**
-- Fixed ALL authorization vulnerabilities identified in security audit
-- Added proper cross-entity reference validation
-- Implemented affected-row checking on mutations
-- Enhanced error messages for better debugging
-
-### V2 Advanced Features (Latest)
-**Status:** Production-ready, all features tested and integrated
-
-1. **Voice Interaction System** (`voice_assistant.php`, `assets/js/voice-assistant.js`) - Speech recognition for hands-free commands, natural language processing, text-to-speech responses
-2. **Security Analytics Dashboard** (`security_analytics.php`) - Login tracking, IP monitoring, anomaly detection, security scoring
-3. **Expense OCR Scanner** (`expense_scanner.php`, `assets/js/receipt-scanner.js`) - Tesseract.js integration for receipt scanning and automated expense extraction
-4. **Multi-Currency Support** (`api/currency.php`) - Real-time exchange rates, currency conversion, multi-currency transactions
-5. **Enhanced PWA Offline Mode** (`assets/js/pwa-offline.js`) - IndexedDB storage for tasks/notes/calendar, automatic background sync, conflict resolution
-6. **Mental Wellness Dashboard** (`mental_wellness_dashboard.php`) - Integrated mood, sleep, and mindfulness tracking with correlations
-7. **Shared Family Dashboard** (`shared_family_dashboard.php`) - Aggregated family data view with health, tasks, and finance overview
-8. **Emergency Mode** (`emergency_mode.php`, `api/emergency.php`) - GPS sharing, health data broadcast to emergency contacts
-9. **Unified Life Analytics** (`unified_analytics.php`) - Cross-dimensional insights correlating productivity, finance, health, and relationships
-10. **Goal Progress Visualizer** (`goal_visualizer.php`) - Heatmaps and timeline graphs for goal tracking
-11. **Telegram Bot** (`telegram_bot.php`) - Command handling with secure webhook authentication, automated reports
-12. **AI Report Generator** (`api/ai_report_generator.php`) - Weekly/monthly automated reports via Telegram or Email
-13. **Database Upgrade V2** (`database_upgrade_v2.sql`) - 30+ new tables for all advanced features
-
-**Security Enhancements:**
-- Telegram webhook token verification (SHA-256 hash)
-- Enhanced authentication and rate limiting
-- Emergency data encryption at rest
-- Security log analysis and anomaly detection
-
-**Bug Fixes:**
-- Fixed PWA IndexedDB initialization (calendarStore reference)
-- Secured Telegram bot webhook endpoint
-- PostgreSQL interval syntax verified
-
-### New Modules Added
-1. **Debt Payoff Planner** (`debts.php`, `api/debts.php`) - Full debt management with payment tracking, snowball/avalanche strategies, and payoff projections
-2. **Recipe Book & Meal Planner** (`recipes.php`, `api/recipes.php`) - Recipe storage, meal planning, and grocery list integration
-3. **Vehicle Maintenance** (`vehicles.php`, `api/vehicles.php`) - Vehicle tracking with maintenance logs, service reminders, and mileage tracking
-4. **Medication & Supplement Tracker** (`medications.php`, `api/medications.php`) - Medication management with intake logging and refill reminders
-5. **Symptom Tracker** (`symptoms.php`, `api/symptoms.php`) - Health symptom logging with severity tracking and pattern analysis
-6. **Personal CRM - Contacts** (`contacts.php`, `api/contacts.php`) - Contact management with relationship tracking and interaction history
-7. **Event Planner** (`events.php`, `api/events.php`) - Event planning with guest lists, checklists, and budget tracking
-8. **Multi-User Family Sharing** (`family_manager.php`, `api/family.php`, `assets/js/family-manager.js`) - Complete family collaboration system with:
-   - Family member management (contact details, relationships, birthdays)
-   - Shared household task tracking with assignments and priorities
-   - Expense sharing with split calculations and payment tracking
-   - Collaborative grocery list management
-   - Full CRUD operations with user-scoped authorization
-9. **Calendar Sync Integration** (`api/calendar_sync.php`, enhanced `calendar.php`) - Google Calendar integration with:
-   - OAuth 2.0 authentication flow
-   - Two-way sync status tracking
-   - ICS export for manual calendar import
-   - Connection management UI with status cards
-
-### Technical Updates
-- Created consolidated JavaScript module (`assets/js/new-modules.js`) for efficient frontend management
-- All new modules implement full CRUD operations with authentication and validation
-- Updated navigation sidebar with all new modules organized by category
-- Enhanced calendar module with day/week/month views and Google Calendar sync
-- Implemented family sharing system with complete REST API (`api/family.php`)
-- Added Composer dependency management with OAuth2 library integration
-- Database expanded with 60+ new tables supporting all new features
-- All API endpoints follow RESTful patterns with proper error handling
-- All CRUD operations use prepared statements with user_id authorization for security
+Life Atlas Organizer is a comprehensive personal life management web application designed to centralize over 30+ core life modules into a single, secure dashboard. Built with PHP 8.2+ and PostgreSQL, it empowers users to efficiently manage finances, track assets, monitor health, maintain journals, organize tasks, and track cryptocurrency investments. The application features AI-powered insights using Google Gemini for intelligent financial forecasting, emotional wellness tracking, SMART goal achievement analysis, life event predictions, and relationship insights. It prioritizes security, user experience, and data integrity, offering a holistic, intelligent solution for personal organization and productivity. The latest version (V3.0) introduces professional and AI tools such as a Freelance & Side-Hustle Tracker, Tax Reports & PDF Export, Team Collaboration, Knowledge Vault, Unified Semantic Search, Life Orchestrator (automation engine), Custom Dashboard Builder, Career Portfolio & Resume Generator, and Nutrition AI.
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.
@@ -213,29 +11,28 @@ Preferred communication style: Simple, everyday language.
 ### Backend Architecture
 **Technology Stack:** PHP 8.2+, PostgreSQL. Employs session-based authentication with secure cookie handling, CSRF token protection, Bcrypt password hashing, and prepared SQL statements.
 **Architectural Pattern:** Traditional MVC-style structure with a module-based organization, allowing each feature to operate independently. Centralized configuration and shared utility functions.
-**Security Design Decisions:** httponly cookies, auto-refreshing CSRF tokens, prepared statements, and multi-layer input validation.
+**Security Design Decisions:** httponly cookies, auto-refreshing CSRF tokens, prepared statements, multi-layer input validation, comprehensive authorization checks (including cross-entity and role-based), and user-scoped queries.
 
 ### Frontend Architecture
-**Technology Choices:** Vanilla JavaScript, CSS custom properties, Chart.js for data visualization, and Tailwind CSS for modern, responsive design. Integrates Lucide Icons and a motion animation library for enhanced UI/UX.
+**Technology Choices:** Vanilla JavaScript, CSS custom properties, Chart.js for data visualization, and Tailwind CSS for modern, responsive design. Integrates Lucide Icons and a motion animation library.
 **Theme System:** Dark/Light mode toggle with localStorage persistence.
 **UI/UX Patterns:** Responsive design (mobile-first), fixed topbar, sidebar navigation, modal-based interactions, and a toast notification system. Global search functionality is available.
 
 ### Data Storage
-**Database:** PostgreSQL, with a schema comprising 40+ tables, foreign key constraints, cascade deletes, and indexing for performance. Key tables cover user authentication, profiles, and module-specific data.
+**Database:** PostgreSQL, with a comprehensive schema (134+ tables) comprising foreign key constraints, cascade deletes, and indexing for performance. Key tables cover user authentication, profiles, and module-specific data.
 **Data Integrity:** Enforced by foreign key relationships and transaction support.
 
 ### Module Architecture
-The application integrates over 25 core modules, including: Dashboard, Assets & Home Management, Bills, Finance, Goals, Habits, Health Dashboard, Gym Routines, Diet Planner, Water Tracker, Investments, Journal, Learning, Subscriptions, Tasks, Cryptocurrency, Gift Ideas, Document Hub, AI Assistant, Security Vault, Device Management, and Advanced Analytics. Each module operates as a self-contained feature, sharing authentication, authorization, UI components, and a centralized notification system. New modules like Work & Career Center, Learning & Knowledge Hub, Household & Family Manager, Travel Planner & Journal, Wellness & Mindfulness Hub, and AI Life Map Dashboard have been added in V2.
+The application integrates over 30+ core modules, including: Dashboard, Assets & Home Management, Bills, Finance, Goals, Habits, Health Dashboard, Gym Routines, Diet Planner, Water Tracker, Investments, Journal, Learning, Subscriptions, Tasks, Cryptocurrency, Gift Ideas, Document Hub, AI Assistant, Security Vault, Device Management, Advanced Analytics, Debt Payoff Planner, Recipe Book & Meal Planner, Vehicle Maintenance, Medication & Supplement Tracker, Symptom Tracker, Personal CRM, Event Planner, Multi-User Family Sharing, and Calendar Sync Integration. Each module operates as a self-contained feature, sharing authentication, authorization, UI components, and a centralized notification system. V3.0 additions include Freelance & Side-Hustle Tracker, Tax Reports, Team Collaboration, Knowledge Vault, Unified Semantic Search, Life Orchestrator, Custom Dashboard Builder, Career Portfolio, and Nutrition AI.
 
 ### AI Integration
-Google Gemini API is integrated via an `AIConfig` class to power 5 AI modules: Financial Forecasting, Mood Tracker & Emotional Insights, SMART Goals Engine, Life Event Predictor, and Relationship Insights. These modules utilize structured prompts for reliable data parsing and store insights in dedicated database tables.
+Google Gemini API is integrated via an `AIConfig` class to power modules like Financial Forecasting, Mood Tracker & Emotional Insights, SMART Goals Engine, Life Event Predictor, and Relationship Insights, as well as Nutrition AI and AI Report Generator. These modules utilize structured prompts for reliable data parsing and store insights in dedicated database tables.
 
 ### Universal Import/Export System
-A comprehensive CSV/Excel import/export system supports 9+ core modules, offering template generation, validation, and bulk operations for data portability.
+A comprehensive CSV/Excel import/export system supports multiple core modules, offering template generation, validation, and bulk operations for data portability.
 
 ### Notification System
-**Multi-Channel Architecture:** Supports email (via SMTP) and Telegram (via Bot API) notifications. Triggers include bill due dates, birthday reminders, and subscription renewals.
-**Automation:** Cron job scripts handle scheduled notifications, automated backups, and recurring event processing.
+**Multi-Channel Architecture:** Supports email (via SMTP) and Telegram (via Bot API) notifications for scheduled alerts and automated reports.
 
 ### Backup and Recovery
 Features manual and automatic scheduled backups, full database export, and restore capabilities. Data portability is supported through JSON and CSV export formats.
@@ -243,24 +40,26 @@ Features manual and automatic scheduled backups, full database export, and resto
 ### Performance Optimizations
 **Database:** Strategic indexing and query optimization using prepared statements.
 **Frontend:** CSS custom properties, lazy loading, Chart.js for visualizations, and localStorage for client-side state management.
-**Caching Strategy:** Session-based caching for user data and localStorage for theme preferences.
 
 ## External Dependencies
 
 ### Third-Party Libraries
-*   **Chart.js:** For data visualization and analytics charts.
-*   **Lucide Icons:** Modern SVG icon library.
-*   **Motion Animation Library:** For smooth UI interactions.
+*   **Chart.js:** For data visualization.
+*   **Lucide Icons:** SVG icon library.
+*   **Motion Animation Library:** For UI interactions.
 *   **Tailwind CSS:** For styling and responsive design.
+*   **Tesseract.js:** For OCR (Expense OCR Scanner).
+*   **OAuth2 Google library (via Composer):** For Google Calendar integration.
 
 ### External Services
-*   **Google Gemini API:** For AI-powered insights and predictions.
+*   **Google Gemini API:** For AI-powered insights.
 *   **SMTP Email Service:** For transactional email notifications.
 *   **Telegram Bot API:** For instant push notifications and real-time alerts.
-*   **CoinGecko API:** (Specific to Cryptocurrency module) for live price updates.
+*   **CoinGecko API:** For live cryptocurrency price updates.
+*   **Google Calendar API:** For calendar synchronization.
 
 ### Database Service
-*   **PostgreSQL:** The primary database, connected via PHP PDO.
+*   **PostgreSQL:** The primary database.
 
 ### Hosting Requirements
 *   **Hostinger Deployment Specifications:** Requires PHP 8.2+, PostgreSQL database access, a web server (Apache/Nginx), file upload capability, cron job support, and SMTP/external API access.

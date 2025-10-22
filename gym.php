@@ -143,7 +143,7 @@ include 'includes/header.php';
 let routines = [];
 
 async function loadRoutines() {
-    const response = await fetch('/api/gym.php?action=list');
+    const response = await fetch('/api/gym.php?type=routines');
     const data = await response.json();
     if (data.success) {
         routines = data.routines;
@@ -212,7 +212,7 @@ document.getElementById('routineForm').addEventListener('submit', async (e) => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
     
-    const response = await fetch('/api/gym.php?action=create', {
+    const response = await fetch('/api/gym.php?type=routines&action=create', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
@@ -228,7 +228,7 @@ document.getElementById('routineForm').addEventListener('submit', async (e) => {
 
 async function deleteRoutine(id) {
     if (!confirm('Delete this routine?')) return;
-    const response = await fetch(`/api/gym.php?id=${id}`, {method: 'DELETE'});
+    const response = await fetch(`/api/gym.php?type=routines&id=${id}`, {method: 'DELETE'});
     const result = await response.json();
     if (result.success) {
         loadRoutines();

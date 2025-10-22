@@ -92,25 +92,23 @@ include 'includes/header.php';
     <div class="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full p-6">
         <h2 class="text-2xl font-bold mb-4 dark:text-white">Add Meal Plan</h2>
         <form id="dietForm" class="space-y-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-medium mb-1 dark:text-gray-300">Meal Type*</label>
-                    <select name="meal_type" required class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
-                        <option value="">Select meal type</option>
-                        <option value="breakfast">Breakfast</option>
-                        <option value="lunch">Lunch</option>
-                        <option value="dinner">Dinner</option>
-                        <option value="snack">Snack</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium mb-1 dark:text-gray-300">Date*</label>
-                    <input type="date" name="plan_date" value="<?php echo date('Y-m-d'); ?>" required class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
-                </div>
+            <div>
+                <label class="block text-sm font-medium mb-1 dark:text-gray-300">Meal Type*</label>
+                <select name="meal_type" required class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                    <option value="">Select meal type</option>
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="snack">Snack</option>
+                </select>
             </div>
             <div>
-                <label class="block text-sm font-medium mb-1 dark:text-gray-300">Foods*</label>
-                <textarea name="foods" required rows="2" placeholder="e.g., Oatmeal, Banana, Almonds" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600"></textarea>
+                <label class="block text-sm font-medium mb-1 dark:text-gray-300">Meal Name*</label>
+                <input type="text" name="meal_name" required placeholder="e.g., Oatmeal with Banana and Almonds" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1 dark:text-gray-300">Meal Date*</label>
+                <input type="date" name="meal_date" value="<?php echo date('Y-m-d'); ?>" required class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -144,11 +142,11 @@ const dailyGoal = 2000;
 
 async function loadPlans() {
     const date = document.getElementById('filterDate').value;
-    const response = await fetch(`/api/diet.php?action=day&date=${date}`);
+    const response = await fetch(`/api/diet.php?type=meals&date=${date}`);
     const data = await response.json();
     if (data.success) {
-        plans = data.plans;
-        updateStats(data.plans);
+        plans = data.meals;
+        updateStats(data.meals);
         renderPlans();
     }
 }
@@ -176,9 +174,9 @@ function renderPlans() {
                 <div class="flex-1">
                     <div class="flex items-center gap-2">
                         <h3 class="font-semibold dark:text-white capitalize">${plan.meal_type}</h3>
-                        <span class="text-sm text-gray-500">${new Date(plan.plan_date).toLocaleDateString()}</span>
+                        <span class="text-sm text-gray-500">${new Date(plan.meal_date).toLocaleDateString()}</span>
                     </div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">${plan.foods}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">${plan.meal_name || ''}</p>
                     <div class="flex gap-4 mt-2 text-sm text-gray-600 dark:text-gray-400">
                         ${plan.calories ? `<span><i class="fas fa-fire text-orange-500"></i> ${plan.calories} cal</span>` : ''}
                         ${plan.protein ? `<span><i class="fas fa-drumstick-bite text-red-500"></i> ${plan.protein}g protein</span>` : ''}
@@ -207,7 +205,7 @@ document.getElementById('dietForm').addEventListener('submit', async (e) => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
     
-    const response = await fetch('/api/diet.php?action=create', {
+    const response = await fetch('/api/diet.php?type=meals&action=create', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
@@ -222,12 +220,12 @@ document.getElementById('dietForm').addEventListener('submit', async (e) => {
 });
 
 async function deletePlan(id) {
-    if (!confirm('Delete this meal plan?')) return;
-    const response = await fetch(`/api/diet.php?id=${id}`, {method: 'DELETE'});
+    if (!confirm('Delete this meal?')) return;
+    const response = await fetch(`/api/diet.php?type=meals&id=${id}`, {method: 'DELETE'});
     const result = await response.json();
     if (result.success) {
         loadPlans();
-        showToast('Meal plan deleted', 'success');
+        showToast('Meal deleted', 'success');
     }
 }
 

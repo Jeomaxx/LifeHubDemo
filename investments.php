@@ -374,15 +374,21 @@ async function saveInvestment(event) {
     const id = data.id;
     delete data.id;
     
-    const url = id ? `/api/crud.php?table=investments&id=${id}` : '/api/crud.php?table=investments';
-    const method = id ? 'PUT' : 'POST';
+    const action = id ? 'update' : 'create';
+    const url = `/api/crud.php?module=investments&action=${action}`;
     
-    data.user_id = '<?php echo $userId; ?>';
+    if (id) {
+        data.id = id;
+    }
     
     try {
+        const csrfToken = '<?php echo $auth->generateCSRFToken(); ?>';
         const response = await fetch(url, {
-            method: method,
-            headers: {'Content-Type': 'application/json'},
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': csrfToken
+            },
             body: JSON.stringify(data)
         });
         
@@ -402,8 +408,14 @@ async function deleteInvestment(id) {
     if (!confirm('Are you sure you want to delete this investment?')) return;
     
     try {
-        const response = await fetch(`/api/crud.php?table=investments&id=${id}`, {
-            method: 'DELETE'
+        const csrfToken = '<?php echo $auth->generateCSRFToken(); ?>';
+        const response = await fetch(`/api/crud.php?module=investments&action=delete`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': csrfToken
+            },
+            body: JSON.stringify({ id: id })
         });
         
         const result = await response.json();

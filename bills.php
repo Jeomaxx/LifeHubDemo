@@ -509,7 +509,7 @@ document.getElementById('billForm').addEventListener('submit', async function(e)
     formData.forEach((value, key) => {
         if (key === 'recurring' || key === 'auto_pay') {
             data[key] = value === 'on' || value === '1';
-        } else if (key !== 'csrf_token') {
+        } else {
             data[key] = value;
         }
     });

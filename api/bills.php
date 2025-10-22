@@ -28,11 +28,20 @@ if (!$auth->isLoggedIn()) {
 $userId = $auth->getUserId();
 $db = Database::getInstance();
 
+// Read and cache input for POST/PUT requests
+$cachedInput = null;
+if (in_array($method, ['POST', 'PUT'])) {
+    $cachedInput = json_decode(file_get_contents('php://input'), true) ?: [];
+}
+
 // CSRF protection for non-GET requests
-if ($method !== 'GET' && !verifyCsrfToken($_POST['csrf_token'] ?? $_GET['csrf_token'] ?? '')) {
-    http_response_code(403);
-    echo json_encode(['error' => 'Invalid CSRF token']);
-    exit;
+if ($method !== 'GET') {
+    $csrfToken = $cachedInput['csrf_token'] ?? $_POST['csrf_token'] ?? $_GET['csrf_token'] ?? '';
+    if (!verifyCsrfToken($csrfToken)) {
+        http_response_code(403);
+        echo json_encode(['error' => 'Invalid CSRF token']);
+        exit;
+    }
 }
 
 // Route handling
@@ -116,7 +125,8 @@ function handlePost($action, $userId, $db) {
 }
 
 function handlePut($userId, $db) {
-    $input = json_decode(file_get_contents('php://input'), true);
+    global $cachedInput;
+    $input = $cachedInput ?: [];
     updateBill($userId, $db, $input);
 }
 
@@ -286,7 +296,8 @@ function getBillsByVendor($userId, $db) {
 }
 
 function createBill($userId, $db) {
-    $input = json_decode(file_get_contents('php://input'), true);
+    global $cachedInput;
+    $input = $cachedInput ?: [];
     
     // Validate required fields
     $required = ['name', 'amount', 'due_date'];
@@ -408,7 +419,8 @@ function deleteBill($userId, $db, $billId) {
 }
 
 function markBillPaid($userId, $db) {
-    $input = json_decode(file_get_contents('php://input'), true);
+    global $cachedInput;
+    $input = $cachedInput ?: [];
     $billId = $input['bill_id'] ?? null;
     
     if (!$billId) {
@@ -481,7 +493,8 @@ function markBillPaid($userId, $db) {
 }
 
 function bulkMarkPaid($userId, $db) {
-    $input = json_decode(file_get_contents('php://input'), true);
+    global $cachedInput;
+    $input = $cachedInput ?: [];
     $billIds = $input['bill_ids'] ?? [];
     
     if (empty($billIds)) {
@@ -516,7 +529,8 @@ function bulkMarkPaid($userId, $db) {
 }
 
 function sendBillReminder($userId, $db) {
-    $input = json_decode(file_get_contents('php://input'), true);
+    global $cachedInput;
+    $input = $cachedInput ?: [];
     $billId = $input['bill_id'] ?? null;
     
     if (!$billId) {
@@ -552,7 +566,8 @@ function sendBillReminder($userId, $db) {
 }
 
 function generateNextRecurring($userId, $db) {
-    $input = json_decode(file_get_contents('php://input'), true);
+    global $cachedInput;
+    $input = $cachedInput ?: [];
     $billId = $input['bill_id'] ?? null;
     
     if (!$billId) {

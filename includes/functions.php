@@ -182,6 +182,13 @@ function getStats($userId) {
     ];
 }
 
+// Helper function to verify CSRF token
+function verifyCsrfToken($token) {
+    require_once __DIR__ . '/auth.php';
+    $auth = new Auth();
+    return $auth->validateCSRFToken($token);
+}
+
 // Helper function to call Auth::requireLogin() for backwards compatibility
 if (!function_exists('requireLogin')) {
     function requireLogin() {

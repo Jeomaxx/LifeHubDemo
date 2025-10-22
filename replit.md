@@ -1,223 +1,108 @@
-# Life Atlas Organizer
+# Life Atlas Organizer - Replit Environment Setup
 
-## Overview
-Life Atlas Organizer is a comprehensive personal life management system built with PHP, PostgreSQL, and modern web technologies. It provides 60+ modules for managing finances, health, career, tasks, goals, and much more, with AI-powered features for insights and automation.
+## Project Overview
+Life Atlas Organizer is a comprehensive personal life management system built with PHP and PostgreSQL. It provides tools for managing finances, health, tasks, goals, and more.
 
-## Current State
-- **Status**: Fully functional with 41 database tables
-- **Environment**: Replit deployment with PostgreSQL database
-- **PHP Version**: 8.2.23
+## Technology Stack
+- **Backend**: PHP 8.3
 - **Database**: PostgreSQL (Neon-backed)
-- **Framework**: Custom PHP with modern CSS/JS
+- **Frontend**: HTML, CSS (Tailwind), JavaScript
+- **Dependencies**: Composer (league/oauth2-google, dompdf)
+- **Server**: PHP Built-in Development Server
 
-## Recent Changes (October 20, 2025)
-### Database
-- Migrated to Replit environment with 41 tables
-- Created `database_MASTER_COMPLETE.sql` as the single source of truth
-- Database includes all core and V3 feature tables
-- Added rate_limit_log table for API rate limiting
+## Environment Setup (Completed)
 
-### Features Developed
-- **PDF Resume Generation**: Implemented using Dompdf library
-- **AI Assistant Integration**: Connected to Gemini API via AIConfig class
-- **Rate Limiting**: Fully implemented for API security
-- **Sidebar Navigation**: Enhanced with defensive variable checks
+### ✅ Installation Steps Completed
+1. **PHP 8.3** installed with language module
+2. **Composer dependencies** installed:
+   - league/oauth2-google ^4.0
+   - dompdf/dompdf ^3.1
+3. **PostgreSQL database** created and configured
+4. **Database schema** imported from `database_COMPLETE_MASTER.sql`
+5. **Database fixes** applied:
+   - Added `timezone` column to users table
+   - Added `theme_preference` column to users table
 
-### Libraries Installed
-- `league/oauth2-google` for Google OAuth
-- `dompdf/dompdf` for PDF generation
+### ✅ Bug Fixes Applied
+**Sidebar Navigation Issue (Fixed)**
+- **Problem**: Clicking sidebar category toggles did nothing; submenus wouldn't expand
+- **Root Cause**: Duplicate event listeners in both `includes/sidebar.php` and `assets/js/main.js` were firing simultaneously, causing toggles to cancel each other out
+- **Solution**: Removed duplicate category-toggle event listeners from `assets/js/main.js` (lines 79-96), keeping only the implementation in `sidebar.php`
+- **Status**: ✅ Fixed - Sidebar now expands/collapses properly
 
-## Project Architecture
-
-### Directory Structure
+## Project Structure
 ```
 /
-├── api/                    # Backend API endpoints (60+ files)
-├── assets/                 # Static assets (CSS, JS, images)
-│   ├── css/               # Style sheets (style, animations, enhanced-ui)
-│   └── js/                # JavaScript files
-├── attached_assets/        # Generated/uploaded assets
-├── cron/                   # Scheduled tasks
-├── docs/                   # Documentation
-├── exports/                # Generated files (PDFs, CSVs)
-├── includes/               # Core PHP includes
-│   ├── auth.php           # Authentication system
-│   ├── db.php             # Database class (singleton)
-│   ├── config.php         # Configuration
-│   ├── functions.php      # Helper functions
-│   ├── sidebar.php        # Navigation sidebar
-│   ├── header.php         # Page header
-│   ├── footer.php         # Page footer
-│   ├── ai_config.php      # AI/Gemini integration
-│   └── rate_limiter.php   # API rate limiting
-├── lang/                   # Internationalization files
-├── tests/                  # Test files
-├── vendor/                 # Composer dependencies
-├── database_MASTER_COMPLETE.sql  # Complete database schema
-└── *.php                   # Frontend modules (60+ files)
+├── includes/          # Core PHP includes (auth, db, config, sidebar)
+├── api/              # API endpoints
+├── assets/           # Static assets (CSS, JS, images)
+│   ├── css/
+│   └── js/
+├── cron/             # Cron job scripts
+├── docs/             # Documentation
+├── *.php             # Main application pages
+├── composer.json     # PHP dependencies
+└── database_*.sql    # Database schemas
 ```
 
-### Database Schema
-The system uses PostgreSQL with 41 tables organized into categories:
+## Key Files
+- `includes/config.php` - Configuration (DB connection, security settings)
+- `includes/db.php` - Database connection handler (PDO wrapper)
+- `includes/auth.php` - Authentication and session management
+- `includes/sidebar.php` - Navigation sidebar with dynamic menus
+- `assets/js/main.js` - Main JavaScript functionality
+- `dashboard.php` - Main dashboard page
 
-**Core Tables:**
-- users, api_tokens, backups, notifications
+## Database Configuration
+The application uses PostgreSQL with the following environment variables:
+- `DATABASE_URL` - Full connection string
+- `PGHOST` - Database host
+- `PGPORT` - Database port (5432)
+- `PGDATABASE` - Database name
+- `PGUSER` - Database user
+- `PGPASSWORD` - Database password
 
-**Finance Modules:**
-- finance, accounts, bills, budgets, debts, subscriptions, investments, crypto_portfolio, crypto_alerts, tax_documents
+Connection is handled through the `Database` class in `includes/db.php`.
 
-**Tasks & Productivity:**
-- tasks, team_tasks, goals, smart_goals, habits, kanban_boards
+## Authentication
+- Session-based authentication
+- Password hashing with bcrypt
+- CSRF token protection
+- Optional Google OAuth integration
+- Optional TOTP (2FA) support
 
-**Health & Wellness:**
-- health, gym_routines, gym_sessions, gym_exercises, diet_plans, mood_entries, medications, symptoms, water_intake, sleep_tracking
+## Running the Application
+The PHP development server is configured to run on port 5000:
+```bash
+php -S 0.0.0.0:5000 -t .
+```
 
-**Career & Professional:**
-- career_skills, portfolio_projects, career_milestones, freelance_clients, freelance_projects, freelance_invoices
+Access the application at: `http://localhost:5000`
 
-**Life Management:**
-- calendar_events, contacts, birthdays, gifts, documents, recipes, vehicles, home_assets
+## Test User Credentials
+- Email: `test@example.com`
+- Password: `password`
+- ID: 1
 
-**AI & Analytics:**
-- ai_conversations, ai_messages, ai_briefings, automation_rules, automation_execution_log
+## Current Status
+✅ **Project is fully operational**
+- Server running on port 5000
+- Database connected and populated
+- Dependencies installed
+- All critical bugs fixed
+- Ready for development and testing
 
-## User Preferences
-- System uses Tailwind CSS via CDN (note: should migrate to PostCSS for production)
-- Dark/light theme toggle supported
-- Mobile-responsive design
-- PWA capabilities
+## Recent Changes (October 22, 2025)
+- Migrated from external environment to Replit
+- Fixed sidebar navigation toggle functionality
+- Added missing database columns for user preferences
+- Created test user for development
+- Verified all core functionality working
 
-## Module Categories
+## Known Notes
+- Tailwind CSS is loaded from CDN (consider installing locally for production)
+- Google OAuth requires `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` environment variables
+- Session cookies are set to non-secure mode for development (change in production)
 
-### 1. Finances (11 modules)
-- Transactions, Accounts, Budgets
-- Bills & Payments, Subscriptions
-- Debt Payoff Planner, Investments
-- Cryptocurrency, Finance Advanced
-- Financial Forecast, Tax Reports & PDF
-
-### 2. Tasks & Projects (3 modules)
-- All Tasks, Kanban Board
-- Pomodoro Timer
-
-### 3. Goals & Habits (3 modules)
-- Goals, SMART Goals
-- Habits
-
-### 4. Health & Wellness (9 modules)
-- Health Dashboard, Health Records
-- Gym Routines, Diet Plans, Nutrition AI
-- Water Tracker, Mood Tracker
-- Mindfulness Hub, Sleep Tracker
-- Medications, Symptom Tracker
-
-### 5. Professional & Career (4 modules)
-- Career Center, Freelance Tracker
-- Portfolio Generator, Team Collaboration
-
-### 6. Learning & Knowledge (3 modules)
-- Learning, Learning Hub
-- Knowledge Vault
-
-### 7. Life Management (9 modules)
-- Journal & Mood, Hobbies
-- Media & Entertainment, Relationships
-- Family Manager, Personal CRM
-- Gift Management, Life Events
-
-### 8. Travel & Lifestyle (2 modules)
-- Travel Planner, Travel Journal
-
-### 9. Calendar & Events (3 modules)
-- Calendar View, Event Planner
-- Birthdays
-
-### 10. Home & Assets (6 modules)
-- Home Assets, Personal Assets
-- Vehicle Maintenance, Maintenance Logs
-- Documents, Recipe Book
-
-### 11. AI & Productivity (7 modules)
-- AI Assistant (Gemini-powered)
-- Daily Briefing, Life Advisor
-- AI Life Map, Life Orchestrator
-- Custom Dashboards, Unified Search
-
-### 12. Analytics & Reports (2 modules)
-- Analytics, Life Analytics
-
-### 13. Security & Privacy (3 modules)
-- Secure Vault, Device Management
-- 2FA Security
-
-### 14. Settings (4 modules)
-- Profile, Import/Export
-- Backup & Restore, Preferences
-
-## API Integration
-
-### Gemini AI (Google)
-- **Status**: Configured via AIConfig class
-- **Environment Variable**: `GEMINI_API_KEY`
-- **Features**: AI Assistant, Mood Analysis, Financial Predictions, Goal Progress Analysis
-
-### Google OAuth
-- **Status**: Configured for authentication
-- **Library**: league/oauth2-google
-- **Features**: Login with Google
-
-## Security Features
-- CSRF protection on all forms
-- Rate limiting on API endpoints
-- Password hashing (bcrypt)
-- Prepared statements (SQL injection prevention)
-- Session management
-- 2FA support
-- Secure vault for sensitive data
-
-## Known Limitations
-1. **Tailwind CSS**: Using CDN in development (should use PostCSS for production)
-2. **Google Calendar Sync**: Placeholder - needs full API implementation
-3. **WhatsApp Integration**: Planned but not yet implemented
-
-## Development Guidelines
-
-### Database Changes
-1. Always update `database_MASTER_COMPLETE.sql`
-2. Use PostgreSQL-compatible SQL
-3. Include proper indexes for performance
-4. Never run destructive SQL without backups
-
-### Adding New Modules
-1. Create frontend PHP file in root
-2. Create corresponding API in `api/` folder
-3. Add to sidebar in `includes/sidebar.php`
-4. Update database schema if needed
-5. Add JavaScript handlers if needed
-
-### Code Conventions
-- Use prepared statements for all database queries
-- Sanitize all user input with `sanitize()` function
-- Use `Auth` class for authentication
-- Use `Database::getInstance()` for DB access
-- Follow existing naming conventions
-- Add error handling and logging
-
-## Deployment
-- **Development**: PHP built-in server on port 5000
-- **Workflow**: Configured via `workflows_set_run_config_tool`
-- **Command**: `php -S 0.0.0.0:5000 -t .`
-
-## Testing
-- Test user created: test@test.com / test123
-- 41 database tables verified and operational
-- All major modules functional
-- PDF generation working (Dompdf)
-- AI integration working (Gemini API)
-- Rate limiting implemented on all API endpoints
-
-## Support & Documentation
-- See `README.md` for feature list
-- See `DATABASE_SETUP_GUIDE.md` for database info
-- See `DEPLOYMENT.md` for deployment instructions
-- See individual module docs in `docs/` folder
+## Next Steps for Development
+The project is ready for feature development and improvements. All import and setup tasks are complete.

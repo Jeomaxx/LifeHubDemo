@@ -76,25 +76,6 @@ function initSidebar() {
         });
     });
     
-    // Category toggle functionality
-    const categoryToggles = document.querySelectorAll('.category-toggle');
-    categoryToggles.forEach(toggle => {
-        toggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            const categoryItems = this.nextElementSibling;
-            const chevron = this.querySelector('i:last-child');
-            
-            if (categoryItems && categoryItems.classList.contains('category-items')) {
-                categoryItems.classList.toggle('hidden');
-                if (chevron) {
-                    chevron.style.transform = categoryItems.classList.contains('hidden') 
-                        ? 'rotate(0deg)' 
-                        : 'rotate(90deg)';
-                }
-            }
-        });
-    });
-    
     // Auto-open the category containing the active page
     const currentPath = window.location.pathname;
     const activeLinks = document.querySelectorAll('.category-items a');

@@ -116,6 +116,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/crypto.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'crypto.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Cryptocurrency</span>
                     </a>
+                    <a href="/expense_scanner.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'expense_scanner.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Expense Scanner</span>
+                    </a>
                     <a href="/finance_advanced.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'finance_advanced.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Finance Advanced</span>
                     </a>
@@ -177,6 +180,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     </a>
                     <a href="/smart_goals.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'smart_goals.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>SMART Goals</span>
+                    </a>
+                    <a href="/goal_visualizer.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'goal_visualizer.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Goal Visualizer</span>
                     </a>
                     <a href="/habits.php" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'habits.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Habits</span>
@@ -431,18 +437,21 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </div>
             </div>
             
-            <!-- AI & Productivity Category -->
+            <!-- AI & Automation Category -->
             <div class="sidebar-category">
                 <button class="category-toggle w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
                     <div class="flex items-center gap-3">
                         <i class="fas fa-robot w-5"></i>
-                        <span class="font-medium">AI & Productivity</span>
+                        <span class="font-medium">AI & Automation</span>
                     </div>
                     <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
                 </button>
                 <div class="category-items pl-11 mt-1 space-y-1 hidden">
                     <a href="/ai_assistant.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'ai_assistant.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>AI Assistant</span>
+                    </a>
+                    <a href="/voice_assistant.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'voice_assistant.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Voice Assistant</span>
                     </a>
                     <a href="/ai_briefing.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'ai_briefing.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Daily Briefing</span>
@@ -456,28 +465,66 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <a href="/life_orchestrator.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'life_orchestrator.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Life Orchestrator</span>
                     </a>
+                    <a href="/unified_search.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'unified_search.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Unified Search</span>
+                    </a>
                     <a href="/custom_dashboards.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'custom_dashboards.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
                         <span>Custom Dashboards</span>
                     </a>
-                    <a href="/unified_search.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'unified_search.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
-                        <span>Unified Search</span>
+                </div>
+            </div>
+            
+            <!-- Emergency & Security Category -->
+            <div class="sidebar-category">
+                <button class="category-toggle w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-exclamation-triangle w-5 text-red-600"></i>
+                        <span class="font-medium">Emergency & Safety</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
+                </button>
+                <div class="category-items pl-11 mt-1 space-y-1 hidden">
+                    <a href="/emergency_mode.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'emergency_mode.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Emergency Mode</span>
+                    </a>
+                    <a href="/health_check.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'health_check.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Health Check</span>
                     </a>
                 </div>
             </div>
 
             <div class="my-2 border-t border-gray-200 dark:border-gray-700"></div>
 
-            <!-- Analytics & Reports -->
-            <a href="/analytics.php" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 <?php echo $currentPage == 'analytics.php' ? 'bg-primary/10 text-primary' : 'text-gray-700 dark:text-gray-300'; ?>">
-                <i class="fas fa-chart-bar w-5"></i>
-                <span class="font-medium">Analytics</span>
-            </a>
-            
-            <!-- Life Analytics -->
-            <a href="/life_analytics.php" class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 <?php echo $currentPage == 'life_analytics.php' ? 'bg-primary/10 text-primary' : 'text-gray-700 dark:text-gray-300'; ?>">
-                <i class="fas fa-chart-pie w-5"></i>
-                <span class="font-medium">Life Analytics</span>
-            </a>
+            <!-- Analytics & Reports Category -->
+            <div class="sidebar-category">
+                <button class="category-toggle w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-chart-bar w-5"></i>
+                        <span class="font-medium">Analytics & Reports</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
+                </button>
+                <div class="category-items pl-11 mt-1 space-y-1 hidden">
+                    <a href="/analytics.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'analytics.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Analytics Dashboard</span>
+                    </a>
+                    <a href="/analytics_dashboard.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'analytics_dashboard.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Advanced Analytics</span>
+                    </a>
+                    <a href="/life_analytics.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'life_analytics.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Life Analytics</span>
+                    </a>
+                    <a href="/unified_analytics.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'unified_analytics.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Unified Analytics</span>
+                    </a>
+                    <a href="/mental_wellness_dashboard.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'mental_wellness_dashboard.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Mental Wellness</span>
+                    </a>
+                    <a href="/security_analytics.php" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm <?php echo $currentPage == 'security_analytics.php' ? 'bg-primary/10 text-primary' : 'text-gray-600 dark:text-gray-400'; ?>">
+                        <span>Security Analytics</span>
+                    </a>
+                </div>
+            </div>
 
             <!-- Notifications -->
             <a href="/notifications.php" class="flex items-center justify-between gap-3 px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 <?php echo $currentPage == 'notifications.php' ? 'bg-primary/10 text-primary' : 'text-gray-700 dark:text-gray-300'; ?>">

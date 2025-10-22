@@ -3,12 +3,15 @@ document.addEventListener('DOMContentLoaded', function() {
     loadAutomationStats();
 });
 
+let currentRules = [];
+
 async function loadRules() {
     try {
         const response = await fetch('/api/life_orchestrator.php?action=rules');
         const result = await response.json();
         if (result.success) {
-            renderRules(result.data || []);
+            currentRules = result.data || [];
+            renderRules(currentRules);
         }
     } catch (error) {
         console.error('Error loading rules:', error);
@@ -103,7 +106,12 @@ function closeRuleModal() {
     if (modal) {
         modal.classList.add('hidden');
         modal.classList.remove('flex');
-        document.getElementById('ruleForm')?.reset();
+    }
+    
+    const form = document.getElementById('ruleForm');
+    if (form) {
+        form.reset();
+        delete form.dataset.editId;
     }
 }
 
@@ -111,36 +119,60 @@ async function saveRule() {
     const ruleName = document.getElementById('ruleName').value;
     const triggerType = document.getElementById('triggerType').value;
     const actionType = document.getElementById('actionType').value;
-    const conditions = document.getElementById('conditions').value;
+    const conditionsText = document.getElementById('conditions')?.value || '';
     
     if (!ruleName || !triggerType || !actionType) {
         showToast('error', 'Error', 'Please fill in all required fields');
         return;
     }
     
+    let triggerConditions = {};
+    let actionParameters = {};
+    
+    if (conditionsText) {
+        try {
+            const parsed = JSON.parse(conditionsText);
+            triggerConditions = parsed;
+            actionParameters = parsed;
+        } catch (e) {
+            triggerConditions = { raw: conditionsText };
+            actionParameters = { raw: conditionsText };
+        }
+    }
+    
+    const form = document.getElementById('ruleForm');
+    const editId = form?.dataset?.editId;
+    
+    const action = editId ? 'update-rule' : 'create-rule';
+    const requestBody = {
+        rule_name: ruleName,
+        description: '',
+        trigger_type: triggerType,
+        trigger_conditions: triggerConditions,
+        action_type: actionType,
+        action_parameters: actionParameters,
+        is_active: true
+    };
+    
+    if (editId) {
+        requestBody.id = editId;
+    }
+    
     try {
-        const response = await fetch('/api/life_orchestrator.php?action=create-rule', {
+        const response = await fetch(`/api/life_orchestrator.php?action=${action}`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                rule_name: ruleName,
-                description: '',
-                trigger_type: triggerType,
-                trigger_conditions: {},
-                action_type: actionType,
-                action_parameters: {conditions: conditions},
-                is_active: true
-            })
+            body: JSON.stringify(requestBody)
         });
         
         const result = await response.json();
         if (result.success) {
-            showToast('success', 'Success', 'Rule created successfully');
+            showToast('success', 'Success', editId ? 'Rule updated successfully' : 'Rule created successfully');
             closeRuleModal();
             loadRules();
             loadAutomationStats();
         } else {
-            showToast('error', 'Error', result.message || 'Failed to create rule');
+            showToast('error', 'Error', result.message || 'Failed to save rule');
         }
     } catch (error) {
         console.error('Error saving rule:', error);
@@ -172,46 +204,54 @@ async function toggleRule(id, isActive) {
     }
 }
 
-async function editRule(id) {
-    try {
-        const response = await fetch(`/api/life_orchestrator.php?action=get_rule&id=${id}`);
-        const result = await response.json();
-        if (result.success && result.rule) {
-            populateEditForm(result.rule);
-        }
-    } catch (error) {
-        console.error('Error loading rule:', error);
+function editRule(id) {
+    const rule = currentRules.find(r => r.id == id);
+    if (!rule) {
+        showToast('error', 'Error', 'Rule not found');
+        return;
     }
-}
-
-function populateEditForm(rule) {
-    document.getElementById('ruleName').value = rule.rule_name;
-    document.getElementById('triggerType').value = rule.trigger_type;
-    document.getElementById('actionType').value = rule.action_type;
-    document.getElementById('conditions').value = rule.conditions || '';
+    
+    document.getElementById('ruleName').value = rule.rule_name || '';
+    document.getElementById('triggerType').value = rule.trigger_type || '';
+    document.getElementById('actionType').value = rule.action_type || '';
+    
+    const conditionsField = document.getElementById('conditions');
+    if (conditionsField) {
+        try {
+            const conditions = typeof rule.trigger_conditions === 'string' 
+                ? rule.trigger_conditions 
+                : JSON.stringify(rule.trigger_conditions || {});
+            conditionsField.value = conditions;
+        } catch (e) {
+            conditionsField.value = '';
+        }
+    }
     
     const form = document.getElementById('ruleForm');
-    form.dataset.editId = rule.id;
+    if (form) {
+        form.dataset.editId = rule.id;
+    }
+    
     openRuleModal();
 }
 
 async function testRule(id) {
     try {
-        showToast('info', 'Testing', 'Testing automation rule...');
-        const response = await fetch('/api/life_orchestrator.php', {
+        showToast('info', 'Testing', 'Executing automation rule...');
+        const response = await fetch('/api/life_orchestrator.php?action=execute-rule', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                action: 'test_rule',
                 id: id
             })
         });
         
         const result = await response.json();
         if (result.success) {
-            showToast('success', 'Test Complete', result.message || 'Rule tested successfully');
+            showToast('success', 'Test Complete', result.message || 'Rule executed successfully');
+            loadAutomationStats();
         } else {
-            showToast('error', 'Test Failed', result.message || 'Rule test failed');
+            showToast('error', 'Test Failed', result.message || 'Rule execution failed');
         }
     } catch (error) {
         console.error('Error testing rule:', error);
@@ -219,27 +259,34 @@ async function testRule(id) {
     }
 }
 
-async function deleteRule(id) {
-    if (!confirm('Delete this automation rule?')) return;
+async function deleteRule(id, skipConfirm = false) {
+    if (!skipConfirm && !confirm('Delete this automation rule?')) return false;
     
     try {
-        const response = await fetch('/api/life_orchestrator.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                action: 'delete_rule',
-                id: id
-            })
+        const response = await fetch(`/api/life_orchestrator.php?id=${id}`, {
+            method: 'DELETE'
         });
         
         const result = await response.json();
         if (result.success) {
-            showToast('success', 'Success', 'Rule deleted');
-            loadRules();
-            loadAutomationStats();
+            if (!skipConfirm) {
+                showToast('success', 'Success', 'Rule deleted');
+                loadRules();
+                loadAutomationStats();
+            }
+            return true;
+        } else {
+            if (!skipConfirm) {
+                showToast('error', 'Error', result.message || 'Failed to delete rule');
+            }
+            return false;
         }
     } catch (error) {
         console.error('Error deleting rule:', error);
+        if (!skipConfirm) {
+            showToast('error', 'Error', 'Failed to delete rule');
+        }
+        return false;
     }
 }
 

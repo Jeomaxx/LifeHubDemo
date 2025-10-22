@@ -72,6 +72,23 @@ try {
                     throw new Exception('Rule not found or access denied');
                 }
                 echo json_encode(['success' => true, 'message' => 'Rule toggled']);
+            } elseif ($action === 'update-rule') {
+                $id = $data['id'];
+                $affected = $db->execute("UPDATE automation_rules SET rule_name = ?, description = ?, trigger_type = ?, trigger_conditions = ?, action_type = ?, action_parameters = ? WHERE id = ? AND user_id = ?", [
+                    $data['rule_name'],
+                    $data['description'] ?? null,
+                    $data['trigger_type'],
+                    json_encode($data['trigger_conditions']),
+                    $data['action_type'],
+                    json_encode($data['action_parameters']),
+                    $id,
+                    $userId
+                ]);
+                
+                if ($affected === 0) {
+                    throw new Exception('Rule not found or access denied');
+                }
+                echo json_encode(['success' => true, 'message' => 'Automation rule updated successfully']);
             } elseif ($action === 'execute-rule') {
                 $id = $data['id'];
                 $rule = $db->fetchOne("SELECT * FROM automation_rules WHERE id = ? AND user_id = ?", [$id, $userId]);

@@ -3,6 +3,10 @@ vendor/
 composer.lock
 *.log
 
+# Node.js
+node_modules/
+package-lock.json
+
 # Uploads and backups
 uploads/backups/*.json
 uploads/backups/*.csv

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Functionality Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #333; }
+        .test-section {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-item {
+            padding: 8px;
+            margin: 5px 0;
+            border-left: 3px solid #ddd;
+            padding-left: 10px;
+        }
+        .test-item.pass {
+            border-left-color: #4CAF50;
+            background: #f1f8f4;
+        }
+        .test-item.fail {
+            border-left-color: #f44336;
+            background: #ffebee;
+        }
+        .test-item.pending {
+            border-left-color: #ff9800;
+            background: #fff3e0;
+        }
+        .summary {
+            background: #2196F3;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Button Functionality Test Report</h1>
+    
+    <div class="summary">
+        <h2>Test Summary</h2>
+        <p>Total Functions: <span id="totalCount">0</span></p>
+        <p>Defined: <span id="passCount">0</span></p>
+        <p>Missing: <span id="failCount">0</span></p>
+        <p>Success Rate: <span id="successRate">0%</span></p>
+    </div>
+    
+    <button onclick="runTests()">Run Tests</button>
+    <button onclick="exportReport()">Export Report</button>
+    
+    <div id="results"></div>
+    
+    <script>
+        const functionsToTest = {
+            "Global Functions": [
+                "openModal",
+                "closeModal",
+                "showToast",
+                "deleteItem",
+                "createItem",
+                "updateItem"
+            ],
+            "Tab Switching": [
+                "switchTab"
+            ],
+            "Account Functions": [
+                "editAccount",
+                "deleteAccount"
+            ],
+            "Budget Functions": [
+                "editBudget",
+                "deleteBudget"
+            ],
+            "Bill Functions": [
+                "editBill",
+                "deleteBill",
+                "markAsPaid",
+                "sendReminder",
+                "viewBillDetail",
+                "bulkMarkPaid"
+            ],
+            "Debt Functions": [
+                "editDebt",
+                "deleteDebt",
+                "recordPayment"
+            ],
+            "Contact Functions": [
+                "viewContact",
+                "logInteraction",
+                "deleteContact",
+                "openAddContactModal"
+            ],
+            "Medication Functions": [
+                "editMedication",
+                "deleteMedication",
+                "logIntake",
+                "openAddMedicationModal"
+            ],
+            "Symptom Functions": [
+                "logSymptomForType",
+                "viewSymptomHistory",
+                "deleteSymptom",
+                "showAddSymptomModal",
+                "showLogSymptomModal"
+            ],
+            "Vehicle Functions": [
+                "viewMaintenance",
+                "addMaintenance",
+                "deleteVehicle"
+            ],
+            "Gift Functions": [
+                "deleteGift"
+            ],
+            "Event Functions": [
+                "deleteEvent"
+            ],
+            "Recipe Functions": [
+                "showAddRecipeModal",
+                "viewRecipe",
+                "addToMealPlan",
+                "saveRecipe"
+            ],
+            "Family Manager Functions": [
+                "showMemberModal",
+                "closeMemberModal",
+                "showTaskModal",
+                "closeTaskModal",
+                "showExpenseModal",
+                "closeExpenseModal",
+                "showGroceryModal",
+                "deleteGroceryList"
+            ],
+            "Admin Functions": [
+                "createBackup",
+                "cleanOldBackups",
+                "testCronJobs",
+                "testEmail",
+                "testTelegram",
+                "toggleMaintenanceMode",
+                "toggleAutoBackup",
+                "clearSystemLogs"
+            ],
+            "Portfolio Functions": [
+                "generatePortfolio",
+                "generateResume",
+                "addSkill",
+                "addProject",
+                "addMilestone"
+            ],
+            "Voice Assistant": [
+                "toggleVoiceRecognition",
+                "sendMessage"
+            ],
+            "Financial Forecast": [
+                "generateForecast",
+                "exportForecast",
+                "showForecastModal"
+            ],
+            "Crypto Functions": [
+                "deleteHolding",
+                "deleteAlert",
+                "refreshPrices",
+                "showCreateAlertModal"
+            ],
+            "Learning Functions": [
+                "addCourse"
+            ],
+            "Home Assets": [
+                "openAssetModal",
+                "closeAssetModal",
+                "saveAsset"
+            ],
+            "Task Functions": [
+                "saveTask"
+            ],
+            "Tax Report Functions": [
+                "openCategoryModal",
+                "openDocumentModal",
+                "generateReport"
+            ],
+            "2FA Functions": [
+                "setup2FA",
+                "nextStep",
+                "previousStep",
+                "finish2FASetup",
+                "disable2FA",
+                "regenerateBackupCodes",
+                "copyBackupCodes",
+                "closeSetup2FAModal"
+            ],
+            "Dashboard Functions": [
+                "refreshAIInsights",
+                "loadAIInsights"
+            ],
+            "Modal Openers": [
+                "openAssetModal",
+                "openRoutineModal",
+                "openClientModal",
+                "openProjectModal",
+                "openInvoiceModal",
+                "openTimeEntryModal",
+                "openAddKnowledgeModal",
+                "openAddEventModal",
+                "openMaintenanceModal",
+                "openRuleModal",
+                "showAddJobModal",
+                "openAddCertModal",
+                "openAddResumeModal"
+            ]
+        };
+        
+        function runTests() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            
+            let totalFunctions = 0;
+            let definedFunctions = 0;
+            
+            for (const [category, functions] of Object.entries(functionsToTest)) {
+                const section = document.createElement('div');
+                section.className = 'test-section';
+                section.innerHTML = `<h3>${category}</h3>`;
+                
+                functions.forEach(funcName => {
+                    totalFunctions++;
+                    const item = document.createElement('div');
+                    item.className = 'test-item';
+                    
+                    const isDefined = typeof window[funcName] === 'function';
+                    if (isDefined) {
+                        definedFunctions++;
+                        item.classList.add('pass');
+                        item.innerHTML = `✅ <strong>${funcName}</strong> - Defined`;
+                    } else {
+                        item.classList.add('fail');
+                        item.innerHTML = `❌ <strong>${funcName}</strong> - Missing`;
+                    }
+                    
+                    section.appendChild(item);
+                });
+                
+                resultsDiv.appendChild(section);
+            }
+            
+            // Update summary
+            document.getElementById('totalCount').textContent = totalFunctions;
+            document.getElementById('passCount').textContent = definedFunctions;
+            document.getElementById('failCount').textContent = (totalFunctions - definedFunctions);
+            document.getElementById('successRate').textContent = 
+                ((definedFunctions / totalFunctions) * 100).toFixed(1) + '%';
+        }
+        
+        function exportReport() {
+            const report = {
+                timestamp: new Date().toISOString(),
+                summary: {
+                    total: document.getElementById('totalCount').textContent,
+                    defined: document.getElementById('passCount').textContent,
+                    missing: document.getElementById('failCount').textContent,
+                    successRate: document.getElementById('successRate').textContent
+                },
+                details: {}
+            };
+            
+            for (const [category, functions] of Object.entries(functionsToTest)) {
+                report.details[category] = {};
+                functions.forEach(funcName => {
+                    report.details[category][funcName] = typeof window[funcName] === 'function' ? 'defined' : 'missing';
+                });
+            }
+            
+            const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'button-test-report.json';
+            a.click();
+        }
+        
+        // Auto-run on page load
+        window.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html>

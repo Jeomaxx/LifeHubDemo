@@ -19,24 +19,11 @@ $currentUser = $auth->getCurrentUser();
     <link rel="stylesheet" href="/assets/css/animations.css">
     <link rel="stylesheet" href="/assets/css/enhanced-ui.css">
     <link rel="stylesheet" href="/assets/css/modern-enhancements.css">
+    <link rel="stylesheet" href="/assets/css/tailwind-output.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/motion@latest/+esm"></script>
     <script src="/assets/js/enhanced-ui.js" defer></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#3b82f6',
-                        secondary: '#6366f1',
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900">
     <?php if ($auth->isLoggedIn()): ?>

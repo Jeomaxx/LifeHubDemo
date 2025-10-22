@@ -159,6 +159,116 @@ function closeUploadModal() {
     document.getElementById('uploadForm').reset();
 }
 
+async function loadDocuments() {
+    try {
+        const response = await fetch('/api/documents.php?action=list');
+        const result = await response.json();
+        
+        if (result.success) {
+            displayDocuments(result.documents || []);
+            updateStats(result.documents || []);
+        }
+    } catch (error) {
+        console.error('Error loading documents:', error);
+    }
+}
+
+function displayDocuments(documents) {
+    const container = document.getElementById('documentsList');
+    
+    if (documents.length === 0) {
+        container.innerHTML = '<div class="text-center py-12 text-gray-500 dark:text-gray-400"><i class="fas fa-folder-open text-4xl mb-3"></i><p>No documents yet. Upload your first document to get started.</p></div>';
+        return;
+    }
+    
+    container.innerHTML = '<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">' + documents.map(doc => `
+        <div class="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition">
+            <div class="flex items-start justify-between mb-2">
+                <div class="flex items-center gap-2">
+                    <i class="fas ${getFileIcon(doc.file_type)} text-2xl text-primary"></i>
+                    <div>
+                        <h3 class="font-semibold text-gray-900 dark:text-white">${doc.title || doc.document_name || 'Untitled'}</h3>
+                        <p class="text-xs text-gray-500">${doc.category || 'Uncategorized'}</p>
+                    </div>
+                </div>
+            </div>
+            ${doc.description ? `<p class="text-sm text-gray-600 dark:text-gray-400 mb-2">${doc.description}</p>` : ''}
+            ${doc.tags ? `<div class="flex gap-1 flex-wrap mb-2">${doc.tags.split(',').map(tag => `<span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs rounded">${tag.trim()}</span>`).join('')}</div>` : ''}
+            <div class="flex items-center justify-between text-xs text-gray-500 mt-2">
+                <span>${new Date(doc.created_at).toLocaleDateString()}</span>
+                <span>${formatFileSize(doc.file_size)}</span>
+            </div>
+            <div class="flex gap-2 mt-3">
+                <button onclick="viewDocument(${doc.id})" class="flex-1 px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600">View</button>
+                <button onclick="downloadDocument(${doc.id})" class="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600"><i class="fas fa-download"></i></button>
+                <button onclick="deleteDocument(${doc.id})" class="px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600"><i class="fas fa-trash"></i></button>
+            </div>
+        </div>
+    `).join('') + '</div>';
+}
+
+function updateStats(documents) {
+    document.getElementById('totalDocs').textContent = documents.length;
+    const totalSize = documents.reduce((sum, doc) => sum + (doc.file_size || 0), 0);
+    document.getElementById('storageUsed').textContent = formatFileSize(totalSize);
+    const categories = new Set(documents.map(d => d.category).filter(c => c));
+    document.getElementById('categoryCount').textContent = categories.size;
+    const recentCount = documents.filter(d => {
+        const created = new Date(d.created_at);
+        const weekAgo = new Date();
+        weekAgo.setDate(weekAgo.getDate() - 7);
+        return created > weekAgo;
+    }).length;
+    document.getElementById('recentUploads').textContent = recentCount;
+}
+
+function getFileIcon(fileType) {
+    if (!fileType) return 'fa-file';
+    if (fileType.includes('pdf')) return 'fa-file-pdf';
+    if (fileType.includes('word') || fileType.includes('document')) return 'fa-file-word';
+    if (fileType.includes('excel') || fileType.includes('spreadsheet')) return 'fa-file-excel';
+    if (fileType.includes('image')) return 'fa-file-image';
+    if (fileType.includes('video')) return 'fa-file-video';
+    return 'fa-file';
+}
+
+function formatFileSize(bytes) {
+    if (!bytes) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+}
+
+async function viewDocument(id) {
+    window.open(`/api/documents.php?action=view&id=${id}`, '_blank');
+}
+
+async function downloadDocument(id) {
+    window.location.href = `/api/documents.php?action=download&id=${id}`;
+}
+
+async function deleteDocument(id) {
+    if (!confirm('Are you sure you want to delete this document?')) return;
+    
+    try {
+        const response = await fetch(`/api/documents.php?action=delete&id=${id}`, {
+            method: 'DELETE',
+            headers: {'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content}
+        });
+        const result = await response.json();
+        
+        if (result.success) {
+            loadDocuments();
+        } else {
+            alert('Error: ' + (result.message || 'Failed to delete document'));
+        }
+    } catch (error) {
+        console.error('Error deleting document:', error);
+        alert('Failed to delete document');
+    }
+}
+
 document.getElementById('uploadForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const formData = new FormData();
@@ -176,12 +286,30 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
     
     const result = await response.json();
     if (result.success) {
-        alert('Document uploaded successfully');
-        window.location.reload();
+        closeUploadModal();
+        loadDocuments();
+        if (typeof showToast === 'function') {
+            showToast('success', 'Success', 'Document uploaded successfully');
+        }
     } else {
         alert('Error: ' + (result.message || 'Failed to upload document'));
     }
 });
+
+document.getElementById('searchDocs')?.addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    document.querySelectorAll('#documentsList > div > div').forEach(doc => {
+        const text = doc.textContent.toLowerCase();
+        doc.style.display = text.includes(query) ? '' : 'none';
+    });
+});
+
+document.getElementById('filterCategory')?.addEventListener('change', function() {
+    loadDocuments();
+});
+
+// Load documents when page loads
+loadDocuments();
 </script>
 
 <?php include 'includes/footer.php'; ?>

@@ -27,8 +27,15 @@ try {
             $startDate = $_POST['start_date'] ?? null;
             $targetDate = $_POST['target_completion_date'] ?? null;
             
-            $courseId = $db->insert("INSERT INTO learning_courses (user_id, course_name, course_platform, course_url, skill_category, start_date, target_completion_date) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                [$userId, $courseName, $coursePlatform, $courseUrl, $skillCategory, $startDate, $targetDate]);
+            $courseId = $db->insert('learning_courses', [
+                'user_id' => $userId,
+                'course_name' => $courseName,
+                'platform' => $coursePlatform,
+                'course_url' => $courseUrl,
+                'skill_category' => $skillCategory,
+                'start_date' => $startDate,
+                'target_completion_date' => $targetDate
+            ]);
             
             echo json_encode(['success' => true, 'course_id' => $courseId]);
             break;
@@ -42,7 +49,7 @@ try {
                 $status = 'completed';
             }
             
-            $db->update("UPDATE learning_courses SET progress_percentage = ?, status = ? WHERE id = ? AND user_id = ?",
+            $db->execute("UPDATE learning_courses SET progress_percentage = ?, status = ? WHERE id = ? AND user_id = ?",
                 [$progress, $status, $courseId, $userId]);
             
             echo json_encode(['success' => true]);
@@ -53,8 +60,11 @@ try {
             $noteTitle = $_POST['note_title'] ?? '';
             $noteContent = $_POST['note_content'] ?? '';
             
-            $noteId = $db->insert("INSERT INTO learning_notes (course_id, note_title, note_content) VALUES (?, ?, ?)",
-                [$courseId, $noteTitle, $noteContent]);
+            $noteId = $db->insert('learning_notes', [
+                'course_id' => $courseId,
+                'note_title' => $noteTitle,
+                'note_content' => $noteContent
+            ]);
             
             echo json_encode(['success' => true, 'note_id' => $noteId]);
             break;
@@ -97,7 +107,7 @@ try {
             
         case 'delete_course':
             $courseId = $_POST['course_id'] ?? 0;
-            $db->delete("DELETE FROM learning_courses WHERE id = ? AND user_id = ?", [$courseId, $userId]);
+            $db->delete('learning_courses', 'id = ? AND user_id = ?', [$courseId, $userId]);
             echo json_encode(['success' => true]);
             break;
             

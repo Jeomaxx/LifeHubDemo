@@ -43,35 +43,38 @@ try {
             break;
             
         case 'add_skill':
-            $id = $db->insert("INSERT INTO career_skills (user_id, skill_name, proficiency_level, category, created_at) VALUES (?, ?, ?, ?, NOW()) RETURNING id",
+            $stmt = $db->execute("INSERT INTO career_skills (user_id, skill_name, proficiency_level, category, created_at) VALUES (?, ?, ?, ?, NOW()) RETURNING id",
                 [$userId, $data['skill_name'], $data['proficiency_level'], $data['category'] ?? '']);
+            $id = $stmt->fetchColumn();
             echo json_encode(['success' => true, 'id' => $id]);
             break;
             
         case 'add_project':
-            $id = $db->insert("INSERT INTO portfolio_projects (user_id, project_name, description, technologies_used, project_url, created_at) VALUES (?, ?, ?, ?, ?, NOW()) RETURNING id",
+            $stmt = $db->execute("INSERT INTO portfolio_projects (user_id, project_name, description, technologies_used, project_url, created_at) VALUES (?, ?, ?, ?, ?, NOW()) RETURNING id",
                 [$userId, $data['project_name'], $data['description'] ?? '', $data['technologies_used'] ?? '', $data['project_url'] ?? '']);
+            $id = $stmt->fetchColumn();
             echo json_encode(['success' => true, 'id' => $id]);
             break;
             
         case 'add_milestone':
-            $id = $db->insert("INSERT INTO career_milestones (user_id, title, description, achievement_date, milestone_type, created_at) VALUES (?, ?, ?, ?, ?, NOW()) RETURNING id",
+            $stmt = $db->execute("INSERT INTO career_milestones (user_id, title, description, achievement_date, milestone_type, created_at) VALUES (?, ?, ?, ?, ?, NOW()) RETURNING id",
                 [$userId, $data['title'], $data['description'] ?? '', $data['achievement_date'], $data['milestone_type'] ?? 'achievement']);
+            $id = $stmt->fetchColumn();
             echo json_encode(['success' => true, 'id' => $id]);
             break;
             
         case 'delete_skill':
-            $db->delete("DELETE FROM career_skills WHERE id = ? AND user_id = ?", [$data['id'], $userId]);
+            $db->execute("DELETE FROM career_skills WHERE id = ? AND user_id = ?", [$data['id'], $userId]);
             echo json_encode(['success' => true]);
             break;
             
         case 'delete_project':
-            $db->delete("DELETE FROM portfolio_projects WHERE id = ? AND user_id = ?", [$data['id'], $userId]);
+            $db->execute("DELETE FROM portfolio_projects WHERE id = ? AND user_id = ?", [$data['id'], $userId]);
             echo json_encode(['success' => true]);
             break;
             
         case 'delete_milestone':
-            $db->delete("DELETE FROM career_milestones WHERE id = ? AND user_id = ?", [$data['id'], $userId]);
+            $db->execute("DELETE FROM career_milestones WHERE id = ? AND user_id = ?", [$data['id'], $userId]);
             echo json_encode(['success' => true]);
             break;
             

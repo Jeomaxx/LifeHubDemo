@@ -75,13 +75,17 @@ try {
             $recommendations = $parsedResponse['ai_recommendations'] ?? 'Stay focused and productive!';
             $priorityScore = $parsedResponse['priority_score'] ?? 50;
             
-            $briefingId = $db->insert("INSERT INTO life_advisor_briefings (user_id, briefing_date, daily_summary, ai_recommendations, priority_score) VALUES (?, CURRENT_DATE, ?, ?, ?)", 
+            $stmt = $db->execute("INSERT INTO life_advisor_briefings (user_id, briefing_date, daily_summary, ai_recommendations, priority_score) VALUES (?, CURRENT_DATE, ?, ?, ?) RETURNING id", 
                 [$userId, $dailySummary, $recommendations, $priorityScore]);
+            $briefingId = $stmt->fetchColumn();
             
             if (isset($parsedResponse['action_items']) && is_array($parsedResponse['action_items'])) {
                 foreach ($parsedResponse['action_items'] as $item) {
-                    $db->insert("INSERT INTO life_advisor_actions (briefing_id, action_text, action_type) VALUES (?, ?, ?)",
-                        [$briefingId, $item['text'] ?? $item, $item['type'] ?? 'normal']);
+                    $db->insert('life_advisor_actions', [
+                        'briefing_id' => $briefingId,
+                        'action_text' => $item['text'] ?? $item,
+                        'action_type' => $item['type'] ?? 'normal'
+                    ]);
                 }
             }
             
@@ -96,7 +100,7 @@ try {
             $actionId = $_POST['action_id'] ?? 0;
             $isCompleted = $_POST['is_completed'] ?? false;
             
-            $db->update("UPDATE life_advisor_actions SET is_completed = ?, completed_at = ? WHERE id = ?",
+            $db->execute("UPDATE life_advisor_actions SET is_completed = ?, completed_at = ? WHERE id = ?",
                 [$isCompleted ? true : false, $isCompleted ? date('Y-m-d H:i:s') : null, $actionId]);
             
             echo json_encode(['success' => true]);

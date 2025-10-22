@@ -38,8 +38,15 @@ try {
                 $sleepDuration = $interval->h + ($interval->i / 60);
             }
             
-            $logId = $db->insert("INSERT INTO sleep_logs (user_id, sleep_date, sleep_start_time, sleep_end_time, sleep_duration_hours, sleep_quality_rating, notes) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                [$userId, $sleepDate, $sleepStartTime, $sleepEndTime, $sleepDuration, $sleepQualityRating, $notes]);
+            $logId = $db->insert('sleep_logs', [
+                'user_id' => $userId,
+                'sleep_date' => $sleepDate,
+                'sleep_start_time' => $sleepStartTime,
+                'sleep_end_time' => $sleepEndTime,
+                'sleep_duration_hours' => $sleepDuration,
+                'sleep_quality_rating' => $sleepQualityRating,
+                'notes' => $notes
+            ]);
             
             echo json_encode(['success' => true, 'log_id' => $logId]);
             break;
@@ -52,8 +59,15 @@ try {
             $moodAfter = $_POST['mood_after'] ?? null;
             $notes = $_POST['notes'] ?? '';
             
-            $sessionId = $db->insert("INSERT INTO meditation_sessions (user_id, session_date, duration_minutes, meditation_type, mood_before, mood_after, notes) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                [$userId, $sessionDate, $durationMinutes, $meditationType, $moodBefore, $moodAfter, $notes]);
+            $sessionId = $db->insert('meditation_sessions', [
+                'user_id' => $userId,
+                'session_date' => $sessionDate,
+                'duration_minutes' => $durationMinutes,
+                'meditation_type' => $meditationType,
+                'mood_before' => $moodBefore,
+                'mood_after' => $moodAfter,
+                'notes' => $notes
+            ]);
             
             echo json_encode(['success' => true, 'session_id' => $sessionId]);
             break;
@@ -67,13 +81,13 @@ try {
             
         case 'delete_sleep':
             $id = $_POST['id'] ?? 0;
-            $db->delete("DELETE FROM sleep_logs WHERE id = ? AND user_id = ?", [$id, $userId]);
+            $db->delete('sleep_logs', 'id = ? AND user_id = ?', [$id, $userId]);
             echo json_encode(['success' => true]);
             break;
             
         case 'delete_meditation':
             $id = $_POST['id'] ?? 0;
-            $db->delete("DELETE FROM meditation_sessions WHERE id = ? AND user_id = ?", [$id, $userId]);
+            $db->delete('meditation_sessions', 'id = ? AND user_id = ?', [$id, $userId]);
             echo json_encode(['success' => true]);
             break;
             

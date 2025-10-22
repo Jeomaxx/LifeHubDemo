@@ -38,11 +38,12 @@ try {
         }
         
         if ($id) {
-            $db->update("UPDATE travel_journal SET title = ?, entry_date = ?, content = ?, location = ?, mood = ?, updated_at = NOW() WHERE id = ? AND user_id = ?",
+            $db->execute("UPDATE travel_journal SET title = ?, entry_date = ?, content = ?, location = ?, mood = ?, updated_at = NOW() WHERE id = ? AND user_id = ?",
                 [$title, $entryDate, $content, $location, $rating, $id, $userId]);
         } else {
-            $id = $db->insert("INSERT INTO travel_journal (user_id, entry_date, title, content, location, mood, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW()) RETURNING id",
+            $stmt = $db->execute("INSERT INTO travel_journal (user_id, entry_date, title, content, location, mood, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW()) RETURNING id",
                 [$userId, $entryDate, $title, $content, $location, $rating]);
+            $id = $stmt->fetchColumn();
         }
         
         echo json_encode(['success' => true, 'id' => $id]);
@@ -67,7 +68,7 @@ try {
         
     } elseif ($action === 'delete_entry') {
         $id = $_POST['id'] ?? 0;
-        $db->delete("DELETE FROM travel_journal WHERE id = ? AND user_id = ?", [$id, $userId]);
+        $db->execute("DELETE FROM travel_journal WHERE id = ? AND user_id = ?", [$id, $userId]);
         echo json_encode(['success' => true]);
         
     } elseif ($method === 'GET') {
@@ -92,16 +93,19 @@ try {
         $type = $data['type'] ?? 'trip';
         
         if ($type === 'trip') {
-            $id = $db->insert("INSERT INTO trips (user_id, destination, country, start_date, end_date, budget, trip_type, status, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id",
+            $stmt = $db->execute("INSERT INTO trips (user_id, destination, country, start_date, end_date, budget, trip_type, status, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id",
                 [$userId, $data['destination'], $data['country'] ?? '', $data['start_date'], $data['end_date'], $data['budget'] ?? 0, $data['trip_type'] ?? '', $data['status'] ?? 'planned', $data['notes'] ?? '']);
+            $id = $stmt->fetchColumn();
             echo json_encode(['success' => true, 'id' => $id]);
         } elseif ($type === 'itinerary') {
-            $id = $db->insert("INSERT INTO trip_itinerary (trip_id, day_number, date, title, description, location, cost) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id",
+            $stmt = $db->execute("INSERT INTO trip_itinerary (trip_id, day_number, date, title, description, location, cost) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id",
                 [$data['trip_id'], $data['day_number'], $data['date'], $data['title'] ?? '', $data['description'] ?? '', $data['location'] ?? '', $data['cost'] ?? 0]);
+            $id = $stmt->fetchColumn();
             echo json_encode(['success' => true, 'id' => $id]);
         } elseif ($type === 'journal') {
-            $id = $db->insert("INSERT INTO travel_journal (trip_id, user_id, entry_date, title, content, location, mood, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) RETURNING id",
+            $stmt = $db->execute("INSERT INTO travel_journal (trip_id, user_id, entry_date, title, content, location, mood, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW()) RETURNING id",
                 [$data['trip_id'], $userId, $data['entry_date'], $data['title'] ?? '', $data['content'], $data['location'] ?? '', $data['mood'] ?? '']);
+            $id = $stmt->fetchColumn();
             echo json_encode(['success' => true, 'id' => $id]);
         }
         
@@ -109,9 +113,9 @@ try {
         $id = (int)($_GET['id'] ?? 0);
         $type = $_GET['type'] ?? 'trip';
         
-        if ($type === 'trip') $db->delete("DELETE FROM trips WHERE id = ? AND user_id = ?", [$id, $userId]);
-        elseif ($type === 'itinerary') $db->delete("DELETE FROM trip_itinerary WHERE id = ?", [$id]);
-        elseif ($type === 'journal') $db->delete("DELETE FROM travel_journal WHERE id = ? AND user_id = ?", [$id, $userId]);
+        if ($type === 'trip') $db->execute("DELETE FROM trips WHERE id = ? AND user_id = ?", [$id, $userId]);
+        elseif ($type === 'itinerary') $db->execute("DELETE FROM trip_itinerary WHERE id = ?", [$id]);
+        elseif ($type === 'journal') $db->execute("DELETE FROM travel_journal WHERE id = ? AND user_id = ?", [$id, $userId]);
         
         echo json_encode(['success' => true]);
     } else {

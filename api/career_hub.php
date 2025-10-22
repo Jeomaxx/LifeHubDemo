@@ -25,8 +25,14 @@ try {
             $startDate = $_POST['start_date'] ?? null;
             $endDate = $_POST['end_date'] ?? null;
             
-            $projectId = $db->insert("INSERT INTO career_projects (user_id, project_name, description, priority, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?)",
-                [$userId, $projectName, $description, $priority, $startDate, $endDate]);
+            $projectId = $db->insert('career_projects', [
+                'user_id' => $userId,
+                'project_name' => $projectName,
+                'description' => $description,
+                'priority' => $priority,
+                'start_date' => $startDate,
+                'end_date' => $endDate
+            ]);
             
             echo json_encode(['success' => true, 'project_id' => $projectId]);
             break;
@@ -51,7 +57,7 @@ try {
             if (!empty($updates)) {
                 $params[] = $projectId;
                 $params[] = $userId;
-                $db->update("UPDATE career_projects SET " . implode(', ', $updates) . " WHERE id = ? AND user_id = ?", $params);
+                $db->execute("UPDATE career_projects SET " . implode(', ', $updates) . " WHERE id = ? AND user_id = ?", $params);
             }
             
             echo json_encode(['success' => true]);
@@ -63,8 +69,13 @@ try {
             $taskDescription = $_POST['task_description'] ?? '';
             $status = $_POST['status'] ?? 'todo';
             
-            $taskId = $db->insert("INSERT INTO career_tasks (user_id, project_id, task_title, task_description, status) VALUES (?, ?, ?, ?, ?)",
-                [$userId, $projectId, $taskTitle, $taskDescription, $status]);
+            $taskId = $db->insert('career_tasks', [
+                'user_id' => $userId,
+                'project_id' => $projectId,
+                'task_title' => $taskTitle,
+                'task_description' => $taskDescription,
+                'status' => $status
+            ]);
             
             $task = $db->fetchOne("SELECT * FROM career_tasks WHERE id = ?", [$taskId]);
             echo json_encode(['success' => true, 'task' => $task]);
@@ -74,7 +85,7 @@ try {
             $taskId = $_POST['task_id'] ?? 0;
             $status = $_POST['status'] ?? '';
             
-            $db->update("UPDATE career_tasks SET status = ? WHERE id = ? AND user_id = ?", [$status, $taskId, $userId]);
+            $db->execute("UPDATE career_tasks SET status = ? WHERE id = ? AND user_id = ?", [$status, $taskId, $userId]);
             echo json_encode(['success' => true]);
             break;
             
@@ -96,8 +107,13 @@ try {
             $hoursLogged = $_POST['hours_logged'] ?? 0;
             $logDate = $_POST['log_date'] ?? date('Y-m-d');
             
-            $timeLogId = $db->insert("INSERT INTO time_logs (user_id, project_id, activity_description, hours_logged, log_date) VALUES (?, ?, ?, ?, ?)",
-                [$userId, $projectId, $activityDescription, $hoursLogged, $logDate]);
+            $timeLogId = $db->insert('time_logs', [
+                'user_id' => $userId,
+                'project_id' => $projectId,
+                'activity_description' => $activityDescription,
+                'hours_logged' => $hoursLogged,
+                'log_date' => $logDate
+            ]);
             
             echo json_encode(['success' => true, 'time_log_id' => $timeLogId]);
             break;
@@ -108,15 +124,20 @@ try {
             $targetDate = $_POST['target_date'] ?? null;
             $notes = $_POST['notes'] ?? '';
             
-            $goalId = $db->insert("INSERT INTO salary_progress (user_id, current_salary, target_salary, target_date, notes) VALUES (?, ?, ?, ?, ?)",
-                [$userId, $currentSalary, $targetSalary, $targetDate, $notes]);
+            $goalId = $db->insert('salary_progress', [
+                'user_id' => $userId,
+                'current_salary' => $currentSalary,
+                'target_salary' => $targetSalary,
+                'target_date' => $targetDate,
+                'notes' => $notes
+            ]);
             
             echo json_encode(['success' => true, 'goal_id' => $goalId]);
             break;
             
         case 'delete_task':
             $taskId = $_POST['task_id'] ?? 0;
-            $db->delete("DELETE FROM career_tasks WHERE id = ? AND user_id = ?", [$taskId, $userId]);
+            $db->delete('career_tasks', 'id = ? AND user_id = ?', [$taskId, $userId]);
             echo json_encode(['success' => true]);
             break;
             

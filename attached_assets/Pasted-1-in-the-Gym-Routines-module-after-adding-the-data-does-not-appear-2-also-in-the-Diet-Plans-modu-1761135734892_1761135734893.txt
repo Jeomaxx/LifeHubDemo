@@ -1,0 +1,27 @@
+1- in the  Gym Routines  module after adding the data does not appear
+2-also in the Diet Plans  module after adding the data does not appear
+3-In the  Sleep Tracker  module the add button does not work. 
+4- in the Medication & Supplement Tracker   module after adding the data does not appear
+5- in the Symptom Tracker    module after adding the data does not appear
+6-in the Work & Career Center     module after adding the data does not appear 
+7- in the Freelance & Side-Hustle Tracker    module after adding the data does not appear
+8-  in the  Career Portfolio & Resume Generator     module after adding the data does not appear
+9-in the  Team Collaboration      module after adding the data does not appear
+10- The module named Learning & Knowledge Hub exists but not yet develop so could you please develop it. 
+11-In the   Knowledge Vault   module the add button does not work. 
+12- In the Household & Family Manager module after adding the data does not appear
+13- In the Personal CRM - Contacts  module after adding the data does not appear
+14-In the Personal Gift Management   module after adding the data does not appear
+15-In the Travel Planner & Journal    module after adding I get this message   Add trip coming soon!
+16-In the   Travel Journal    module the add button does not work. 
+17-In the Full Calendar   module the add button does not work. 
+18-In the Event Planner    module the add button does not work because after filling all the data the button to save does not work. 
+19-In the Home & Assets   module after adding the data does not appear
+20-In the Vehicle Maintenance  module the add button does not work because after filling all the data the button to save does not work. 
+21-In the Maintenance Logs   module the add button does not work because after filling all the data the button to save does not work. 
+22-In the Documents Hub  module the add button does not work because after filling all the data the button to save does not work. 
+23-In the Recipe Book & Meal Planner  module the add button does not work because after filling all the data the button to save does not work, also I think that this module is develop so could you please develop it.
+24-In the Life Orchestrator    module the add button does not work. 
+25-In the  Custom Dashboard Builder  module the add buttons does not work. 
+26-In the Secure Vault    module after adding the data does not appear
+27-The light and Dark modes need to be well check because they are not work probably 

@@ -5,10 +5,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 async function loadRules() {
     try {
-        const response = await fetch('/api/life_orchestrator.php?action=get_rules');
+        const response = await fetch('/api/life_orchestrator.php?action=rules');
         const result = await response.json();
         if (result.success) {
-            renderRules(result.rules || []);
+            renderRules(result.data || []);
         }
     } catch (error) {
         console.error('Error loading rules:', error);
@@ -65,10 +65,10 @@ function renderRules(rules) {
 
 async function loadAutomationStats() {
     try {
-        const response = await fetch('/api/life_orchestrator.php?action=get_stats');
+        const response = await fetch('/api/life_orchestrator.php?action=stats');
         const result = await response.json();
         if (result.success) {
-            updateStats(result.stats);
+            updateStats(result.data);
         }
     } catch (error) {
         console.error('Error loading stats:', error);
@@ -76,14 +76,17 @@ async function loadAutomationStats() {
 }
 
 function updateStats(stats) {
-    if (stats.total_rules !== undefined) {
-        document.getElementById('totalRules').textContent = stats.total_rules;
-    }
     if (stats.active_rules !== undefined) {
         document.getElementById('activeRules').textContent = stats.active_rules;
     }
-    if (stats.executions_today !== undefined) {
-        document.getElementById('executionsToday').textContent = stats.executions_today;
+    if (stats.today_executions !== undefined) {
+        document.getElementById('todayExecutions').textContent = stats.today_executions;
+    }
+    if (stats.success_rate !== undefined) {
+        document.getElementById('successRate').textContent = stats.success_rate + '%';
+    }
+    if (stats.time_saved !== undefined) {
+        document.getElementById('timeSaved').textContent = stats.time_saved + 'h';
     }
 }
 
@@ -116,15 +119,16 @@ async function saveRule() {
     }
     
     try {
-        const response = await fetch('/api/life_orchestrator.php', {
+        const response = await fetch('/api/life_orchestrator.php?action=create-rule', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                action: 'add_rule',
                 rule_name: ruleName,
+                description: '',
                 trigger_type: triggerType,
+                trigger_conditions: {},
                 action_type: actionType,
-                conditions: conditions,
+                action_parameters: {conditions: conditions},
                 is_active: true
             })
         });
@@ -146,13 +150,11 @@ async function saveRule() {
 
 async function toggleRule(id, isActive) {
     try {
-        const response = await fetch('/api/life_orchestrator.php', {
+        const response = await fetch('/api/life_orchestrator.php?action=toggle-rule', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                action: 'toggle_rule',
-                id: id,
-                is_active: isActive
+                id: id
             })
         });
         

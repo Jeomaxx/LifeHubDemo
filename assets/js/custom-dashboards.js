@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    enableDrag
-
-Drop();
+    enableDragDrop();
     loadDashboard();
 });
 

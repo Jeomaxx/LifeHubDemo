@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initAnimations();
     initFormValidation();
     initTooltips();
+    initQuickAddButtons();
 });
 
 function initTheme() {
@@ -582,3 +583,56 @@ window.addEventListener('load', function() {
         }
     });
 });
+
+// Quick Add Buttons Functionality
+function initQuickAddButtons() {
+    document.addEventListener('click', function(e) {
+        const quickAddBtn = e.target.closest('.quick-add-btn');
+        if (quickAddBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const module = quickAddBtn.getAttribute('data-module');
+            if (module) {
+                handleQuickAdd(module);
+            }
+        }
+    });
+}
+
+function handleQuickAdd(module) {
+    const moduleConfig = {
+        'finance': { url: '/finance.php', title: 'Add Transaction' },
+        'account': { url: '/accounts.php', title: 'Add Account' },
+        'budget': { url: '/budgets.php', title: 'Add Budget' },
+        'bill': { url: '/bills.php', title: 'Add Bill' },
+        'subscription': { url: '/subscriptions.php', title: 'Add Subscription' },
+        'debt': { url: '/debts.php', title: 'Add Debt' },
+        'task': { url: '/tasks.php', title: 'Add Task' },
+        'goal': { url: '/goals.php', title: 'Add Goal' },
+        'habit': { url: '/habits.php', title: 'Add Habit' },
+        'gym': { url: '/gym.php', title: 'Add Workout' },
+        'diet': { url: '/diet.php', title: 'Add Diet Plan' },
+        'mood': { url: '/mood_tracker.php', title: 'Log Mood' },
+        'medication': { url: '/medications.php', title: 'Add Medication' },
+        'symptom': { url: '/symptoms.php', title: 'Log Symptom' },
+        'contact': { url: '/contacts.php', title: 'Add Contact' },
+        'gift': { url: '/gifts.php', title: 'Add Gift' },
+        'event': { url: '/events.php', title: 'Add Event' },
+        'birthday': { url: '/birthdays.php', title: 'Add Birthday' },
+        'home_asset': { url: '/home_assets.php', title: 'Add Home Asset' },
+        'asset': { url: '/assets.php', title: 'Add Asset' },
+        'vehicle': { url: '/vehicles.php', title: 'Add Vehicle' },
+        'document': { url: '/documents.php', title: 'Add Document' },
+        'recipe': { url: '/recipes.php', title: 'Add Recipe' },
+        'vault': { url: '/vault.php', title: 'Add to Vault' }
+    };
+    
+    const config = moduleConfig[module];
+    if (config) {
+        window.location.href = config.url + '?action=add';
+        showToast('info', 'Opening Form', `Opening ${config.title} form...`);
+    } else {
+        console.warn('Unknown module:', module);
+    }
+}

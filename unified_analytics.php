@@ -234,7 +234,7 @@ function calculateHealthScore($userId, $db) {
 }
 
 function getLifeLevel($score) {
-    if ($score >= 80) return 'Thriving - You're doing amazing!';
+    if ($score >= 80) return 'Thriving - You\'re doing amazing!';
     if ($score >= 60) return 'Balanced - Keep up the good work';
     if ($score >= 40) return 'Room for Growth - Focus on key areas';
     return 'Needs Attention - Prioritize self-improvement';

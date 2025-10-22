@@ -317,7 +317,7 @@ function calculateWellnessScore($avgMood, $avgSleep, $meditationMinutes) {
 
 function getWellnessLevel($score) {
     if ($score >= 80) return 'Excellent - Keep up the great work!';
-    if ($score >= 60) return 'Good - You're doing well';
+    if ($score >= 60) return 'Good - You\'re doing well';
     if ($score >= 40) return 'Fair - Room for improvement';
     return 'Needs Attention - Focus on self-care';
 }

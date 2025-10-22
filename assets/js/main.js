@@ -75,6 +75,49 @@ function initSidebar() {
             this.style.transform = 'translateX(0)';
         });
     });
+    
+    // Category toggle functionality
+    const categoryToggles = document.querySelectorAll('.category-toggle');
+    categoryToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const categoryItems = this.nextElementSibling;
+            const chevron = this.querySelector('i:last-child');
+            
+            if (categoryItems && categoryItems.classList.contains('category-items')) {
+                categoryItems.classList.toggle('hidden');
+                if (chevron) {
+                    chevron.style.transform = categoryItems.classList.contains('hidden') 
+                        ? 'rotate(0deg)' 
+                        : 'rotate(90deg)';
+                }
+            }
+        });
+    });
+    
+    // Auto-open the category containing the active page
+    const currentPath = window.location.pathname;
+    const activeLinks = document.querySelectorAll('.category-items a');
+    activeLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && currentPath.includes(href) && href !== '/') {
+            // Find parent category-items and open it
+            const parentCategory = link.closest('.category-items');
+            if (parentCategory && parentCategory.classList.contains('hidden')) {
+                parentCategory.classList.remove('hidden');
+                // Rotate the chevron
+                const categoryToggle = parentCategory.previousElementSibling;
+                if (categoryToggle && categoryToggle.classList.contains('category-toggle')) {
+                    const chevron = categoryToggle.querySelector('i:last-child');
+                    if (chevron) {
+                        chevron.style.transform = 'rotate(90deg)';
+                    }
+                }
+            }
+            // Highlight active link
+            link.classList.add('bg-primary/10', 'border-l-4', 'border-primary');
+        }
+    });
 }
 
 function initModals() {

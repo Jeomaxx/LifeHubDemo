@@ -186,6 +186,137 @@ include 'includes/header.php';
     </div>
 </div>
 
+<!-- Project Modal -->
+<div id="projectModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+            <h2 class="text-2xl font-bold mb-6">Add Project</h2>
+            <form id="projectForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Project Name *</label>
+                    <input type="text" name="project_name" required class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Description</label>
+                    <textarea name="description" rows="3" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Budget</label>
+                        <input type="number" step="0.01" name="budget" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Hourly Rate</label>
+                        <input type="number" step="0.01" name="hourly_rate" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Start Date</label>
+                        <input type="date" name="start_date" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Deadline</label>
+                        <input type="date" name="deadline" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Status</label>
+                    <select name="status" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                        <option value="in_progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="on_hold">On Hold</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="flex gap-2 justify-end">
+                    <button type="button" onclick="closeModal('projectModal')" class="px-4 py-2 border rounded-lg">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg">Save Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Invoice Modal -->
+<div id="invoiceModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+            <h2 class="text-2xl font-bold mb-6">Create Invoice</h2>
+            <form id="invoiceForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Invoice Number *</label>
+                    <input type="text" name="invoice_number" required placeholder="INV-001" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Invoice Date *</label>
+                        <input type="date" name="invoice_date" required class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Due Date</label>
+                        <input type="date" name="due_date" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Total Amount *</label>
+                    <input type="number" step="0.01" name="total_amount" required class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Status</label>
+                    <select name="status" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                        <option value="draft">Draft</option>
+                        <option value="sent">Sent</option>
+                        <option value="paid">Paid</option>
+                        <option value="overdue">Overdue</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Notes</label>
+                    <textarea name="notes" rows="3" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600"></textarea>
+                </div>
+                <div class="flex gap-2 justify-end">
+                    <button type="button" onclick="closeModal('invoiceModal')" class="px-4 py-2 border rounded-lg">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg">Create Invoice</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Time Entry Modal -->
+<div id="timeEntryModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-gray-800 rounded-lg max-w-lg w-full">
+        <div class="p-6">
+            <h2 class="text-2xl font-bold mb-6">Log Time</h2>
+            <form id="timeEntryForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Entry Date *</label>
+                    <input type="date" name="entry_date" required class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Hours *</label>
+                    <input type="number" step="0.25" name="hours" required class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Description</label>
+                    <textarea name="description" rows="3" class="w-full px-4 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600"></textarea>
+                </div>
+                <div>
+                    <label class="flex items-center gap-2">
+                        <input type="checkbox" name="billable" value="1" checked class="rounded">
+                        <span class="text-sm">Billable</span>
+                    </label>
+                </div>
+                <div class="flex gap-2 justify-end">
+                    <button type="button" onclick="closeModal('timeEntryModal')" class="px-4 py-2 border rounded-lg">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg">Log Time</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="/assets/js/freelance-tracker.js"></script>
 <script>
 if (typeof lucide !== 'undefined') lucide.createIcons();

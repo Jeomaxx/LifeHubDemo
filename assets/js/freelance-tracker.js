@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     document.getElementById('clientForm').addEventListener('submit', saveClient);
+    document.getElementById('projectForm')?.addEventListener('submit', saveProject);
+    document.getElementById('invoiceForm')?.addEventListener('submit', saveInvoice);
+    document.getElementById('timeEntryForm')?.addEventListener('submit', saveTimeEntry);
+    
     document.getElementById('projectStatusFilter')?.addEventListener('change', function() {
         loadProjects(this.value);
     });
@@ -227,15 +231,19 @@ function openClientModal() {
 }
 
 function openProjectModal() {
-    alert('Project modal coming soon! Use API to create projects.');
+    document.getElementById('projectModal').classList.remove('hidden');
 }
 
 function openInvoiceModal() {
-    alert('Invoice modal coming soon! Use API to create invoices.');
+    const today = new Date().toISOString().split('T')[0];
+    document.querySelector('#invoiceForm [name="invoice_date"]').value = today;
+    document.getElementById('invoiceModal').classList.remove('hidden');
 }
 
 function openTimeEntryModal() {
-    alert('Time entry modal coming soon! Use API to log time.');
+    const today = new Date().toISOString().split('T')[0];
+    document.querySelector('#timeEntryForm [name="entry_date"]').value = today;
+    document.getElementById('timeEntryModal').classList.remove('hidden');
 }
 
 function closeModal(modalId) {
@@ -266,6 +274,91 @@ async function saveClient(e) {
         }
     } catch (error) {
         showToast('Error saving client', 'error');
+        console.error(error);
+    }
+}
+
+async function saveProject(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    
+    try {
+        const response = await fetch('/api/freelance.php?type=project', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        if (result.success) {
+            closeModal('projectModal');
+            e.target.reset();
+            loadProjects();
+            loadStats();
+            showToast('Project added successfully!', 'success');
+        } else {
+            showToast(result.message, 'error');
+        }
+    } catch (error) {
+        showToast('Error saving project', 'error');
+        console.error(error);
+    }
+}
+
+async function saveInvoice(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    
+    try {
+        const response = await fetch('/api/freelance.php?type=invoice', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        if (result.success) {
+            closeModal('invoiceModal');
+            e.target.reset();
+            loadInvoices();
+            loadStats();
+            showToast('Invoice created successfully!', 'success');
+        } else {
+            showToast(result.message, 'error');
+        }
+    } catch (error) {
+        showToast('Error creating invoice', 'error');
+        console.error(error);
+    }
+}
+
+async function saveTimeEntry(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    data.billable = document.querySelector('#timeEntryForm [name="billable"]').checked;
+    
+    try {
+        const response = await fetch('/api/freelance.php?type=time-entry', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        if (result.success) {
+            closeModal('timeEntryModal');
+            e.target.reset();
+            loadTimeEntries();
+            loadStats();
+            showToast('Time entry logged successfully!', 'success');
+        } else {
+            showToast(result.message, 'error');
+        }
+    } catch (error) {
+        showToast('Error logging time', 'error');
         console.error(error);
     }
 }

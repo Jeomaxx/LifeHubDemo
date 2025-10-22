@@ -271,6 +271,68 @@ document.getElementById('jobForm').addEventListener('submit', async (e) => {
     }
 });
 
+// Add certification form submission
+document.getElementById('certForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    data.type = 'certification';
+    
+    try {
+        const response = await fetch('/api/career.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            closeModal('addCertModal');
+            e.target.reset();
+            loadCertifications();
+            showToast('Certification added successfully!', 'success');
+        } else {
+            showToast(result.message || 'Error adding certification', 'error');
+        }
+    } catch (error) {
+        showToast('Error adding certification', 'error');
+        console.error(error);
+    }
+});
+
+// Add resume form submission
+document.getElementById('resumeForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+    data.type = 'resume';
+    
+    try {
+        const response = await fetch('/api/career.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            closeModal('addResumeModal');
+            e.target.reset();
+            loadResumes();
+            showToast('Resume version added successfully!', 'success');
+        } else {
+            showToast(result.message || 'Error adding resume', 'error');
+        }
+    } catch (error) {
+        showToast('Error adding resume', 'error');
+        console.error(error);
+    }
+});
+
 // Delete job
 async function deleteJob(id) {
     if (!confirm('Are you sure you want to delete this job application?')) return;
@@ -359,11 +421,11 @@ function openAddJobModal() {
 }
 
 function openAddCertModal() {
-    showToast('Certification form coming soon!', 'info');
+    document.getElementById('addCertModal').classList.remove('hidden');
 }
 
 function openAddResumeModal() {
-    showToast('Resume upload coming soon!', 'info');
+    document.getElementById('addResumeModal').classList.remove('hidden');
 }
 
 function closeModal(modalId) {

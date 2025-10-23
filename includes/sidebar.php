@@ -564,6 +564,62 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 </div>
             </div>
 
+            <!-- Advanced Features Category -->
+            <div class="sidebar-category">
+                <button class="category-toggle w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-rocket w-5"></i>
+                        <span class="font-medium">Advanced Features</span>
+                        <span class="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs px-2 py-0.5 rounded-full">New</span>
+                    </div>
+                    <i class="fas fa-chevron-down text-xs transition-transform duration-200"></i>
+                </button>
+                <div class="category-items pl-11 mt-1 space-y-1 hidden">
+                    <a href="/modules/automation/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>Life Automation</span>
+                    </a>
+                    <a href="/modules/analytics/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>Life Analytics</span>
+                    </a>
+                    <a href="/modules/digital_twin/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>AI Digital Twin</span>
+                    </a>
+                    <a href="/modules/scenario/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>Scenario Simulator</span>
+                    </a>
+                    <a href="/modules/roadmap/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>Life Roadmap</span>
+                    </a>
+                    <a href="/modules/business/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>Business Suite</span>
+                    </a>
+                    <a href="/modules/collaboration/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>Shared Spaces</span>
+                    </a>
+                    <a href="/modules/memory/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>Knowledge Graph</span>
+                    </a>
+                    <a href="/modules/journal/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>Journal & Memories</span>
+                    </a>
+                    <a href="/modules/energy/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>Energy & Focus</span>
+                    </a>
+                    <a href="/modules/assets/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>Assets & Subscriptions</span>
+                    </a>
+                    <a href="/modules/eco/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>Eco Tracker</span>
+                    </a>
+                    <a href="/modules/events2/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>Smart Reminders</span>
+                    </a>
+                    <a href="/modules/integrations/" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm text-gray-600 dark:text-gray-400">
+                        <span>Integrations</span>
+                    </a>
+                </div>
+            </div>
+
             <!-- Settings Category -->
             <div class="sidebar-category">
                 <button class="category-toggle w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300">
